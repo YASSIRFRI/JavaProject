@@ -1,0 +1,54 @@
+<diagram program="umletino" version="15.0.0"><zoom_level>8</zoom_level><help_text>Space for diagram notesst</help_text><element><id>UMLClass</id><coordinates><x>248</x><y>200</y><w>168</w><h>80</h></coordinates><panel_attributes>/Piece/
+--
+- color : boolean
+--
++valideMove(Move): boolean
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>704</x><y>312</y><w>168</w><h>120</h></coordinates><panel_attributes>ChessBoard
+--
+
+
+--
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>208</x><y>400</y><w>168</w><h>96</h></coordinates><panel_attributes>*BoardSquare*
+--
+-x: int
+-y: int
+-placeholder: Piece
+--
+-getValidMoves()
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>200</x><y>584</y><w>168</w><h>88</h></coordinates><panel_attributes>*Move*
+--
+-source : int
+-destination: int
+-piece: Piece
+-status : boolean
+--
++commit(): void
++reverse():void
+
+
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>464</x><y>672</y><w>168</w><h>56</h></coordinates><panel_attributes>*Player*
+--
+id: Long="36548"
+[waiting for message]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>800</x><y>192</y><w>168</w><h>56</h></coordinates><panel_attributes>/GameBoard/
+--
+-theme : string
+-spots: spots[][]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>896</x><y>312</y><w>168</w><h>128</h></coordinates><panel_attributes>*CheckersBoard*
+--
+
+
+--
+
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>960</x><y>272</y><w>24</w><h>56</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>768</x><y>272</y><w>24</w><h>56</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>768</x><y>264</y><w>216</w><h>32</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;250;20</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>240</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1128</x><y>472</y><w>168</w><h>56</h></coordinates><panel_attributes>/Game/
+--
+-status: enum
+-history:Move[]
+-players:Player[]
+
+-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>816</x><y>688</y><w>168</w><h>56</h></coordinates><panel_attributes>_object: Class_
+--
+id: Long="36548"
+[waiting for message]</panel_attributes><additional_attributes></additional_attributes></element></diagram>

@@ -2,6 +2,8 @@ import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
@@ -22,14 +24,11 @@ public class App extends Application {
         
         StackPane root = new StackPane();
         root.getChildren().add(btn);
-  
-  /*
-  Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
-  Scene scene = new Scene(root);
-  */
-  
-  Scene scene = new Scene(root, 300, 250);
-  
+
+
+
+        Parent root = FXMLLoader.load(getClass().getResource("MainScene.fxml"));
+            Scene scene = new Scene(root);
   primaryStage.setTitle("Hello World!");
         primaryStage.setScene(scene);
         primaryStage.show();
