@@ -17,6 +17,10 @@ abstract class Piece {
      * This method returns the name of the piece
      */
 
+    public Piece(String string, Boolean color2) {
+    }
+
+
     public String getName() {
         return name;
     }
@@ -29,10 +33,7 @@ abstract class Piece {
         return color;
     }
 
-    public abstract boolean validateMove()
-    
-
-}
+    public abstract boolean validateMove();
 
 /*
  * This class represents a King piece
@@ -42,12 +43,24 @@ class King extends Piece {
     public King(Boolean color) {
         super("King", color);
     }
+
+    @Override
+    public boolean validateMove() {
+        // TODO Auto-generated method stub
+        return false;
+    }
 }
 
 
 class Queen extends Piece {
     public Queen(Boolean color) {
         super("Queen", color);
+    }
+
+    @Override
+    public boolean validateMove() {
+        // TODO Auto-generated method stub
+        return false;
     }
     
 
@@ -56,6 +69,12 @@ class Queen extends Piece {
 class Rook extends Piece {
     public Rook(Boolean color) {
         super("Rook", color);
+    }
+
+    @Override
+    public boolean validateMove() {
+        // TODO Auto-generated method stub
+        return false;
     }
     
 
@@ -66,6 +85,12 @@ class Bishop extends Piece {
     public Bishop(Boolean color) {
         super("Bishop", color);
     }
+
+    @Override
+    public boolean validateMove() {
+        // TODO Auto-generated method stub
+        return false;
+    }
     
 
 }
@@ -73,6 +98,12 @@ class Bishop extends Piece {
 class Knight extends Piece {
     public Knight(Boolean color) {
         super("Knight", color);
+    }
+
+    @Override
+    public boolean validateMove() {
+        // TODO Auto-generated method stub
+        return false;
     }
     
 
@@ -82,7 +113,16 @@ class Pawn extends Piece {
     public Pawn(Boolean color) {
         super("Pawn", color);
     }
+
+    @Override
+    public boolean validateMove() {
+        // TODO Auto-generated method stub
+        return false;
+    }
     
+
+}
+
 
 }
 
