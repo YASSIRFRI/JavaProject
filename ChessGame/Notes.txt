@@ -1,0 +1,6 @@
+I'm currently working with 2d coordinates so a piece should have both x an y coordinates but 
+we can also track a piece with only one coordinate, if we number the squares from 1 to 64.
+
+
+
+

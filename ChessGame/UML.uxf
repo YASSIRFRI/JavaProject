@@ -36,13 +36,13 @@ id: Long="36548"
 [waiting for message]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>800</x><y>192</y><w>168</w><h>56</h></coordinates><panel_attributes>/GameBoard/
 --
 -theme : string
--spots: spots[][]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>896</x><y>312</y><w>168</w><h>128</h></coordinates><panel_attributes>*CheckersBoard*
+-spots: spots[][]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>896</x><y>304</y><w>168</w><h>128</h></coordinates><panel_attributes>*CheckersBoard*
 --
 
 
 --
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>960</x><y>272</y><w>24</w><h>56</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>768</x><y>272</y><w>24</w><h>56</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>768</x><y>264</y><w>216</w><h>32</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;250;20</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>240</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1128</x><y>472</y><w>168</w><h>56</h></coordinates><panel_attributes>/Game/
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>960</x><y>272</y><w>24</w><h>48</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;40</additional_attributes></element><element><id>Relation</id><coordinates><x>768</x><y>272</y><w>24</w><h>56</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>768</x><y>264</y><w>216</w><h>32</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;250;20</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>240</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1128</x><y>472</y><w>168</w><h>56</h></coordinates><panel_attributes>/Game/
 --
 -status: enum
 -history:Move[]
