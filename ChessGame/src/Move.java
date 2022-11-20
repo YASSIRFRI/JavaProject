@@ -12,6 +12,7 @@ class Move {
     private int destination;
     private Piece piece;
     private MoveStatus status;
+    private Square destSquare;
 
     public Move(int source, int destination, Piece piece, MoveStatus status) {
         this.source = source;
@@ -27,13 +28,18 @@ class Move {
     public int getDestination() {
         return destination;
     }
+    public Square getSquare()
+    {
+        return this.destSquare;
+    }
 
     public Piece getPiece() {
-        return piece;
+        return this.destSquare.getPiece();
     }
     public String getStatus() {
         return this.status.name();
     }
+    
 
 
 

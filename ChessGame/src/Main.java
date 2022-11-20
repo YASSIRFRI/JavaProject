@@ -6,19 +6,19 @@ import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 public class Main extends Application {
-  @Override/*from  w  w w .jav a  2 s . com*/
+  @Override
   public void start(Stage primaryStage) {
     // Create a GridPane
     GridPane pane = new GridPane();
-
-    // Create 64 rectangles and add to pane
     int count = 0;
-    double s = 100; // side of rectangle
+    double s = 50; 
     for (int i = 0; i < 8; i++) {
       count++;
       for (int j = 0; j < 8; j++) {
         Rectangle r = new Rectangle(s, s, s, s);
         if (count % 2 == 0)
+          r.setFill(Color.BLACK);
+        else 
           r.setFill(Color.WHITE);
         pane.add(r, j, i);
         count++;

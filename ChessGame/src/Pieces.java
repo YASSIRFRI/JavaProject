@@ -1,9 +1,11 @@
+import javax.print.attribute.standard.Destination;
+
 abstract class Piece {
     private String name;
     private Boolean color;
-    private int x;
-    private int y;
-    
+    protected int x;
+    protected int y;
+   
 
     public Piece(String name, Boolean color,int x,int y) {
         this.name = name;
@@ -33,7 +35,7 @@ abstract class Piece {
         return color;
     }
 
-    public abstract boolean validateMove();
+    public abstract boolean validateMove(Move move);
 
 /*
  * This class represents a King piece
@@ -45,8 +47,14 @@ class King extends Piece {
     }
 
     @Override
-    public boolean validateMove() {
-        // TODO Auto-generated method stub
+    public boolean validateMove(Move move) {
+        //if(move.getPiece())
+        int xDestination= move.getDestination()%8;
+        int yDestination= move.getDestination()/8;
+        if(Math.pow((double)(xDestination-this.x),(double)2)+Math.pow((double)(xDestination-this.x),(double)2)<=2)
+        {
+            return true;
+        }
         return false;
     }
 }
@@ -58,8 +66,18 @@ class Queen extends Piece {
     }
 
     @Override
-    public boolean validateMove() {
-        // TODO Auto-generated method stub
+    public boolean validateMove(Move move) {
+        Piece destPiece=move.getPiece();
+        if(destPiece.getColor()==this.getColor())
+        {
+            return false;
+        }
+        else
+        {
+            
+        }
+        
+
         return false;
     }
     
