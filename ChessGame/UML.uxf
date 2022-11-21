@@ -1,54 +1,75 @@
-<diagram program="umletino" version="15.0.0"><zoom_level>8</zoom_level><help_text>Space for diagram notesst</help_text><element><id>UMLClass</id><coordinates><x>248</x><y>200</y><w>168</w><h>80</h></coordinates><panel_attributes>/Piece/
+<diagram program="umletino" version="15.0.0"><zoom_level>6</zoom_level><help_text>Space for diagram notesst</help_text><element><id>UMLClass</id><coordinates><x>342</x><y>444</y><w>126</w><h>60</h></coordinates><panel_attributes>/Piece/
 --
 - color : boolean
 --
 +valideMove(Move): boolean
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>704</x><y>312</y><w>168</w><h>120</h></coordinates><panel_attributes>ChessBoard
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>684</x><y>498</y><w>126</w><h>90</h></coordinates><panel_attributes>ChessBoard
+--
+-fillBoard:void
+
+
 --
 
-
---
-
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>208</x><y>400</y><w>168</w><h>96</h></coordinates><panel_attributes>*BoardSquare*
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>534</x><y>390</y><w>126</w><h>72</h></coordinates><panel_attributes>*BoardSquare*
 --
 -x: int
 -y: int
 -placeholder: Piece
 --
 -getValidMoves()
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>200</x><y>584</y><w>168</w><h>88</h></coordinates><panel_attributes>*Move*
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>660</x><y>234</y><w>126</w><h>90</h></coordinates><panel_attributes>*Move*
 --
 -source : int
 -destination: int
 -piece: Piece
 -status : boolean
+-game:Game
 --
 +commit(): void
 +reverse():void
 
 
 
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>464</x><y>672</y><w>168</w><h>56</h></coordinates><panel_attributes>*Player*
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>1098</x><y>462</y><w>126</w><h>42</h></coordinates><panel_attributes>*Player*
 --
-id: Long="36548"
-[waiting for message]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>800</x><y>192</y><w>168</w><h>56</h></coordinates><panel_attributes>/GameBoard/
+-String: Username
+-color: boolean
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>756</x><y>360</y><w>126</w><h>84</h></coordinates><panel_attributes>/GameBoard/
 --
 -theme : string
--spots: spots[][]</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>896</x><y>304</y><w>168</w><h>128</h></coordinates><panel_attributes>*CheckersBoard*
+-boardSquares: BoardSquares[]
+--
+#fillBoard[]
+#pieceCount:int
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>828</x><y>498</y><w>126</w><h>90</h></coordinates><panel_attributes>*CheckersBoard*
+--
+-fillBoard: void
+
 --
 
-
---
-
-</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>960</x><y>272</y><w>24</w><h>48</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;40</additional_attributes></element><element><id>Relation</id><coordinates><x>768</x><y>272</y><w>24</w><h>56</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>Relation</id><coordinates><x>768</x><y>264</y><w>216</w><h>32</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;250;20</additional_attributes></element><element><id>Relation</id><coordinates><x>872</x><y>240</y><w>24</w><h>56</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>1128</x><y>472</y><w>168</w><h>56</h></coordinates><panel_attributes>/Game/
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>876</x><y>462</y><w>18</w><h>48</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>732</x><y>462</y><w>18</w><h>48</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;60</additional_attributes></element><element><id>Relation</id><coordinates><x>732</x><y>456</y><w>162</w><h>24</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;250;20</additional_attributes></element><element><id>Relation</id><coordinates><x>810</x><y>438</y><w>18</w><h>42</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;10;10;50</additional_attributes></element><element><id>UMLClass</id><coordinates><x>942</x><y>360</y><w>126</w><h>84</h></coordinates><panel_attributes>/Game/
 --
 -status: enum
 -history:Move[]
 -players:Player[]
-
--</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>816</x><y>688</y><w>168</w><h>56</h></coordinates><panel_attributes>_object: Class_
+-gameBoard:GameBoard[]
+-moveHistory:Move[]
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>114</x><y>396</y><w>126</w><h>42</h></coordinates><panel_attributes>*King*
 --
-id: Long="36548"
-[waiting for message]</panel_attributes><additional_attributes></additional_attributes></element></diagram>
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>108</x><y>468</y><w>126</w><h>36</h></coordinates><panel_attributes>*Rook*
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>108</x><y>606</y><w>126</w><h>42</h></coordinates><panel_attributes>*Knight*
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>114</x><y>324</y><w>126</w><h>42</h></coordinates><panel_attributes>*Bishop*
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>114</x><y>258</y><w>126</w><h>42</h></coordinates><panel_attributes>*Panwn*
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>UMLClass</id><coordinates><x>108</x><y>534</y><w>126</w><h>42</h></coordinates><panel_attributes>*Queen*
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>258</y><w>18</w><h>384</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;10;10;620</additional_attributes></element><element><id>Relation</id><coordinates><x>234</x><y>252</y><w>72</w><h>24</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;100;20</additional_attributes></element><element><id>Relation</id><coordinates><x>234</x><y>342</y><w>72</w><h>24</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;100;20</additional_attributes></element><element><id>Relation</id><coordinates><x>234</x><y>414</y><w>72</w><h>24</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;100;20</additional_attributes></element><element><id>Relation</id><coordinates><x>228</x><y>474</y><w>78</w><h>24</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;110;20</additional_attributes></element><element><id>Relation</id><coordinates><x>228</x><y>546</y><w>78</w><h>24</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;110;20</additional_attributes></element><element><id>Relation</id><coordinates><x>228</x><y>618</y><w>78</w><h>24</h></coordinates><panel_attributes></panel_attributes><additional_attributes>10;20;110;20</additional_attributes></element><element><id>Relation</id><coordinates><x>288</x><y>444</y><w>66</w><h>18</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>90;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>462</x><y>408</y><w>84</w><h>84</h></coordinates><panel_attributes>lt=&lt;-&gt;
+</panel_attributes><additional_attributes>10;120;80;120;80;10;120;10</additional_attributes></element><element><id>Relation</id><coordinates><x>654</x><y>390</y><w>114</w><h>18</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>170;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>372</x><y>204</y><w>18</w><h>252</h></coordinates><panel_attributes>lt=&lt;&lt;-</panel_attributes><additional_attributes>10;400;10;10</additional_attributes></element><element><id>UMLClass</id><coordinates><x>318</x><y>168</y><w>126</w><h>42</h></coordinates><panel_attributes>*CheckersPawn
+--
+</panel_attributes><additional_attributes></additional_attributes></element><element><id>Relation</id><coordinates><x>876</x><y>372</y><w>78</w><h>18</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes><additional_attributes>110;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>780</x><y>270</y><w>228</w><h>102</h></coordinates><panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-
+</panel_attributes><additional_attributes>360;150;360;20;10;20</additional_attributes></element><element><id>Relation</id><coordinates><x>1062</x><y>396</y><w>96</w><h>78</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>140;110;140;10;10;10</additional_attributes></element><element><id>Relation</id><coordinates><x>576</x><y>300</y><w>96</w><h>102</h></coordinates><panel_attributes>lt=&lt;-</panel_attributes><additional_attributes>10;150;10;10;140;10</additional_attributes></element></diagram>

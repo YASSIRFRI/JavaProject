@@ -3,6 +3,8 @@ public class Square {
     private int x;
     private int y;
     private Piece piece;
+    private boolean isOccupied;
+
 
     public Square(int x, int y, Piece piece) {
         this.x = x;
