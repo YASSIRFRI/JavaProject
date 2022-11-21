@@ -30,14 +30,16 @@ fontsize=10
     <coordinates>
       <x>390</x>
       <y>460</y>
-      <w>210</w>
+      <w>240</w>
       <h>100</h>
     </coordinates>
     <panel_attributes>/Piece/
 --
 - color : boolean
+- isDead(): boolean
 --
-+valideMove(Move): boolean
++validateMove(destination: BoardSquare): boolean
++getValidMoves(): Move[]
 
 
 </panel_attributes>
@@ -73,9 +75,8 @@ fontsize=10
 --
 -x: int
 -y: int
--placeholder: Piece
 --
--getValidMoves(): Move[]
+
 </panel_attributes>
     <additional_attributes/>
   </element>
@@ -89,15 +90,14 @@ fontsize=10
     </coordinates>
     <panel_attributes>*Move*
 --
--source : int
--destination: int
+-source: BoardSquare
+-destination: BoardSquare
 -piece: Piece
 -status : boolean
--game:Game
+-game: Game
 --
 +commit(): void
-+reverse(): void
-+begin(): void</panel_attributes>
++reverse(): void</panel_attributes>
     <additional_attributes/>
   </element>
   <element>
@@ -380,14 +380,14 @@ fontsize=10
   <element>
     <id>Relation</id>
     <coordinates>
-      <x>590</x>
+      <x>620</x>
       <y>400</y>
-      <w>140</w>
+      <w>110</w>
       <h>140</h>
     </coordinates>
     <panel_attributes>lt=&lt;-&gt;
 </panel_attributes>
-    <additional_attributes>10.0;120.0;80.0;120.0;80.0;10.0;120.0;10.0</additional_attributes>
+    <additional_attributes>10.0;120.0;50.0;120.0;50.0;10.0;90.0;10.0</additional_attributes>
   </element>
   <element>
     <id>Relation</id>
