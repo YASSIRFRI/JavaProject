@@ -36,10 +36,11 @@ fontsize=10
     <panel_attributes>/Piece/
 --
 - color : boolean
-- isDead(): boolean
+- isDead: boolean
+- location: BoardSquare
 --
 +validateMove(destination: BoardSquare): boolean
-+getValidMoves(): Move[]
++getValidMoves(): BoardSquare[]
 
 
 </panel_attributes>
