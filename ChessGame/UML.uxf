@@ -57,10 +57,11 @@ fontsize=10
     </coordinates>
     <panel_attributes>ChessBoard
 --
--fillBoard:void
 
 
 --
+-fillBoard(): void
+
 
 </panel_attributes>
     <additional_attributes/>
@@ -145,9 +146,10 @@ fontsize=10
     </coordinates>
     <panel_attributes>*CheckersBoard*
 --
--fillBoard: void
+
 
 --
+-fillBoard(): void
 
 </panel_attributes>
     <additional_attributes/>
@@ -207,9 +209,9 @@ fontsize=10
     <panel_attributes>/Game/
 --
 -status: enum
--players:Player[]
--gameBoard:GameBoard[]
--moveHistory:Move[]
+-players: Player[]
+-gameBoard: GameBoard[]
+-moveHistory: Move[]
 </panel_attributes>
     <additional_attributes/>
   </element>
