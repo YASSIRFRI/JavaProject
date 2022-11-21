@@ -31,7 +31,7 @@ fontsize=10
       <x>390</x>
       <y>460</y>
       <w>240</w>
-      <h>100</h>
+      <h>110</h>
     </coordinates>
     <panel_attributes>/Piece/
 --
@@ -41,6 +41,7 @@ fontsize=10
 --
 +validateMove(destination: BoardSquare): boolean
 +getValidMoves(): BoardSquare[]
++move(destination: BoardSquare): boolean
 
 
 </panel_attributes>
