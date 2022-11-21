@@ -1,3 +1,0 @@
-UML Edits:
-- Changed "BoardSquare" to "Spot"
-- Moved getValidMoves() method from Spot class to Move class 
