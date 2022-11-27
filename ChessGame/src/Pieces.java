@@ -11,7 +11,7 @@ abstract class Piece {
         this.name = name;
         this.color = color;
         this.x=x;
-        this.y=y;
+        this.y=y;   
     }
 
     
