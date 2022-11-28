@@ -10,15 +10,17 @@ public class Game {
     private GameStatus status; 
     private GameBoard gameBoard;
     private Move[] moveHistory;
+    private Player[] players;
 
 
 
 
 
-    public Game(GameStatus status,GameBoard gameBoard,Move moveHistory[]){
+    public Game(GameStatus status,GameBoard gameBoard,Move[] moveHistory,Player[] players){
         this.status = status;
         this.gameBoard = gameBoard;
         this.moveHistory = moveHistory;
+        this.players = players;
 
     }
 
@@ -47,6 +49,14 @@ public class Game {
 
     public void setGameBoard(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
+    }
+
+    public Player[] getPlayers() {
+        return players;
+    }
+
+    public void setPlayers(Player[] players) {
+        this.players = players;
     }
 
     

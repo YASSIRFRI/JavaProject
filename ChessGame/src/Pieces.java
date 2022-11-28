@@ -141,6 +141,20 @@ class Pawn extends Piece {
 
 }
 
+class CheckersPawn extends Piece{
+    public CheckersPawn(Boolean color) {
+        super("CheckersPawn", color);
+
+    }
+
+    @Override
+    public boolean validateMove() {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+}
+
 
 }
 
