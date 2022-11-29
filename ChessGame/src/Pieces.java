@@ -91,7 +91,6 @@ class Rook extends Piece {
 
     @Override
     public boolean validateMove() {
-        //WAAAAAAAA
         return false;
     }
     
@@ -108,7 +107,6 @@ class Bishop extends Piece {
     public boolean validateMove() {
         // TODO Auto-generated method stub
         return false;
-        // this is a temp comment
     }
     
 
