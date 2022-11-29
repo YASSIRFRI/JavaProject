@@ -91,7 +91,7 @@ class Rook extends Piece {
 
     @Override
     public boolean validateMove() {
-        // TODO Auto-generated method stub
+        //WAAAAAAAA
         return false;
     }
     
