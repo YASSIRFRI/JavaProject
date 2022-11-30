@@ -50,7 +50,27 @@ abstract class Piece {
         return this.location == null;
     }
 
-    public abstract boolean validateMove(Move move);
+    public abstract boolean validateMove(Move move, Square[][] board);
+
+    /**
+     * This method checks if a given square can be occupied by a piece, depending on the piece
+     * (it can be occupied only if the square is empty, or is already occupied by a different color piece)
+     *
+     * @param board array of squares of the board
+     * @param x x coordinate of the square
+     * @param y y coordinate of the square
+     * @return boolean, whether that square can be occupied be the piece who called this method or not
+     */
+    public boolean canOccupySquare(int x, int y, Square[][] board) {
+        if (board[x][y].getPlaceholder() == null)
+            return true;
+        else {
+            if (board[x][y].getPlaceholder().getIsWhite() == this.isWhite)
+                return false;
+            else
+                return true;
+        }
+    }
 }
 
 /**
@@ -65,15 +85,20 @@ class King extends Piece {
     }
 
     @Override
-    public boolean validateMove(Move move) {
-        // TODO Auto-generated method stub
-//        int xDestination= move.getDestination()%8;
-//        int yDestination= move.getDestination()/8;
-//        if(Math.pow((double)(xDestination-this.x),(double)2)+Math.pow((double)(xDestination-this.x),(double)2)<=2)
-//        {
-//            return true;
-//        }
-        return false;
+    public boolean validateMove(Move move, Square[][] board) {
+        int xSrc = move.getSourceSquare().getX();
+        int ySrc = move.getSourceSquare().getY();
+        int xDest = move.getDestinationSquare().getX();
+        int yDest = move.getDestinationSquare().getY();
+
+        boolean result;
+        if (Math.abs(xSrc - xDest) <= 1 && Math.abs(ySrc - yDest) <= 1)
+            result = this.canOccupySquare(xDest, yDest, board);
+        else
+            result = false;
+
+
+        return result && (move.getStatus() != MoveStatus.CHECK);
     }
 }
 
@@ -117,11 +142,37 @@ class Rook extends Piece {
     }
 
     @Override
-    public boolean validateMove(Move move) {
-        // TODO Auto-generated method stub
-        return false;
-    }
+    public boolean validateMove(Move move, Square[][] board) {
+        int xSrc = move.getSourceSquare().getX();
+        int ySrc = move.getSourceSquare().getY();
+        int xDest = move.getDestinationSquare().getX();
+        int yDest = move.getDestinationSquare().getY();
+        boolean result, emptyPath=true;
 
+        if (xSrc == xDest) {
+            for (int i=Math.min(ySrc, yDest)+1; i<Math.max(ySrc, yDest); i++) {  //looping through squares from source to destination
+                if (board[xSrc][i].getPlaceholder() != null) {
+                    emptyPath = false;
+                    break;
+                }
+            }
+            result = emptyPath && canOccupySquare(xDest, yDest, board);
+
+        } else if (ySrc == yDest) {
+            for (int i=Math.min(xSrc, xDest)+1; i<Math.max(xSrc, xDest); i++) {  //looping through squares from source to destination
+                if (board[ySrc][i].getPlaceholder() != null) {
+                    emptyPath = false;
+                    break;
+                }
+            }
+            result = emptyPath && canOccupySquare(xDest, yDest, board);
+
+        } else {
+            result = false;
+        }
+
+        return result && (move.getStatus() != MoveStatus.CHECK);
+    }
 }
 
 
@@ -135,12 +186,56 @@ class Bishop extends Piece {
     }
 
     @Override
-    public boolean validateMove(Move move) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-    
+    public boolean validateMove(Move move, Square[][] board) {
+        int xSrc = move.getSourceSquare().getX();
+        int ySrc = move.getSourceSquare().getY();
+        int xDest = move.getDestinationSquare().getX();
+        int yDest = move.getDestinationSquare().getY();
+        boolean result, emptyPath=true;
 
+        if (Math.abs(xSrc - xDest) == Math.abs(ySrc - yDest)) {
+
+            if (xDest >= xSrc && yDest >= ySrc) {
+                for (int i=xSrc+1, j=ySrc+1; i<xDest && j<yDest; i++, j++) {
+                    if (board[i][j].getPlaceholder() != null) {
+                        emptyPath = false;
+                        break;
+                    }
+                }
+            }
+
+            else if (xDest <= xSrc && yDest >= ySrc) {
+                for (int i=xSrc-1, j=ySrc+1; i>xDest && j<yDest; i--, j++) {
+                    if (board[i][j].getPlaceholder() != null) {
+                        emptyPath = false;
+                        break;
+                    }
+                }
+            }
+            else if (xDest <= xSrc && yDest <= ySrc) {
+                for (int i=xSrc-1, j=ySrc-1; i>xDest && j>yDest; i--, j--) {
+                    if (board[i][j].getPlaceholder() != null) {
+                        emptyPath = false;
+                        break;
+                    }
+                }
+            }
+            else if (xDest >= xSrc && yDest <= ySrc) {
+                for (int i=xSrc+1, j=yDest-1; i<xDest && j>yDest; i++, j--) {
+                    if (board[i][j].getPlaceholder() != null) {
+                        emptyPath = false;
+                        break;
+                    }
+                }
+            }
+
+            result = emptyPath && canOccupySquare(xDest, yDest, board);
+        }
+        else
+            result = false;
+
+        return result && (move.getStatus() != MoveStatus.CHECK);
+    }
 }
 
 class Knight extends Piece {

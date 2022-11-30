@@ -29,8 +29,8 @@ class Move {
     public Piece getPiece() {
         return piece;
     }
-    public String getStatus() {
-        return this.status.name();
+    public MoveStatus getStatus() {
+        return this.status;
     }
     public Game getGame() {
         return game;
