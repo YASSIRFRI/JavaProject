@@ -1,54 +1,47 @@
-
-
-
-
 enum MoveStatus
 {
     VALID,INVALID,COMMITED,CHECK,CHECKMATE;
 }
 
 class Move {
-    private int source;
-    private int destination;
+    private Square sourceSquare;
+    private Square destinationSquare;
     private Piece piece;
     private MoveStatus status;
-    private Square destSquare;
+    private Game game;
 
-    public Move(int source, int destination, Piece piece, MoveStatus status) {
-        this.source = source;
-        this.destination = destination;
+    public Move(Square sourceSquare, Square destinationSquare, Piece piece, MoveStatus status, Game game) {
+        this.sourceSquare = sourceSquare;
+        this.destinationSquare = destinationSquare;
         this.piece = piece;
         this.status = status;
+        this.game = game;
     }
 
-    public int getSource() {
-        return source;
+    public Square getSourceSquare() {
+        return sourceSquare;
     }
 
-    public int getDestination() {
-        return destination;
-    }
-    public Square getSquare()
-    {
-        return this.destSquare;
+    public Square getDestinationSquare() {
+        return destinationSquare;
     }
 
     public Piece getPiece() {
-        return this.destSquare.getPiece();
+        return piece;
     }
     public String getStatus() {
         return this.status.name();
     }
-    
-
-
-
-    public void setSource(int source) {
-        this.source = source;
+    public Game getGame() {
+        return game;
     }
 
-    public void setDestination(int destination) {
-        this.destination = destination;
+    public void setSource(Square sourceSquare) {
+        this.sourceSquare = sourceSquare;
+    }
+
+    public void setDestination(Square destinationSquare) {
+        this.destinationSquare = destinationSquare;
     }
 
     public void setPiece(Piece piece) {
@@ -58,4 +51,6 @@ class Move {
     public void setStatus(MoveStatus status) {
         this.status = status;
     }
+
+    public void setGame(Game game) { this.game = game; }
 }

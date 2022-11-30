@@ -1,0 +1,2 @@
+Things we need to talk about:
+- dependency between piece constructor and boardSquare constructor
