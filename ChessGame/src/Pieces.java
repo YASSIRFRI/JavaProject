@@ -1,4 +1,9 @@
 import javax.print.attribute.standard.Destination;
+
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.paint.ImagePattern;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
@@ -6,6 +11,8 @@ abstract class Piece {
     protected String name;
     protected boolean isWhite;
     protected Square location;
+    protected ImageView image;
+
 
     public Piece(String name, boolean isWhite, Square location, ImagePattern image) {
         this.name = name;
@@ -13,10 +20,10 @@ abstract class Piece {
         this.isWhite = isWhite;
         this.location = location;
         if(isWhite){
-            this.image = new ImagePattern(new Image("file:static/White" + name + ".png"));
+            this.image = new ImageView(new Image("file:static/White" + name + ".png"));
         }
         else{
-            this.image = new ImagePattern(new Image("file:static/Black" + name + ".png"));
+            this.image = new ImageView(new Image("file:static/Black" + name + ".png"));
         }
     }
 
