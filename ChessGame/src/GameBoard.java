@@ -41,25 +41,25 @@ class ChessBoard extends GameBoard {
     @Override
     public void fillBoard() {
         for (int i = 0; i < 8; i++) {
-            board[1][i].setPlaceholder(new Pawn(true));
-            board[6][i].setPlaceholder(new Pawn(false));
+            board[i][1].setPlaceholder(new Pawn(true));
+            board[i][6].setPlaceholder(new Pawn(false));
         }
-        board[0][0].setPlaceholder(new Rook(true));
-        board[0][7].setPlaceholder(new Rook(true));
-        board[7][0].setPlaceholder(new Rook(false));
+        board[7][0].setPlaceholder(new Rook(true));
+        board[0][0].setPlaceholder(new Rook(false));
+        board[0][7].setPlaceholder(new Rook(false));
         board[7][7].setPlaceholder(new Rook(false));
-        board[0][1].setPlaceholder(new Knight(true));
-        board[0][6].setPlaceholder(new Knight(true));
-        board[7][1].setPlaceholder(new Knight(false));
-        board[7][6].setPlaceholder(new Knight(false));
-        board[0][2].setPlaceholder(new Bishop(true));
-        board[0][5].setPlaceholder(new Bishop(true));
-        board[7][2].setPlaceholder(new Bishop(false));
-        board[7][5].setPlaceholder(new Bishop(false));
-        board[0][3].setPlaceholder(new Queen(true));
-        board[0][4].setPlaceholder(new King(true));
-        board[7][3].setPlaceholder(new Queen(false));
-        board[7][4].setPlaceholder(new King(false));
+        board[1][0].setPlaceholder(new Knight(true));
+        board[6][0].setPlaceholder(new Knight(true));
+        board[1][7].setPlaceholder(new Knight(false));
+        board[6][7].setPlaceholder(new Knight(false));
+        board[2][0].setPlaceholder(new Bishop(false));
+        board[5][0].setPlaceholder(new Bishop(true));
+        board[2][7].setPlaceholder(new Bishop(true));
+        board[5][7].setPlaceholder(new Bishop(false));
+        board[3][0].setPlaceholder(new Queen(true));
+        board[4][0].setPlaceholder(new King(true));
+        board[7][7].setPlaceholder(new Queen(false));
+        board[4][7].setPlaceholder(new King(false));
         for(int i=0;i<8;i++)
         {
             for(int j=0;j<8;j++)
@@ -88,7 +88,7 @@ class CheckersBoard extends GameBoard{
 
     @Override
     void fillBoard(){
-        
+
         return
     }
 
