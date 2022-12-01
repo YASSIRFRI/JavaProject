@@ -68,11 +68,11 @@ abstract class Piece {
 
     public boolean validateMove(Move move, Square[][] board) {
         ArrayList<Square> validMoves = this.getValidMoves(board);
-        int xDest = move.getDestinationSquare().getX();
-        int yDest = move.getDestinationSquare().getY();
+        int xDest = move.getDestinationSquare().getx();
+        int yDest = move.getDestinationSquare().gety();
         for (int i=0; i<validMoves.size(); i++) {
-            int i_x = validMoves.get(i).getX();
-            int i_y = validMoves.get(i).getY();
+            int i_x = validMoves.get(i).getx();
+            int i_y = validMoves.get(i).gety();
 
             if (i_x == xDest && i_y == yDest)       // Checking if the move is in valid moves
                 return true;
@@ -120,8 +120,8 @@ class King extends Piece {
 
     @Override
     public ArrayList<Square> getValidMoves(Square[][] board) {
-        int xSrc = this.getLocation().getX();
-        int ySrc = this.getLocation().getY();
+        int xSrc = this.getLocation().getx();
+        int ySrc = this.getLocation().gety();
         ArrayList<Square> validMoves = new ArrayList<Square>();
 
         for (int i= xSrc-1; i <= xSrc+1; i++) {
@@ -175,8 +175,8 @@ class Rook extends Piece {
 
     @Override
     public ArrayList<Square> getValidMoves(Square[][] board) {
-        int xSrc = this.getLocation().getX();
-        int ySrc = this.getLocation().getY();
+        int xSrc = this.getLocation().getx();
+        int ySrc = this.getLocation().gety();
         ArrayList<Square> validMoves = new ArrayList<Square>();
 
         // Moving to the right
