@@ -1,8 +1,8 @@
-import javafx.scene.image.Image;
-import javafx.scene.paint.*;
+import javax.print.attribute.standard.Destination;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
-abstract class Piece  {
-    protected ImagePattern image;
+abstract class Piece {
     protected String name;
     protected boolean isWhite;
     protected Square location;
@@ -59,13 +59,31 @@ abstract class Piece  {
         return this.location == null;
     }
 
-    public abstract boolean validateMove(Move move, Square[][] board);
+    public boolean validateMove(Move move, Square[][] board) {
+        ArrayList<Square> validMoves = this.getValidMoves(board);
+        int xDest = move.getDestinationSquare().getX();
+        int yDest = move.getDestinationSquare().getY();
+        for (int i=0; i<validMoves.size(); i++) {
+            int i_x = validMoves.get(i).getX();
+            int i_y = validMoves.get(i).getY();
+
+            if (i_x == xDest && i_y == yDest)       // Checking if the move is in valid moves
+                return true;
+        }
+        return false;
+    }
+
+    /**
+     * This method returns an arraylist of squares that the piece can move to;
+     * @param board the 2d array of squares of the board of the game;
+     * @return an arraylist of all the squares the piece can move to;
+     */
+    public abstract ArrayList<Square> getValidMoves(Square[][] board);
 
     /**
      * This method checks if a given square can be occupied by a piece, depending on the piece
      * (it can be occupied only if the square is empty, or is already occupied by a different color piece)
-     *
-     * @param board array of squares of the board
+     * @param board 2D array of squares of the board
      * @param x x coordinate of the square
      * @param y y coordinate of the square
      * @return boolean, whether that square can be occupied be the piece who called this method or not
@@ -94,20 +112,18 @@ class King extends Piece {
     }
 
     @Override
-    public boolean validateMove(Move move, Square[][] board) {
-        int xSrc = (int) move.getSourceSquare().getx();
-        int ySrc = move.getSourceSquare().gety();
-        int xDest = move.getDestinationSquare().getx();
-        int yDest = move.getDestinationSquare().gety();
+    public ArrayList<Square> getValidMoves(Square[][] board) {
+        int xSrc = this.getLocation().getX();
+        int ySrc = this.getLocation().getY();
+        ArrayList<Square> validMoves = new ArrayList<Square>();
 
-        boolean result;
-        if (Math.abs(xSrc - xDest) <= 1 && Math.abs(ySrc - yDest) <= 1)
-            result = this.canOccupySquare(xDest, yDest, board);
-        else
-            result = false;
-
-
-        return result && (move.getStatus() != MoveStatus.CHECK);
+        for (int i= xSrc-1; i <= xSrc+1; i++) {
+            for (int j=ySrc-1; j <= ySrc+1; j++) {
+                if (i != j && 0<=i && i<=7 && 0<=j && j<=7 && this.canOccupySquare(i, j, board))
+                    validMoves.add(board[i][j]);
+            }
+        }
+        return validMoves;
     }
 }
 
@@ -151,36 +167,56 @@ class Rook extends Piece {
     }
 
     @Override
-    public boolean validateMove(Move move, Square[][] board) {
-        int xSrc = move.getSourceSquare().getx();
-        int ySrc = move.getSourceSquare().gety();
-        int xDest = move.getDestinationSquare().getx();
-        int yDest = move.getDestinationSquare().gety();
-        boolean result, emptyPath=true;
+    public ArrayList<Square> getValidMoves(Square[][] board) {
+        int xSrc = this.getLocation().getX();
+        int ySrc = this.getLocation().getY();
+        ArrayList<Square> validMoves = new ArrayList<Square>();
 
-        if (xSrc == xDest) {
-            for (int i=Math.min(ySrc, yDest)+1; i<Math.max(ySrc, yDest); i++) {  //looping through squares from source to destination
-                if (board[xSrc][i].getPlaceholder() != null) {
-                    emptyPath = false;
+        // Moving to the right
+        for (int i=xSrc+1; i<=7; i++) {
+            if (this.canOccupySquare(i, ySrc, board)) {
+                validMoves.add(board[i][ySrc]);
+                if (board[i][ySrc] != null)         // if the square has a piece of different color
                     break;
-                }
             }
-            result = emptyPath && canOccupySquare(xDest, yDest, board);
-
-        } else if (ySrc == yDest) {
-            for (int i=Math.min(xSrc, xDest)+1; i<Math.max(xSrc, xDest); i++) {  //looping through squares from source to destination
-                if (board[ySrc][i].getPlaceholder() != null) {
-                    emptyPath = false;
-                    break;
-                }
-            }
-            result = emptyPath && canOccupySquare(xDest, yDest, board);
-
-        } else {
-            result = false;
+            else
+                break;
         }
 
-        return result && (move.getStatus() != MoveStatus.CHECK);
+        // Moving to the left
+        for (int i=xSrc-1; i>=0; i--) {
+            if (this.canOccupySquare(i, ySrc, board)) {
+                validMoves.add(board[i][ySrc]);
+                if (board[i][ySrc] != null)         // if the square has a piece of different color
+                    break;
+            }
+            else
+                break;
+        }
+
+        // Moving up
+        for (int i=ySrc+1; i<=7; i++) {
+            if (this.canOccupySquare(xSrc, i, board)) {
+                validMoves.add(board[xSrc][i]);
+                if (board[xSrc][i] != null)         // if the square has a piece of different color
+                    break;
+            }
+            else
+                break;
+        }
+
+        //Moving down
+        for (int i=ySrc-1; i>=0; i--) {
+            if (this.canOccupySquare(xSrc, i, board)) {
+                validMoves.add(board[xSrc][i]);
+                if (board[xSrc][i] != null)         // if the square has a piece of different color
+                    break;
+            }
+            else
+                break;
+        }
+
+        return validMoves;
     }
 }
 
@@ -195,55 +231,8 @@ class Bishop extends Piece {
     }
 
     @Override
-    public boolean validateMove(Move move, Square[][] board) {
-        int xSrc = move.getSourceSquare().getx();
-        int ySrc = move.getSourceSquare().gety();
-        int xDest = move.getDestinationSquare().getx();
-        int yDest = move.getDestinationSquare().gety();
-        boolean result, emptyPath=true;
-
-        if (Math.abs(xSrc - xDest) == Math.abs(ySrc - yDest)) {
-
-            if (xDest >= xSrc && yDest >= ySrc) {
-                for (int i=xSrc+1, j=ySrc+1; i<xDest && j<yDest; i++, j++) {
-                    if (board[i][j].getPlaceholder() != null) {
-                        emptyPath = false;
-                        break;
-                    }
-                }
-            }
-
-            else if (xDest <= xSrc && yDest >= ySrc) {
-                for (int i=xSrc-1, j=ySrc+1; i>xDest && j<yDest; i--, j++) {
-                    if (board[i][j].getPlaceholder() != null) {
-                        emptyPath = false;
-                        break;
-                    }
-                }
-            }
-            else if (xDest <= xSrc && yDest <= ySrc) {
-                for (int i=xSrc-1, j=ySrc-1; i>xDest && j>yDest; i--, j--) {
-                    if (board[i][j].getPlaceholder() != null) {
-                        emptyPath = false;
-                        break;
-                    }
-                }
-            }
-            else if (xDest >= xSrc && yDest <= ySrc) {
-                for (int i=xSrc+1, j=yDest-1; i<xDest && j>yDest; i++, j--) {
-                    if (board[i][j].getPlaceholder() != null) {
-                        emptyPath = false;
-                        break;
-                    }
-                }
-            }
-
-            result = emptyPath && canOccupySquare(xDest, yDest, board);
-        }
-        else
-            result = false;
-
-        return result && (move.getStatus() != MoveStatus.CHECK);
+    public ArrayList<Square> getValidMoves(Square[][] board) {
+        
     }
 }
 
