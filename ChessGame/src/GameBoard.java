@@ -81,16 +81,16 @@ class ChessBoard extends GameBoard {
     }
 }
 
-class CheckersBoard extends GameBoard{
-    public CheckersBoard(int size){
-        super(size);
-    }
-
-    @Override
-    void fillBoard(){
-
-        return
-    }
-
-
-}
+//class CheckersBoard extends GameBoard{
+//    public CheckersBoard(int size){
+//        super(size);
+//    }
+//
+//    @Override
+//    void fillBoard(){
+//
+//        return
+//    }
+//
+//
+//}
