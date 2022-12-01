@@ -1,3 +1,4 @@
+import javafx.scene.image.Image;
 import javafx.scene.paint.*;
 
 abstract class Piece  {
@@ -6,10 +7,17 @@ abstract class Piece  {
     protected boolean isWhite;
     protected Square location;
 
-    public Piece(String name, boolean isWhite, Square location) {
+    public Piece(String name, boolean isWhite, Square location, ImagePattern image) {
         this.name = name;
+
         this.isWhite = isWhite;
         this.location = location;
+        if(isWhite){
+            this.image = new ImagePattern(new Image("file:static/White" + name + ".png"));
+        }
+        else{
+            this.image = new ImagePattern(new Image("file:static/Black" + name + ".png"));
+        }
     }
 
     public Piece(String name, boolean isWhite) {
