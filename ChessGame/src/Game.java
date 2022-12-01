@@ -21,6 +21,9 @@ public class Game extends Application{
     private GameBoard gameBoard;
     private Move[] moveHistory;
     private Player[] players;
+    
+
+
 
 
     public GameStatus getStatus()
@@ -60,6 +63,7 @@ public class Game extends Application{
     @Override
     public void start(Stage primaryStage){
         ChessBoard chessBoard = new ChessBoard();
+        chessBoard.fillBoard();
         Scene scene = new Scene(chessBoard,700,700);
         primaryStage.setScene(scene);
         primaryStage.show();

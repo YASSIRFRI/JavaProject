@@ -23,6 +23,7 @@ public class Square extends Rectangle {
         this.x = x;
         this.y = y;
         this.setFill(color);
+        this.placeholder = null;
     }
 
 

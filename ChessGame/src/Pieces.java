@@ -20,10 +20,10 @@ abstract class Piece {
         this.isWhite = isWhite;
         this.location = location;
         if(isWhite){
-            this.image = new ImageView(new Image("file:static/White" + name + ".png"));
+            this.image = new ImageView(new Image("file:static/White/" + name + ".png"));
         }
         else{
-            this.image = new ImageView(new Image("file:static/Black" + name + ".png"));
+            this.image = new ImageView(new Image("file:static/Black/" + name + ".png"));
         }
     }
 
@@ -31,6 +31,12 @@ abstract class Piece {
         this.name = name;
         this.isWhite = isWhite;
         this.location = null;
+        if(isWhite){
+            this.image = new ImageView(new Image("file:static/White/" + name + ".png"));
+        }
+        else{
+            this.image = new ImageView(new Image("file:static/Black/" + name + ".png"));
+        }
     }
 
 
@@ -57,6 +63,9 @@ abstract class Piece {
 
     public void setLocation(Square location) {
         this.location = location;
+    }
+    public ImageView getImage(){
+        return image;
     }
 
     /**
