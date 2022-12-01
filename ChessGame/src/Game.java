@@ -64,7 +64,7 @@ public class Game extends Application{
     public void start(Stage primaryStage){
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.fillBoard();
-        Scene scene = new Scene(chessBoard,700,700);
+        Scene scene = new Scene(chessBoard,800,800);
         primaryStage.setScene(scene);
         primaryStage.show();
         

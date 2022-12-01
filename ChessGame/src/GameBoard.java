@@ -21,12 +21,9 @@ public abstract class GameBoard extends GridPane {
                 else
                     board[i][j] = new Square(i, j, Color.WHITE);
                 this.add(board[i][j], i, j);
-                System.out.println(board[i][j].getFill());
-                System.out.println(board[i][j]);
                 count++;
             }
         }
-        System.out.println(this);
     }
     public abstract void fillBoard();
 }
