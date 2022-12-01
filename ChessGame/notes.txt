@@ -2,3 +2,16 @@ Things we need to talk about:
 - dependency between piece constructor and boardSquare constructor
 - validateMove() should take board as parameter
 - should i set move status in validateMove() method
+
+
+
+
+
+
+we have being doing it all wrong, we should not separat fucntional code with gui code
+from what i'v seen, square for example, should extend Rectangle, and have a piece as an image view
+and so on (gameboard gridpane) 
+
+
+
+

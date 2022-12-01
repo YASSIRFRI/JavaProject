@@ -1,17 +1,19 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
 
 public class Main extends Application {
   @Override
   public void start(Stage primaryStage) {
-    // Create a GridPane
     GridPane pane = new GridPane();
     int count = 0;
-    double s = 50; 
+    double s = 100; 
     for (int i = 0; i < 8; i++) {
       count++;
       for (int j = 0; j < 8; j++) {
@@ -24,13 +26,13 @@ public class Main extends Application {
         count++;
       }
     }
+    Image image = new Image("file:C:/Users/Lenovo/Desktop/LBD3/JavaProject/ChessGame/static/Kn.png");
+    ImagePattern pattern = new ImagePattern(image);
 
-    // Create a scene and place it in the stage
-    Scene scene = new Scene(pane);
-    primaryStage.setTitle("java2s.com");
-    primaryStage.setScene(scene); // Place in scene in the stage
+    ((Shape) pane.getChildren().get(0)).setFill(pattern);
+    Scene scene = new Scene(pane,700,700);
+    primaryStage.setScene(scene);
     primaryStage.show();
-    ;
   }
   public static void main(String[] args) {
     launch(args);

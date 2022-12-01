@@ -1,5 +1,9 @@
-public class Square {
+import javafx.scene.shape.Rectangle;
 
+
+
+public class Square extends Rectangle {
+    
     private int x;
     private int y;
     private Piece placeholder;
@@ -16,16 +20,18 @@ public class Square {
         this.placeholder = null;
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
 
     public Piece getPlaceholder() {
         return placeholder;
+    }
+
+
+    public int getx() {
+        return x;
+    }
+
+    public int gety() {
+        return y;
     }
 
     public void setX(int x) {
