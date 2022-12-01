@@ -332,13 +332,16 @@ class Knight extends Piece {
 
 class Pawn extends Piece {
 
+    private boolean hasMoved;
 
     public Pawn(boolean isWhite) {
         super("Pawn", isWhite);
+        this.hasMoved = false;
     }
 
     public Pawn(boolean isWhite, Square location) {
         super("Pawn", isWhite, location);
+        this.hasMoved = false;
     }
 
     @Override
@@ -347,28 +350,47 @@ class Pawn extends Piece {
         int ySrc = this.getLocation().gety();
         ArrayList<Square> validMoves = new ArrayList<Square>();
 
+        // Checking the square forward
+        if ((ySrc+1)<=7 && board[xSrc][ySrc+1].getPlaceholder() == null)
+            validMoves.add(board[xSrc][ySrc+1]);
 
+        // Checking the diagonals
+        if ((xSrc+1)<=7 && (ySrc+1)<=7 && board[xSrc+1][ySrc+1].getPlaceholder() != null) {
+            if (board[xSrc+1][ySrc+1].getPlaceholder().getIsWhite() != this.isWhite)
+                validMoves.add(board[xSrc+1][ySrc+1]);
+        }
 
-        return null;
+        if ((xSrc-1)>=0 && (ySrc+1)<=7 && board[xSrc-1][ySrc+1].getPlaceholder() != null) {
+            if (board[xSrc-1][ySrc+1].getPlaceholder().getIsWhite() != this.isWhite)
+                validMoves.add(board[xSrc-1][ySrc+1]);
+        }
+
+        // Checking the second square forward if the pawn never moved
+        if (! this.hasMoved) {
+            if ((ySrc+2)<=7 && board[xSrc][ySrc+2].getPlaceholder() == null)
+                validMoves.add(board[xSrc][ySrc+2]);
+        }
+
+        return validMoves;
     }
 }
 
-class CheckersPawn extends Piece {
-    public CheckersPawn(boolean isWhite) {
-        super("CheckersPawn", isWhite);
-    }
-
-    public CheckersPawn(boolean isWhite, Square location) {
-        super("CheckersPawn", isWhite, location);
-    }
-
-    @Override
-    public boolean validateMove(Move move) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-
-}
+//class CheckersPawn extends Piece {
+//    public CheckersPawn(boolean isWhite) {
+//        super("CheckersPawn", isWhite);
+//    }
+//
+//    public CheckersPawn(boolean isWhite, Square location) {
+//        super("CheckersPawn", isWhite, location);
+//    }
+//
+//    @Override
+//    public boolean validateMove(Move move) {
+//        // TODO Auto-generated method stub
+//        return false;
+//    }
+//
+//}
 
 
 
