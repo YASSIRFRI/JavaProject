@@ -1,4 +1,6 @@
 import javafx.scene.layout.GridPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public abstract class GameBoard extends GridPane {
 
@@ -22,14 +24,25 @@ class ChessBoard extends GameBoard {
 
     public ChessBoard(int size) {
         super(size);
+        
     }
 
     @Override
     void fillBoard() {
-        for (int i = 0; i < this.size; i++) {
-            for (int j = 0; j < this.size; j++) {
+        int count;
+        for (int i = 0; i < 8; i++) {
+            count++;
+            for (int j = 0; j < 8; j++) {
+              Rectangle r = new Rectangle(s, s, s, s);
+              if (count % 2 == 0)
+                r.setFill(Color.BLACK);
+              else 
+                r.setFill(Color.WHITE);
+              pane.add(r, j, i);
+              count++;
             }
-        }
+          }
+        
     }
 }
 

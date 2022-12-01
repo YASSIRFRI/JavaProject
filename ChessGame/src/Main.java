@@ -1,6 +1,7 @@
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
@@ -27,10 +28,10 @@ public class Main extends Application {
         count++;
       }
     }
-    Image image = new Image("file:static/Kn.png");
+    ImageView iv = new ImageView(new Image("file:static/White/Knight.png"));
+    Image image = new Image("file:static/White/Knight.png");
     ImagePattern pattern = new ImagePattern(image);
-
-    ((Shape) pane.getChildren().get(0)).setFill(pattern);
+     pane.add(iv,1,0);
     Scene scene = new Scene(pane,700,700);
     primaryStage.setScene(scene);
     primaryStage.show();
