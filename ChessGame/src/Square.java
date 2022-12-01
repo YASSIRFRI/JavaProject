@@ -3,12 +3,14 @@ import javafx.scene.shape.Rectangle;
 
 
 public class Square extends Rectangle {
-    
+
+
     private int x;
     private int y;
     private Piece placeholder;
 
     public Square(int x, int y, Piece placeholder) {
+        super(100, 100);
         this.x = x;
         this.y = y;
         this.placeholder = placeholder;

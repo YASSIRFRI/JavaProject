@@ -4,6 +4,7 @@ import javafx.scene.image.Image;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.shape.Shape;
 import javafx.stage.Stage;
@@ -26,7 +27,7 @@ public class Main extends Application {
         count++;
       }
     }
-    Image image = new Image("file:C:/Users/Lenovo/Desktop/LBD3/JavaProject/ChessGame/static/Kn.png");
+    Image image = new Image("file:static/Kn.png");
     ImagePattern pattern = new ImagePattern(image);
 
     ((Shape) pane.getChildren().get(0)).setFill(pattern);

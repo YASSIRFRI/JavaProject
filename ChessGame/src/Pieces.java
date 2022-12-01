@@ -1,6 +1,7 @@
-import javax.print.attribute.standard.Destination;
+import javafx.scene.paint.*;
 
-abstract class Piece {
+abstract class Piece  {
+    protected ImagePattern image;
     protected String name;
     protected boolean isWhite;
     protected Square location;
