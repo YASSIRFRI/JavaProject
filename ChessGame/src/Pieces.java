@@ -225,7 +225,7 @@ class Bishop extends Piece {
 
     @Override
     public ArrayList<Square> getValidMoves(Square[][] board) {
-        //
+        
     }
 }
 

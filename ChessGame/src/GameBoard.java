@@ -1,4 +1,6 @@
-public abstract class GameBoard {
+import javafx.scene.layout.GridPane;
+
+public abstract class GameBoard extends GridPane {
 
     protected Square[][] board;
 
