@@ -87,10 +87,10 @@ class King extends Piece {
 
     @Override
     public boolean validateMove(Move move, Square[][] board) {
-        int xSrc = move.getSourceSquare().getX();
-        int ySrc = move.getSourceSquare().getY();
-        int xDest = move.getDestinationSquare().getX();
-        int yDest = move.getDestinationSquare().getY();
+        int xSrc = (int) move.getSourceSquare().getx();
+        int ySrc = move.getSourceSquare().gety();
+        int xDest = move.getDestinationSquare().getx();
+        int yDest = move.getDestinationSquare().gety();
 
         boolean result;
         if (Math.abs(xSrc - xDest) <= 1 && Math.abs(ySrc - yDest) <= 1)
@@ -144,10 +144,10 @@ class Rook extends Piece {
 
     @Override
     public boolean validateMove(Move move, Square[][] board) {
-        int xSrc = move.getSourceSquare().getX();
-        int ySrc = move.getSourceSquare().getY();
-        int xDest = move.getDestinationSquare().getX();
-        int yDest = move.getDestinationSquare().getY();
+        int xSrc = move.getSourceSquare().getx();
+        int ySrc = move.getSourceSquare().gety();
+        int xDest = move.getDestinationSquare().getx();
+        int yDest = move.getDestinationSquare().gety();
         boolean result, emptyPath=true;
 
         if (xSrc == xDest) {
@@ -188,10 +188,10 @@ class Bishop extends Piece {
 
     @Override
     public boolean validateMove(Move move, Square[][] board) {
-        int xSrc = move.getSourceSquare().getX();
-        int ySrc = move.getSourceSquare().getY();
-        int xDest = move.getDestinationSquare().getX();
-        int yDest = move.getDestinationSquare().getY();
+        int xSrc = move.getSourceSquare().getx();
+        int ySrc = move.getSourceSquare().gety();
+        int xDest = move.getDestinationSquare().getx();
+        int yDest = move.getDestinationSquare().gety();
         boolean result, emptyPath=true;
 
         if (Math.abs(xSrc - xDest) == Math.abs(ySrc - yDest)) {
