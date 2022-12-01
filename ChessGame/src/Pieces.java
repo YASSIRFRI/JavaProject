@@ -331,6 +331,8 @@ class Knight extends Piece {
 }
 
 class Pawn extends Piece {
+
+
     public Pawn(boolean isWhite) {
         super("Pawn", isWhite);
     }
@@ -340,12 +342,15 @@ class Pawn extends Piece {
     }
 
     @Override
-    public boolean validateMove(Move move) {
-        // TODO Auto-generated method stub
-        return false;
+    public ArrayList<Square> getValidMoves(Square[][] board) {
+        int xSrc = this.getLocation().getx();
+        int ySrc = this.getLocation().gety();
+        ArrayList<Square> validMoves = new ArrayList<Square>();
+
+
+
+        return null;
     }
-
-
 }
 
 class CheckersPawn extends Piece {
