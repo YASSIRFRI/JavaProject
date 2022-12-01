@@ -153,24 +153,17 @@ class Queen extends Piece {
     }
 
     @Override
-    public boolean validateMove(Move move) {
-        // TODO Auto-generated method stub
+    public ArrayList<Square> getValidMoves(Square[][] board) {
+        // The queen's valid moves are the (bishop + rook) valid moves
+        Rook temp_rook = new Rook(this.isWhite, this.location);
+        Bishop temp_bishop = new Bishop(this.isWhite, this.location);
 
-//        Piece destPiece=move.getPiece();
-//        if(destPiece.getColor()==this.getColor())
-//        {
-//            return false;
-//        }
-//        else
-//        {
-//
-//        }
+        ArrayList<Square> queenValidMoves = new ArrayList<Square>();
+        queenValidMoves.addAll(temp_rook.getValidMoves(board));
+        queenValidMoves.addAll(temp_bishop.getValidMoves(board));
 
-
-        return false;
+        return queenValidMoves;
     }
-    
-
 }
 
 class Rook extends Piece {
@@ -248,7 +241,55 @@ class Bishop extends Piece {
 
     @Override
     public ArrayList<Square> getValidMoves(Square[][] board) {
-        
+        int xSrc = this.getLocation().getx();
+        int ySrc = this.getLocation().gety();
+        ArrayList<Square> validMoves = new ArrayList<Square>();
+
+        //Moving top-right
+        for (int i=xSrc+1, j=ySrc+1; i<=7 && j<=7; i++, j++) {
+            if (this.canOccupySquare(i, j, board)) {
+                validMoves.add(board[i][j]);
+                if (board[i][j] != null)
+                    break;
+            }
+            else
+                break;
+        }
+
+        //Moving top-left
+        for (int i=xSrc-1, j=ySrc+1; i>=0 && j<=7; i--, j++) {
+            if (this.canOccupySquare(i, j, board)) {
+                validMoves.add(board[i][j]);
+                if (board[i][j] != null)
+                    break;
+            }
+            else
+                break;
+        }
+
+        //Moving bottom-right
+        for (int i=xSrc+1, j=ySrc-1; i<=7 && j>=0; i++, j--) {
+            if (this.canOccupySquare(i, j, board)) {
+                validMoves.add(board[i][j]);
+                if (board[i][j] != null)
+                    break;
+            }
+            else
+                break;
+        }
+
+        //Moving bottom-left
+        for (int i=xSrc-1, j=ySrc-1; i>=0 && j>=0; i--, j--) {
+            if (this.canOccupySquare(i, j, board)) {
+                validMoves.add(board[i][j]);
+                if (board[i][j] != null)
+                    break;
+            }
+            else
+                break;
+        }
+
+        return validMoves;
     }
 }
 
@@ -262,12 +303,31 @@ class Knight extends Piece {
     }
 
     @Override
-    public boolean validateMove(Move move) {
-        // TODO Auto-generated method stub
-        return false;
-    }
-    
+    public ArrayList<Square> getValidMoves(Square[][] board) {
+        int xSrc = this.getLocation().getx();
+        int ySrc = this.getLocation().gety();
+        ArrayList<Square> validMoves = new ArrayList<Square>();
 
+        int[][] standardPossibleSquares = {
+                {xSrc+2, ySrc+1},
+                {xSrc+2, ySrc-1},
+                {xSrc+1, ySrc+2},
+                {xSrc+1, ySrc-2},
+                {xSrc-2, ySrc+1},
+                {xSrc-2, ySrc-1},
+                {xSrc-1, ySrc+2},
+                {xSrc-1, ySrc-2}
+        };
+
+        for (int i=0; i<8; i++) {
+            int x = standardPossibleSquares[i][0];
+            int y = standardPossibleSquares[i][1];
+            if (0<=x && x<=7 && 0<=y && y<=7 && this.canOccupySquare(x, y, board))
+                validMoves.add(board[x][y]);
+        }
+
+        return validMoves;
+    }
 }
 
 class Pawn extends Piece {
@@ -284,7 +344,7 @@ class Pawn extends Piece {
         // TODO Auto-generated method stub
         return false;
     }
-    
+
 
 }
 

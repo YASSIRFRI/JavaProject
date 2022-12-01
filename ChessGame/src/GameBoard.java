@@ -88,7 +88,7 @@ class CheckersBoard extends GameBoard{
 
     @Override
     void fillBoard(){
-        
+
         return
     }
 
