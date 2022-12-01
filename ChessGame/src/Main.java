@@ -29,8 +29,6 @@ public class Main extends Application {
       }
     }
     ImageView iv = new ImageView(new Image("file:static/White/Knight.png"));
-    Image image = new Image("file:static/White/Knight.png");
-    ImagePattern pattern = new ImagePattern(image);
      pane.add(iv,1,0);
     Scene scene = new Scene(pane,700,700);
     primaryStage.setScene(scene);
@@ -39,5 +37,7 @@ public class Main extends Application {
   public static void main(String[] args) {
     launch(args);
   }
+
+  
 }
  

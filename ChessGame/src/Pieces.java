@@ -14,7 +14,7 @@ abstract class Piece {
     protected ImageView image;
 
 
-    public Piece(String name, boolean isWhite, Square location, ImagePattern image) {
+    public Piece(String name, boolean isWhite, Square location) {
         this.name = name;
 
         this.isWhite = isWhite;

@@ -1,11 +1,6 @@
 Things we need to talk about:
 - dependency between piece constructor and boardSquare constructor
 - validateMove() should take board as parameter
-<<<<<<< HEAD
-- should i set move status in validateMove() method?
-- getValidMoves() return type is ArrayList instead of Array
-- we should add a method: kingCanBeKilled() and use it in getValidMoves()
-=======
 - should i set move status in validateMove() method
 
 
@@ -20,4 +15,3 @@ and so on (gameboard gridpane)
 
 
 
->>>>>>> 654fd28d84440ec4f12c2a7445dd0fa873e182fa

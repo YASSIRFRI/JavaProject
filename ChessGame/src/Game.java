@@ -1,28 +1,27 @@
-public class Game {
-    public enum GameStatus {
-        ACTIVE,
-        BLACK_WIN,
-        WHITE_WIN,
-        FORFEIT,
-        STALEMATE,
-        RESIGNATION
-    }   
+import java.io.Console;
+
+import javax.sound.midi.SysexMessage;
+
+import javafx.application.Application;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
+
+enum GameStatus {
+    ACTIVE,
+    BLACK_WIN,
+    WHITE_WIN,
+    FORFEIT,
+    STALEMATE,
+    RESIGNATION
+}   
+
+public class Game extends Application{
+
     private GameStatus status; 
     private GameBoard gameBoard;
     private Move[] moveHistory;
     private Player[] players;
 
-
-
-
-
-    public Game(GameStatus status,GameBoard gameBoard,Move[] moveHistory,Player[] players){
-        this.status = status;
-        this.gameBoard = gameBoard;
-        this.moveHistory = moveHistory;
-        this.players = players;
-
-    }
 
     public GameStatus getStatus()
     {
@@ -57,6 +56,18 @@ public class Game {
 
     public void setPlayers(Player[] players) {
         this.players = players;
+    }
+    @Override
+    public void start(Stage primaryStage){
+        ChessBoard chessBoard = new ChessBoard();
+        Scene scene = new Scene(chessBoard,700,700);
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        
+    }
+
+    public static void main(String[] args) {
+        launch(args);
     }
 
     

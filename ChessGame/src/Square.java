@@ -1,3 +1,4 @@
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
 
@@ -7,19 +8,21 @@ public class Square extends Rectangle {
 
     private int x;
     private int y;
+    static double s=100;
     private Piece placeholder;
 
     public Square(int x, int y, Piece placeholder) {
-        super(100, 100);
+        super(s,s,s,s);
         this.x = x;
         this.y = y;
         this.placeholder = placeholder;
     }
 
-    public Square(int x, int y) {
+    public Square(int x, int y, Color color) {
+        super(s,s,s,s);
         this.x = x;
         this.y = y;
-        this.placeholder = null;
+        this.setFill(color);
     }
 
 
