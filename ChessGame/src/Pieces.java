@@ -185,7 +185,7 @@ class Rook extends Piece {
         for (int i=xSrc+1; i<=7; i++) {
             if (this.canOccupySquare(i, ySrc, board)) {
                 validMoves.add(board[i][ySrc]);
-                if (board[i][ySrc] != null)         // if the square has a piece of different color
+                if (board[i][ySrc].getPlaceholder() != null)         // if the square has a piece of different color
                     break;
             }
             else
@@ -196,7 +196,7 @@ class Rook extends Piece {
         for (int i=xSrc-1; i>=0; i--) {
             if (this.canOccupySquare(i, ySrc, board)) {
                 validMoves.add(board[i][ySrc]);
-                if (board[i][ySrc] != null)         // if the square has a piece of different color
+                if (board[i][ySrc].getPlaceholder() != null)         // if the square has a piece of different color
                     break;
             }
             else
@@ -207,7 +207,7 @@ class Rook extends Piece {
         for (int i=ySrc+1; i<=7; i++) {
             if (this.canOccupySquare(xSrc, i, board)) {
                 validMoves.add(board[xSrc][i]);
-                if (board[xSrc][i] != null)         // if the square has a piece of different color
+                if (board[xSrc][i].getPlaceholder() != null)         // if the square has a piece of different color
                     break;
             }
             else
@@ -218,7 +218,7 @@ class Rook extends Piece {
         for (int i=ySrc-1; i>=0; i--) {
             if (this.canOccupySquare(xSrc, i, board)) {
                 validMoves.add(board[xSrc][i]);
-                if (board[xSrc][i] != null)         // if the square has a piece of different color
+                if (board[xSrc][i].getPlaceholder() != null)         // if the square has a piece of different color
                     break;
             }
             else
@@ -249,7 +249,7 @@ class Bishop extends Piece {
         for (int i=xSrc+1, j=ySrc+1; i<=7 && j<=7; i++, j++) {
             if (this.canOccupySquare(i, j, board)) {
                 validMoves.add(board[i][j]);
-                if (board[i][j] != null)
+                if (board[i][j].getPlaceholder() != null)
                     break;
             }
             else
@@ -260,7 +260,7 @@ class Bishop extends Piece {
         for (int i=xSrc-1, j=ySrc+1; i>=0 && j<=7; i--, j++) {
             if (this.canOccupySquare(i, j, board)) {
                 validMoves.add(board[i][j]);
-                if (board[i][j] != null)
+                if (board[i][j].getPlaceholder() != null)
                     break;
             }
             else
@@ -271,7 +271,7 @@ class Bishop extends Piece {
         for (int i=xSrc+1, j=ySrc-1; i<=7 && j>=0; i++, j--) {
             if (this.canOccupySquare(i, j, board)) {
                 validMoves.add(board[i][j]);
-                if (board[i][j] != null)
+                if (board[i][j].getPlaceholder() != null)
                     break;
             }
             else
@@ -282,7 +282,7 @@ class Bishop extends Piece {
         for (int i=xSrc-1, j=ySrc-1; i>=0 && j>=0; i--, j--) {
             if (this.canOccupySquare(i, j, board)) {
                 validMoves.add(board[i][j]);
-                if (board[i][j] != null)
+                if (board[i][j].getPlaceholder() != null)
                     break;
             }
             else
