@@ -138,7 +138,7 @@ class King extends Piece {
 
         for (int i= xSrc-1; i <= xSrc+1; i++) {
             for (int j=ySrc-1; j <= ySrc+1; j++) {
-                if (i != j && 0<=i && i<=7 && 0<=j && j<=7 && this.canOccupySquare(i, j, board))
+                if (0<=i && i<=7 && 0<=j && j<=7 && this.canOccupySquare(i, j, board))
                     validMoves.add(board[i][j]);
             }
         }

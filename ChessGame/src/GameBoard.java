@@ -77,7 +77,7 @@ class ChessBoard extends GameBoard implements  EventHandler<javafx.scene.input.M
         board[2][7].getPlaceholder().setLocation(board[2][7]);
         board[5][7].setPlaceholder(new Bishop(false));
         //
-        board[3][3].setPlaceholder(new Bishop(false, board[3][3]));
+        board[3][3].setPlaceholder(new Bishop(true, board[3][3]));
         //
         board[5][7].getPlaceholder().setLocation(board[5][7]);
         board[3][0].setPlaceholder(new Queen(true));
