@@ -67,6 +67,9 @@ abstract class Piece {
     public ImageView getImage(){
         return image;
     }
+    public void setImage(ImageView image) {
+        this.image = image;
+    }
 
     /**
      * This method returns whether the piece is dead or not (present on the board or not)

@@ -40,11 +40,11 @@ public class Square extends Rectangle {
         return y;
     }
 
-    public void setX(int x) {
+    public void setx(int x) {
         this.x = x;
     }
 
-    public void setY(int y) {
+    public void sety(int y) {
         this.y = y;
     }
 

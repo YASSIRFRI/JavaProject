@@ -1,0 +1,9 @@
+.light {
+    -fx-fill: #99CCFF;
+    -fx-stroke-width: 0px;
+}
+
+.dark {
+    -fx-fill: #006599;
+    -fx-stroke-width: 0px;
+}
