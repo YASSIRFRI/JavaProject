@@ -42,14 +42,14 @@ class ChessBoard extends GameBoard implements  EventHandler<javafx.scene.input.M
         for (int i = 0; i < 8; i++) {
             if(i%2==0)
             {
-            board[i][1].setPlaceholder(new Pawn(true));
+            board[i][1].setPlaceholder(new Pawn(false));
             board[i][1].getPlaceholder().setLocation(board[i][1]);
             board[i][6].setPlaceholder(new Pawn(false));
             board[i][6].getPlaceholder().setLocation(board[i][6]);
             }
             else
             {
-                board[i][1].setPlaceholder(new Pawn(false));
+                board[i][1].setPlaceholder(new Pawn(true));
                 board[i][1].getPlaceholder().setLocation(board[i][1]);
                 board[i][6].setPlaceholder(new Pawn(true));
                 board[i][6].getPlaceholder().setLocation(board[i][6]);
