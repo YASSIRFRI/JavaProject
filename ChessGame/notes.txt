@@ -15,4 +15,7 @@ and so on (gameboard gridpane)
 
 
 
+to check if king is in threat, i should create temp different color pieces in his same location and check if I can kill some piece
+
+
 
