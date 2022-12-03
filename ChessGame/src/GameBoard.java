@@ -1,5 +1,7 @@
-import java.io.Console;
+import java.util.ArrayList;
 
+import javafx.event.EventHandler;
+import javafx.event.EventTarget;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 
@@ -17,9 +19,9 @@ public abstract class GameBoard extends GridPane {
             count++;
             for (int j = 0; j < size; j++) {
                 if (count % 2 == 0)
-                    board[i][j] = new Square(i, j, Color.BLACK);
+                    board[i][j] = new Square(i, j, Color.RED);
                 else
-                    board[i][j] = new Square(i, j, Color.WHITE);
+                    board[i][j] = new Square(i, j, Color.GREEN);
                 this.add(board[i][j], i, j);
                 count++;
             }
@@ -29,7 +31,7 @@ public abstract class GameBoard extends GridPane {
 }
 
 
-class ChessBoard extends GameBoard {
+class ChessBoard extends GameBoard implements  EventHandler<javafx.scene.input.MouseEvent> {
 
     ChessBoard() {
         super(8);
@@ -41,30 +43,50 @@ class ChessBoard extends GameBoard {
             if(i%2==0)
             {
             board[i][1].setPlaceholder(new Pawn(true));
+            board[i][1].getPlaceholder().setLocation(board[i][1]);
             board[i][6].setPlaceholder(new Pawn(false));
+            board[i][6].getPlaceholder().setLocation(board[i][6]);
             }
             else
             {
                 board[i][1].setPlaceholder(new Pawn(false));
+                board[i][1].getPlaceholder().setLocation(board[i][1]);
                 board[i][6].setPlaceholder(new Pawn(true));
+                board[i][6].getPlaceholder().setLocation(board[i][6]);
             }
         }
         board[0][0].setPlaceholder(new Rook(false));
+        board[0][0].getPlaceholder().setLocation(board[0][0]);
         board[0][7].setPlaceholder(new Rook(true));
+        board[0][7].getPlaceholder().setLocation(board[0][7]);
         board[7][7].setPlaceholder(new Rook(false));
+        board[7][7].getPlaceholder().setLocation(board[7][7]);
         board[1][0].setPlaceholder(new Knight(true));
+        board[1][0].getPlaceholder().setLocation(board[1][0]);
         board[6][0].setPlaceholder(new Knight(false));
+        board[6][0].getPlaceholder().setLocation(board[6][0]);
         board[1][7].setPlaceholder(new Knight(false));
+        board[1][7].getPlaceholder().setLocation(board[1][7]);
         board[6][7].setPlaceholder(new Knight(true));
+        board[6][7].getPlaceholder().setLocation(board[6][7]);
         board[2][0].setPlaceholder(new Bishop(false));
+        board[2][0].getPlaceholder().setLocation(board[2][0]);
         board[5][0].setPlaceholder(new Bishop(true));
+        board[5][0].getPlaceholder().setLocation(board[5][0]);
         board[2][7].setPlaceholder(new Bishop(true));
+        board[2][7].getPlaceholder().setLocation(board[2][7]);
         board[5][7].setPlaceholder(new Bishop(false));
+        board[5][7].getPlaceholder().setLocation(board[5][7]);
         board[3][0].setPlaceholder(new Queen(true));
+        board[3][0].getPlaceholder().setLocation(board[3][0]);
         board[3][7].setPlaceholder(new Queen(false));
+        board[3][7].getPlaceholder().setLocation(board[3][7]);
         board[4][0].setPlaceholder(new King(false));
+        board[4][0].getPlaceholder().setLocation(board[4][0]);
         board[7][7].setPlaceholder(new Rook(false));
+        board[7][7].getPlaceholder().setLocation(board[7][7]);
         board[7][0].setPlaceholder(new Rook(true));
+        board[7][0].getPlaceholder().setLocation(board[7][0]);
 
         board[4][7].setPlaceholder(new King(true));
         for(int i=0;i<8;i++)
@@ -86,6 +108,22 @@ class ChessBoard extends GameBoard {
           }
         
     }
+    public void handle(javafx.scene.input.MouseEvent event) {
+        EventTarget target = event.getTarget();
+        if (target instanceof Square) {
+            Square square = (Square) target;
+            if(square.getPlaceholder()!=null)
+            {
+                ArrayList<Square> moves = square.getPlaceholder().getValidMoves(board);
+                for(Square s:moves)
+                {
+                    s.setFill(Color.WHITE);
+                }
+            }
+
+        }
+    }
+
 }
 
 //class CheckersBoard extends GameBoard{

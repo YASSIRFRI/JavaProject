@@ -14,6 +14,7 @@ public class Main extends Application {
   @Override
   public void start(Stage primaryStage) {
     GridPane pane = new GridPane();
+    
     int count = 0;
     double s = 100; 
     for (int i = 0; i < 8; i++) {
@@ -32,6 +33,7 @@ public class Main extends Application {
      pane.add(iv,1,0);
     Scene scene = new Scene(pane,700,700);
     primaryStage.setScene(scene);
+    primaryStage.setResizable(false);
     primaryStage.show();
   }
  
