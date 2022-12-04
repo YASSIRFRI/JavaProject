@@ -122,34 +122,43 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         EventTarget target = event.getTarget();
         if (target instanceof Square) {
             Square square = (Square) target;
+            if(square.getPlaceholder()==null){System.out.println("null");}
             if(square.getPlaceholder()!=null)
             {
                 if(triggerer==null)
                 {
                     triggerer = square;
+                    ArrayList<Square> moves = square.getPlaceholder().getValidMoves(board);
+                    for (Square s: moves) {
+                        highlightedSquares.add(s);
+                        s.setFill(Color.GREEN);
+                    return;
+                }
                 }
                 else
                 {
+                    System.out.println(triggerer.getPlaceholder().getClass().getName());
                     square.setPlaceholder(triggerer.getPlaceholder());
-                    triggerer.setPlaceholder(null);
+                    this.getChildren().remove(triggerer.getPlaceholder().getImage());
+                    this.add(triggerer.getPlaceholder().getImage(), square.getx(), square.gety());
+                    board[triggerer.getx()][triggerer.gety()].setPlaceholder(null);
+                    board[square.getx()][square.gety()].setPlaceholder(square.getPlaceholder());
                     triggerer = null;
                 }
                 this.removeHighlights();
 
 
-                ArrayList<Square> moves = square.getPlaceholder().getValidMoves(board);
-                for (Square s: moves) {
-                    highlightedSquares.add(s);
-                    s.setFill(Color.GREEN);
-                }
             }
             else
             {
                 if(triggerer!=null)
                 {
-                    System.out.println(triggerer);
+                    System.out.println(triggerer.getx()+" "+triggerer.gety());
+                    System.out.println(triggerer.getPlaceholder().getClass().getName());
                     this.getChildren().remove(triggerer.getPlaceholder().getImage());
                     this.add(triggerer.getPlaceholder().getImage(), square.getx(), square.gety());
+                    board[square.getx()][square.gety()].setPlaceholder(triggerer.getPlaceholder());
+                    board[triggerer.getx()][triggerer.gety()].setPlaceholder(null);
                     triggerer=null;
                 }
                 this.removeHighlights();
