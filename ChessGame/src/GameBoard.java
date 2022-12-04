@@ -61,6 +61,7 @@ public abstract class GameBoard extends GridPane {
 class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
     private ArrayList<Square> highlightedSquares;
+    public static Square triggerer;
 
     ChessBoard() {
         super(8);
@@ -119,18 +120,39 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
     public void handle(MouseEvent event) {
         EventTarget target = event.getTarget();
-
         if (target instanceof Square) {
             Square square = (Square) target;
             if(square.getPlaceholder()!=null)
             {
+                if(triggerer==null)
+                {
+                    triggerer = square;
+                }
+                else
+                {
+                    square.setPlaceholder(triggerer.getPlaceholder());
+                    triggerer.setPlaceholder(null);
+                    triggerer = null;
+                }
                 this.removeHighlights();
+
 
                 ArrayList<Square> moves = square.getPlaceholder().getValidMoves(board);
                 for (Square s: moves) {
                     highlightedSquares.add(s);
                     s.setFill(Color.GREEN);
                 }
+            }
+            else
+            {
+                if(triggerer!=null)
+                {
+                    System.out.println(triggerer);
+                    this.getChildren().remove(triggerer.getPlaceholder().getImage());
+                    this.add(triggerer.getPlaceholder().getImage(), square.getx(), square.gety());
+                    triggerer=null;
+                }
+                this.removeHighlights();
             }
 
         }
@@ -153,6 +175,8 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
                 }
             }
         }
+
+        
     
     }
 
