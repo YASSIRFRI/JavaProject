@@ -7,6 +7,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
@@ -55,7 +56,7 @@ public abstract class GameBoard extends GridPane {
 }
 
 
-class ChessBoard extends GameBoard implements  EventHandler<javafx.scene.input.MouseEvent> {
+class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
     ChessBoard() {
         super(8);
@@ -98,7 +99,7 @@ class ChessBoard extends GameBoard implements  EventHandler<javafx.scene.input.M
         this.setAlignment(Pos.CENTER);
         
     }
-    public void handle(javafx.scene.input.MouseEvent event) {
+    public void handle(MouseEvent event) {
         EventTarget target = event.getTarget();
         if (target instanceof Square) {
             Square square = (Square) target;
