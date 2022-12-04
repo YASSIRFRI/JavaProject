@@ -7,6 +7,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
@@ -117,8 +118,8 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
     }
 
     public void handle(MouseEvent event) {
-        System.out.println("Clicked");
         EventTarget target = event.getTarget();
+
         if (target instanceof Square) {
             Square square = (Square) target;
             if(square.getPlaceholder()!=null)
@@ -133,6 +134,26 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
             }
 
         }
+        else
+        {
+            if(target instanceof ImageView)
+            {
+                ImageView image = (ImageView) target;
+                int x = GridPane.getColumnIndex(image);
+                int y = GridPane.getRowIndex(image);
+                if(board[x][y].getPlaceholder()!=null)
+                {
+                    this.removeHighlights();
+
+                    ArrayList<Square> moves = board[x][y].getPlaceholder().getValidMoves(board);
+                    for (Square s: moves) {
+                        highlightedSquares.add(s);
+                        s.setFill(Color.GREEN);
+                    }
+                }
+            }
+        }
+    
     }
 
 }

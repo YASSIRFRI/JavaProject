@@ -27,6 +27,8 @@ finding the new images)
 the event listener are actaly the squares not the imageviews so when we click on the center of the imageview it will not work
 notice that it works only when we click on the border of the square
 I'm working on that
+-Ilyass: you removed the setSquare calls from the board now, when we click on the image how do we know which square it is?
+#image and square events problem fixed
 
 
 
