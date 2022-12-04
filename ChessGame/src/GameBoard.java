@@ -117,6 +117,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
     }
 
     public void handle(MouseEvent event) {
+        System.out.println("Clicked");
         EventTarget target = event.getTarget();
         if (target instanceof Square) {
             Square square = (Square) target;

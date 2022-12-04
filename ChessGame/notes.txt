@@ -16,7 +16,24 @@ and so on (gameboard gridpane)
 
 
 - to check if king is in threat, i should create temp different color pieces in his same location and check if I can kill some piece
-- I need to reimplement the pawn getValidMoves() and consider the orientation
+- I need to reimplement the pawn getValidMoves() and consider the orientation(yuup it is not working for black pawns)(good job
+finding the new images)
+
+
+
+-I will start thinking about how to move pieces around
+
+-I found another problem:
+the event listener are actaly the squares not the imageviews so when we click on the center of the imageview it will not work
+notice that it works only when we click on the border of the square
+I'm working on that
+
+
+
+
+
+
+
 
 
 
