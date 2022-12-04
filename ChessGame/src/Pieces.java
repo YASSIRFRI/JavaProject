@@ -123,6 +123,10 @@ abstract class Piece {
                 return true;
         }
     }
+
+    public static boolean isInRange(int idx) {
+        return (0 <= idx && idx <= 7);
+    }
 }
 
 /**
@@ -342,6 +346,7 @@ class Knight extends Piece {
 class Pawn extends Piece {
 
     private boolean hasMoved;
+    private int pawnOrientation;
 
     public Pawn(boolean isWhite) {
         super("Pawn", isWhite);
@@ -351,6 +356,26 @@ class Pawn extends Piece {
     public Pawn(boolean isWhite, Square location) {
         super("Pawn", isWhite, location);
         this.hasMoved = false;
+        if (isWhite)
+            this.pawnOrientation = 1;
+        else
+            this.pawnOrientation = -1;
+    }
+
+    public boolean isHasMoved() {
+        return hasMoved;
+    }
+
+    public void setHasMoved(boolean hasMoved) {
+        this.hasMoved = hasMoved;
+    }
+
+    public int getPawnOrientation() {
+        return pawnOrientation;
+    }
+
+    public void setPawnOrientation(int pawnOrientation) {
+        this.pawnOrientation = pawnOrientation;
     }
 
     @Override
@@ -359,25 +384,26 @@ class Pawn extends Piece {
         int ySrc = this.getLocation().gety();
         ArrayList<Square> validMoves = new ArrayList<Square>();
 
+
         // Checking the square forward
-        if ((ySrc+1)<=7 && board[xSrc][ySrc+1].getPlaceholder() == null)
-            validMoves.add(board[xSrc][ySrc+1]);
+        if (isInRange(ySrc+pawnOrientation) && board[xSrc][ySrc+pawnOrientation].getPlaceholder() == null)
+            validMoves.add(board[xSrc][ySrc+pawnOrientation]);
 
         // Checking the diagonals
-        if ((xSrc+1)<=7 && (ySrc+1)<=7 && board[xSrc+1][ySrc+1].getPlaceholder() != null) {
-            if (board[xSrc+1][ySrc+1].getPlaceholder().getIsWhite() != this.isWhite)
-                validMoves.add(board[xSrc+1][ySrc+1]);
+        if (isInRange(xSrc+pawnOrientation) && isInRange(ySrc+pawnOrientation) && board[xSrc+pawnOrientation][ySrc+pawnOrientation].getPlaceholder() != null) {
+            if (board[xSrc+pawnOrientation][ySrc+pawnOrientation].getPlaceholder().getIsWhite() != this.isWhite)
+                validMoves.add(board[xSrc+pawnOrientation][ySrc+pawnOrientation]);
         }
 
-        if ((xSrc-1)>=0 && (ySrc+1)<=7 && board[xSrc-1][ySrc+1].getPlaceholder() != null) {
-            if (board[xSrc-1][ySrc+1].getPlaceholder().getIsWhite() != this.isWhite)
-                validMoves.add(board[xSrc-1][ySrc+1]);
+        if (isInRange(xSrc-pawnOrientation) && isInRange(ySrc+pawnOrientation) && board[xSrc-pawnOrientation][ySrc+pawnOrientation].getPlaceholder() != null) {
+            if (board[xSrc-pawnOrientation][ySrc+pawnOrientation].getPlaceholder().getIsWhite() != this.isWhite)
+                validMoves.add(board[xSrc-pawnOrientation][ySrc+pawnOrientation]);
         }
 
         // Checking the second square forward if the pawn never moved
-        if (! this.hasMoved) {
-            if ((ySrc+2)<=7 && board[xSrc][ySrc+2].getPlaceholder() == null && board[xSrc][ySrc+1].getPlaceholder() == null)
-                validMoves.add(board[xSrc][ySrc+2]);
+        if (! this.isHasMoved()) {
+            if (board[xSrc][ySrc+2*pawnOrientation].getPlaceholder() == null && board[xSrc][ySrc+pawnOrientation].getPlaceholder() == null)
+                validMoves.add(board[xSrc][ySrc+2*pawnOrientation]);
         }
 
         return validMoves;
