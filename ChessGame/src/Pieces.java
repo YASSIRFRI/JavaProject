@@ -25,6 +25,9 @@ abstract class Piece {
         else{
             this.image = new ImageView(new Image("file:static/Black/" + name + ".png"));
         }
+
+        this.image.setFitHeight(Square.squareWidth - 25);
+        this.image.setFitWidth(Square.squareWidth - 25);
     }
 
     public Piece(String name, boolean isWhite) {
@@ -37,6 +40,9 @@ abstract class Piece {
         else{
             this.image = new ImageView(new Image("file:static/Black/" + name + ".png"));
         }
+
+        this.image.setFitHeight(Square.squareWidth - 25);
+        this.image.setFitWidth(Square.squareWidth - 25);
     }
 
 

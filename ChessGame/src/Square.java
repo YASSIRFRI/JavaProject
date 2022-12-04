@@ -8,18 +8,18 @@ public class Square extends Rectangle {
 
     private int x;
     private int y;
-    static double s=100;
+    public static double squareWidth = Game.windowWidth / 8;
     private Piece placeholder;
 
     public Square(int x, int y, Piece placeholder) {
-        super(s,s,s,s);
+        super(squareWidth,squareWidth,squareWidth,squareWidth);
         this.x = x;
         this.y = y;
         this.placeholder = placeholder;
     }
 
     public Square(int x, int y, Color color) {
-        super(s,s,s,s);
+        super(squareWidth,squareWidth,squareWidth,squareWidth);
         this.x = x;
         this.y = y;
         this.setFill(color);

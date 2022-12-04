@@ -22,9 +22,7 @@ public class Game extends Application{
     private Move[] moveHistory;
     private Player[] players;
     
-
-
-
+    public static double windowWidth = 700.0;
 
     public GameStatus getStatus()
     {
@@ -65,7 +63,7 @@ public class Game extends Application{
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.fillBoard();
         chessBoard.setOnMouseClicked(chessBoard);
-        Scene scene = new Scene(chessBoard,800,800);
+        Scene scene = new Scene(chessBoard, windowWidth+4, windowWidth+4);
         primaryStage.setScene(scene);
         primaryStage.show();
         
