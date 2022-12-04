@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "Launch test_ilyas",
+            "request": "launch",
+            "mainClass": "temp_tests.test_ilyas",
+            "projectName": "ChessGame_1837f640"
+        },
+        {
+            "type": "java",
             "name": "Launch App",
             "request": "launch",
             "mainClass": "Game",
