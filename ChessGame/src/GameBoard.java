@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
+import javafx.scene.paint.Paint;
 
 public abstract class GameBoard extends GridPane {
 
@@ -58,8 +59,11 @@ public abstract class GameBoard extends GridPane {
 
 class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
+    private ArrayList<Square> highlightedSquares;
+
     ChessBoard() {
         super(8);
+        highlightedSquares = new ArrayList<Square>();
     }
 
     @Override
@@ -99,15 +103,30 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         this.setAlignment(Pos.CENTER);
         
     }
+
+    public void removeHighlights() {
+
+        for (Square s: highlightedSquares) {
+            if ((s.getx() + s.gety()) % 2 != 0)
+                s.setFill(Color.BLUE);
+            else
+                s.setFill(Color.DEEPSKYBLUE);
+        }
+
+        this.highlightedSquares.clear();
+    }
+
     public void handle(MouseEvent event) {
         EventTarget target = event.getTarget();
         if (target instanceof Square) {
             Square square = (Square) target;
             if(square.getPlaceholder()!=null)
             {
+                this.removeHighlights();
+
                 ArrayList<Square> moves = square.getPlaceholder().getValidMoves(board);
-                for(Square s: moves)
-                {
+                for (Square s: moves) {
+                    highlightedSquares.add(s);
                     s.setFill(Color.GREEN);
                 }
             }
