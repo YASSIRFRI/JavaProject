@@ -16,6 +16,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 
+import javax.management.monitor.MonitorNotification;
+
 public abstract class GameBoard extends GridPane {
 
     protected Square[][] board;
@@ -54,15 +56,24 @@ public abstract class GameBoard extends GridPane {
             }
         }
     }
+
+    public Square[][] getBoard() {
+        return board;
+    }
+
+    public void setBoard(Square[][] board) {
+        this.board = board;
+    }
+
     public abstract void fillBoard();
 }
 
 
 class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
-    private ArrayList<Square> highlightedSquares;
-    private Piece blackKing;
-    private Piece whiteKing;
+    private final ArrayList<Square> highlightedSquares;
+    private King blackKing;
+    private King whiteKing;
 
 //    public static Square triggerer;
 
@@ -71,20 +82,101 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         highlightedSquares = new ArrayList<Square>();
     }
 
-    public Piece getBlackKing() {
+    public King getBlackKing() {
         return blackKing;
     }
 
-    public void setBlackKing(Piece blackKing) {
+    public void setBlackKing(King blackKing) {
         this.blackKing = blackKing;
     }
 
-    public Piece getWhiteKing() {
+    public King getWhiteKing() {
         return whiteKing;
     }
 
-    public void setWhiteKing(Piece whiteKing) {
+    public void setWhiteKing(King whiteKing) {
         this.whiteKing = whiteKing;
+    }
+
+    public boolean isKingInThreat(boolean teamIsWhite) {
+        King king;
+        if (teamIsWhite)
+            king = this.getWhiteKing();
+        else
+            king = this.getBlackKing();
+
+        int x = king.getLocation().getx();
+        int y = king.getLocation().gety();
+
+//        // Checking threat by an enemy Pawn
+//        Pawn tempPawn = new Pawn(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempPawn.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Pawn")
+//                return true;
+//        }
+//
+//        // Checking threat by an enemy Knight
+//        Knight tempKnight = new Knight(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempKnight.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Knight")
+//                return true;
+//        }
+//
+//        // Checking threat by an enemy Bishop
+//        Bishop tempBishop = new Bishop(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempBishop.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Bishop")
+//                return true;
+//        }
+
+//        // Checking threat by an enemy Rook
+//        Rook tempRook = new Rook(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempRook.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Rook")
+//                return true;
+//        }
+
+//        // Checking threat by an enemy King
+//        King tempKing = new King(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempKing.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "King")
+//                return true;
+//        }
+//
+//        // Checking threat by an enemy Queen
+//        Queen tempQueen = new Queen(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempQueen.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Queen")
+//                return true;
+//        }
+
+        // If none of those cases are true, then the king is not in threat
+        return false;
+
+    }
+
+    public boolean kingWillBeInThreat(Move move) {
+        Piece piece = move.getPiece();
+        int x_src = move.getSourceSquare().getx();
+        int y_src = move.getSourceSquare().gety();
+        int x_dest = move.getDestinationSquare().getx();
+        int y_dest = move.getDestinationSquare().gety();
+
+        // Simulating the move (to check if king will be in threat)
+        this.getBoard()[x_src][y_src].setPlaceholder(null);
+        Piece killedPiece = board[x_dest][y_dest].getPlaceholder();
+        this.getBoard()[x_dest][y_dest].setPlaceholder(piece);
+        piece.setLocation(board[x_dest][y_dest]);
+
+        // Retrieving the result
+        boolean result = this.isKingInThreat(piece.getIsWhite());
+
+        // Resetting the board to initial state
+        this.getBoard()[x_src][y_src].setPlaceholder(piece);
+        piece.setLocation(board[x_src][y_src]);
+        this.getBoard()[x_dest][y_dest].setPlaceholder(killedPiece);
+
+        return result;
     }
 
     @Override
@@ -111,8 +203,17 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         board[7][7].setPlaceholder(new Rook(false, board[7][7]));
         board[7][0].setPlaceholder(new Rook(true, board[7][0]));
 
-        this.setBlackKing(board[3][7].getPlaceholder());
-        this.setWhiteKing(board[3][0].getPlaceholder());
+        ////////
+        board[3][3].setPlaceholder(new King(false, board[3][3]));
+        board[5][3].setPlaceholder(new Rook(false, board[5][3]));
+        board[7][3].setPlaceholder(new Rook(true, board[7][3]));
+
+        this.setBlackKing((King) board[3][3].getPlaceholder());
+        /////
+
+
+//        this.setBlackKing((King) board[3][7].getPlaceholder());
+        this.setWhiteKing((King) board[3][0].getPlaceholder());
 
         for (int i=0;i<8;i++) {
             for (int j=0;j<8;j++) {
@@ -193,8 +294,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
             clickedSquare = (Square) target;
         }
 
-        else if (target instanceof ImageView) {
-            ImageView image = (ImageView) target;
+        else if (target instanceof ImageView image) {
             int x = GridPane.getColumnIndex(image);
             int y = GridPane.getRowIndex(image);
             clickedSquare = board[x][y];
@@ -206,10 +306,13 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
             {
                 this.removeHighlights();
 
-                ArrayList<Square> moves = clickedSquare.getPlaceholder().getValidMoves(board);
+                ArrayList<Square> moves = clickedSquare.getPlaceholder().getValidMoves(this);
                 for (Square s: moves) {
                     highlightedSquares.add(s);
-                    s.setFill(Color.GREEN);
+                    if ((! s.isEmpty()) && clickedSquare.getPlaceholder().isEnemy(s.getPlaceholder()))
+                        s.setFill(Color.RED);
+                    else
+                        s.setFill(Color.GREEN);
                 }
             }
         }

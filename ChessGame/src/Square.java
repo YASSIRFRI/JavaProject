@@ -30,8 +30,6 @@ public class Square extends Rectangle {
     public Piece getPlaceholder() {
         return placeholder;
     }
-
-
     public int getx() {
         return x;
     }
@@ -50,5 +48,9 @@ public class Square extends Rectangle {
 
     public void setPlaceholder(Piece placeholder) {
         this.placeholder = placeholder;
+    }
+
+    public boolean isEmpty() {
+        return this.getPlaceholder() == null;
     }
 }

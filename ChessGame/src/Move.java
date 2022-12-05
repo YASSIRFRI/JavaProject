@@ -17,6 +17,12 @@ class Move {
         this.status = status;
         this.game = game;
     }
+
+    public Move(Square sourceSquare, Square destinationSquare, Piece piece) {
+        this.sourceSquare = sourceSquare;
+        this.destinationSquare = destinationSquare;
+        this.piece = piece;
+    }
     
     // Getters and setters
     public Square getSourceSquare() {

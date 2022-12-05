@@ -15,6 +15,7 @@ Piece {
     protected ImageView image;
 
 
+
     public Piece(String name, boolean isWhite, Square location) {
         this.name = name;
 
@@ -80,8 +81,8 @@ Piece {
         return this.location == null;
     }
 
-    public boolean validateMove(Move move, Square[][] board) {
-        ArrayList<Square> validMoves = this.getValidMoves(board);
+    public boolean validateMove(Move move, ChessBoard chessBoard) {
+        ArrayList<Square> validMoves = this.getValidMoves(chessBoard);
         int xDest = move.getDestinationSquare().getx();
         int yDest = move.getDestinationSquare().gety();
         for (int i=0; i<validMoves.size(); i++) {
@@ -96,10 +97,10 @@ Piece {
 
     /**
      * This method returns an arraylist of squares that the piece can move to;
-     * @param board the 2d array of squares of the board of the game;
+     * @param chessBoard the board of the game;
      * @return an arraylist of all the squares the piece can move to;
      */
-    public abstract ArrayList<Square> getValidMoves(Square[][] board);
+    public abstract ArrayList<Square> getValidMoves(ChessBoard chessBoard);
 
     /**
      * This method checks if a given square can be occupied by a piece, depending on the piece
@@ -123,6 +124,16 @@ Piece {
     public static boolean isInRange(int idx) {
         return (0 <= idx && idx <= 7);
     }
+
+    public boolean kingWillNotBeThreatened(Square moveDestinationSquare, ChessBoard chessBoard) {
+        Move move = new Move(this.getLocation(), moveDestinationSquare, this);
+        return ! chessBoard.kingWillBeInThreat(move);
+    }
+
+    public boolean isEnemy(Piece piece) {
+        return this.getIsWhite() != piece.getIsWhite();
+    }
+
 }
 
 /**
@@ -137,10 +148,12 @@ class King extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(Square[][] board) {
+    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
         int xSrc = this.getLocation().getx();
         int ySrc = this.getLocation().gety();
+        Square[][] board = chessBoard.getBoard();
         ArrayList<Square> validMoves = new ArrayList<Square>();
+        ArrayList<Square> finalValidMoves = new ArrayList<Square>();
 
         for (int i= xSrc-1; i <= xSrc+1; i++) {
             for (int j=ySrc-1; j <= ySrc+1; j++) {
@@ -148,7 +161,12 @@ class King extends Piece {
                     validMoves.add(board[i][j]);
             }
         }
-        return validMoves;
+        for (int i=0; i<validMoves.size(); i++) {
+            if (this.kingWillNotBeThreatened(validMoves.get(i), chessBoard))
+                finalValidMoves.add(validMoves.get(i));
+        }
+
+        return finalValidMoves;
     }
 }
 
@@ -162,14 +180,14 @@ class Queen extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(Square[][] board) {
+    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
         // The queen's valid moves are the (bishop + rook) valid moves
         Rook temp_rook = new Rook(this.isWhite, this.location);
         Bishop temp_bishop = new Bishop(this.isWhite, this.location);
 
         ArrayList<Square> queenValidMoves = new ArrayList<Square>();
-        queenValidMoves.addAll(temp_rook.getValidMoves(board));
-        queenValidMoves.addAll(temp_bishop.getValidMoves(board));
+        queenValidMoves.addAll(temp_rook.getValidMoves(chessBoard));
+        queenValidMoves.addAll(temp_bishop.getValidMoves(chessBoard));
 
         return queenValidMoves;
     }
@@ -185,14 +203,16 @@ class Rook extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(Square[][] board) {
+    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
         int xSrc = this.getLocation().getx();
         int ySrc = this.getLocation().gety();
+        Square[][] board = chessBoard.getBoard();
         ArrayList<Square> validMoves = new ArrayList<Square>();
+        ArrayList<Square> finalValidMoves = new ArrayList<Square>();
 
         // Moving to the right
         for (int i=xSrc+1; i<=7; i++) {
-            if (this.canOccupySquare(i, ySrc, board)) {
+            if (this.canOccupySquare(i, ySrc, board) && this.kingWillNotBeThreatened(board[i][ySrc], chessBoard)) {
                 validMoves.add(board[i][ySrc]);
                 if (board[i][ySrc].getPlaceholder() != null)         // if the square has a piece of different color
                     break;
@@ -203,7 +223,7 @@ class Rook extends Piece {
 
         // Moving to the left
         for (int i=xSrc-1; i>=0; i--) {
-            if (this.canOccupySquare(i, ySrc, board)) {
+            if (this.canOccupySquare(i, ySrc, board) && this.kingWillNotBeThreatened(board[i][ySrc], chessBoard)) {
                 validMoves.add(board[i][ySrc]);
                 if (board[i][ySrc].getPlaceholder() != null)         // if the square has a piece of different color
                     break;
@@ -214,7 +234,7 @@ class Rook extends Piece {
 
         // Moving down
         for (int i=ySrc+1; i<=7; i++) {
-            if (this.canOccupySquare(xSrc, i, board)) {
+            if (this.canOccupySquare(xSrc, i, board) && this.kingWillNotBeThreatened(board[xSrc][i], chessBoard)) {
                 validMoves.add(board[xSrc][i]);
                 if (board[xSrc][i].getPlaceholder() != null)         // if the square has a piece of different color
                     break;
@@ -225,7 +245,7 @@ class Rook extends Piece {
 
         //Moving up
         for (int i=ySrc-1; i>=0; i--) {
-            if (this.canOccupySquare(xSrc, i, board)) {
+            if (this.canOccupySquare(xSrc, i, board) && this.kingWillNotBeThreatened(board[xSrc][i], chessBoard)) {
                 validMoves.add(board[xSrc][i]);
                 if (board[xSrc][i].getPlaceholder() != null)         // if the square has a piece of different color
                     break;
@@ -234,7 +254,12 @@ class Rook extends Piece {
                 break;
         }
 
-        return validMoves;
+        for (int i=0; i<validMoves.size(); i++) {
+            if (this.kingWillNotBeThreatened(validMoves.get(i), chessBoard))
+                finalValidMoves.add(validMoves.get(i));
+        }
+
+        return finalValidMoves;
     }
 }
 
@@ -249,14 +274,16 @@ class Bishop extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(Square[][] board) {
+    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
         int xSrc = this.getLocation().getx();
         int ySrc = this.getLocation().gety();
+        Square[][] board = chessBoard.getBoard();
         ArrayList<Square> validMoves = new ArrayList<Square>();
+        ArrayList<Square> finalValidMoves = new ArrayList<Square>();
 
         //Moving bottom-right
         for (int i=xSrc+1, j=ySrc+1; i<=7 && j<=7; i++, j++) {
-            if (this.canOccupySquare(i, j, board)) {
+            if (this.canOccupySquare(i, j, board) && this.kingWillNotBeThreatened(board[i][j], chessBoard)) {
                 validMoves.add(board[i][j]);
                 if (board[i][j].getPlaceholder() != null)
                     break;
@@ -267,7 +294,7 @@ class Bishop extends Piece {
 
         //Moving bottom-left
         for (int i=xSrc-1, j=ySrc+1; i>=0 && j<=7; i--, j++) {
-            if (this.canOccupySquare(i, j, board)) {
+            if (this.canOccupySquare(i, j, board) && this.kingWillNotBeThreatened(board[i][j], chessBoard)) {
                 validMoves.add(board[i][j]);
                 if (board[i][j].getPlaceholder() != null)
                     break;
@@ -278,7 +305,7 @@ class Bishop extends Piece {
 
         //Moving top-right
         for (int i=xSrc+1, j=ySrc-1; i<=7 && j>=0; i++, j--) {
-            if (this.canOccupySquare(i, j, board)) {
+            if (this.canOccupySquare(i, j, board) && this.kingWillNotBeThreatened(board[i][j], chessBoard)) {
                 validMoves.add(board[i][j]);
                 if (board[i][j].getPlaceholder() != null)
                     break;
@@ -289,7 +316,7 @@ class Bishop extends Piece {
 
         //Moving top-left
         for (int i=xSrc-1, j=ySrc-1; i>=0 && j>=0; i--, j--) {
-            if (this.canOccupySquare(i, j, board)) {
+            if (this.canOccupySquare(i, j, board) && this.kingWillNotBeThreatened(board[i][j], chessBoard)) {
                 validMoves.add(board[i][j]);
                 if (board[i][j].getPlaceholder() != null)
                     break;
@@ -298,7 +325,12 @@ class Bishop extends Piece {
                 break;
         }
 
-        return validMoves;
+        for (int i=0; i<validMoves.size(); i++) {
+            if (this.kingWillNotBeThreatened(validMoves.get(i), chessBoard))
+                finalValidMoves.add(validMoves.get(i));
+        }
+
+        return finalValidMoves;
     }
 }
 
@@ -312,10 +344,12 @@ class Knight extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(Square[][] board) {
+    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
         int xSrc = this.getLocation().getx();
         int ySrc = this.getLocation().gety();
+        Square[][] board = chessBoard.getBoard();
         ArrayList<Square> validMoves = new ArrayList<Square>();
+        ArrayList<Square> finalValidMoves = new ArrayList<Square>();
 
         int[][] standardPossibleSquares = {
                 {xSrc+2, ySrc+1},
@@ -331,11 +365,16 @@ class Knight extends Piece {
         for (int i=0; i<8; i++) {
             int x = standardPossibleSquares[i][0];
             int y = standardPossibleSquares[i][1];
-            if (isInRange(x) && isInRange(y) && this.canOccupySquare(x, y, board))
+            if (isInRange(x) && isInRange(y) && this.canOccupySquare(x, y, board) && this.kingWillNotBeThreatened(board[x][y], chessBoard))
                 validMoves.add(board[x][y]);
         }
 
-        return validMoves;
+        for (int i=0; i<validMoves.size(); i++) {
+            if (this.kingWillNotBeThreatened(validMoves.get(i), chessBoard))
+                finalValidMoves.add(validMoves.get(i));
+        }
+
+        return finalValidMoves;
     }
 }
 
@@ -380,34 +419,41 @@ class Pawn extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(Square[][] board) {
+    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
         int xSrc = this.getLocation().getx();
         int ySrc = this.getLocation().gety();
+        Square[][] board = chessBoard.getBoard();
         ArrayList<Square> validMoves = new ArrayList<Square>();
+        ArrayList<Square> finalValidMoves = new ArrayList<Square>();
 
 
         // Checking the square forward
-        if (isInRange(ySrc+pawnOrientation) && board[xSrc][ySrc+pawnOrientation].getPlaceholder() == null)
+        if (isInRange(ySrc+pawnOrientation) && board[xSrc][ySrc+pawnOrientation].getPlaceholder() == null && this.kingWillNotBeThreatened(board[xSrc][ySrc+pawnOrientation], chessBoard))
             validMoves.add(board[xSrc][ySrc+pawnOrientation]);
 
         // Checking the diagonals
         if (isInRange(xSrc+pawnOrientation) && isInRange(ySrc+pawnOrientation) && board[xSrc+pawnOrientation][ySrc+pawnOrientation].getPlaceholder() != null) {
-            if (board[xSrc+pawnOrientation][ySrc+pawnOrientation].getPlaceholder().getIsWhite() != this.isWhite)
+            if (board[xSrc+pawnOrientation][ySrc+pawnOrientation].getPlaceholder().getIsWhite() != this.isWhite && this.kingWillNotBeThreatened(board[xSrc+pawnOrientation][ySrc+pawnOrientation], chessBoard))
                 validMoves.add(board[xSrc+pawnOrientation][ySrc+pawnOrientation]);
         }
 
         if (isInRange(xSrc-pawnOrientation) && isInRange(ySrc+pawnOrientation) && board[xSrc-pawnOrientation][ySrc+pawnOrientation].getPlaceholder() != null) {
-            if (board[xSrc-pawnOrientation][ySrc+pawnOrientation].getPlaceholder().getIsWhite() != this.isWhite)
+            if (board[xSrc-pawnOrientation][ySrc+pawnOrientation].getPlaceholder().getIsWhite() != this.isWhite && this.kingWillNotBeThreatened(board[xSrc-pawnOrientation][ySrc+pawnOrientation], chessBoard))
                 validMoves.add(board[xSrc-pawnOrientation][ySrc+pawnOrientation]);
         }
 
         // Checking the second square forward if the pawn never moved
         if (! this.isHasMoved()) {
-            if (board[xSrc][ySrc+2*pawnOrientation].getPlaceholder() == null && board[xSrc][ySrc+pawnOrientation].getPlaceholder() == null)
+            if (board[xSrc][ySrc+2*pawnOrientation].getPlaceholder() == null && board[xSrc][ySrc+pawnOrientation].getPlaceholder() == null && this.kingWillNotBeThreatened(board[xSrc][ySrc+2*pawnOrientation], chessBoard))
                 validMoves.add(board[xSrc][ySrc+2*pawnOrientation]);
         }
 
-        return validMoves;
+        for (int i=0; i<validMoves.size(); i++) {
+            if (this.kingWillNotBeThreatened(validMoves.get(i), chessBoard))
+                finalValidMoves.add(validMoves.get(i));
+        }
+
+        return finalValidMoves;
     }
 }
 
