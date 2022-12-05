@@ -61,7 +61,7 @@ public abstract class GameBoard extends GridPane {
 class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
     private ArrayList<Square> highlightedSquares;
-    public static Square triggerer;
+//    public static Square triggerer;
 
     ChessBoard() {
         super(8);
@@ -120,72 +120,79 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
     public void handle(MouseEvent event) {
         EventTarget target = event.getTarget();
+//        if (target instanceof Square) {
+//            Square square = (Square) target;
+//            if(square.getPlaceholder()==null){System.out.println("null");}
+//            if(square.getPlaceholder()!=null)
+//            {
+//                if(triggerer==null)
+//                {
+//                    triggerer = square;
+//                    ArrayList<Square> moves = square.getPlaceholder().getValidMoves(board);
+//                    for (Square s: moves) {
+//                        highlightedSquares.add(s);
+//                        s.setFill(Color.GREEN);
+//                    return;
+//                }
+//                }
+//                else
+//                {
+//                    System.out.println(triggerer.getPlaceholder().getClass().getName());
+//                    square.setPlaceholder(triggerer.getPlaceholder());
+//                    this.getChildren().remove(triggerer.getPlaceholder().getImage());
+//                    this.add(triggerer.getPlaceholder().getImage(), square.getx(), square.gety());
+//                    board[triggerer.getx()][triggerer.gety()].setPlaceholder(null);
+//                    board[square.getx()][square.gety()].setPlaceholder(square.getPlaceholder());
+//                    triggerer = null;
+//                }
+//                this.removeHighlights();
+//
+//
+//            }
+//            else
+//            {
+//                if(triggerer!=null)
+//                {
+//                    System.out.println(triggerer.getx()+" "+triggerer.gety());
+//                    System.out.println(triggerer.getPlaceholder().getClass().getName());
+//                    this.getChildren().remove(triggerer.getPlaceholder().getImage());
+//                    this.add(triggerer.getPlaceholder().getImage(), square.getx(), square.gety());
+//                    board[square.getx()][square.gety()].setPlaceholder(triggerer.getPlaceholder());
+//                    board[triggerer.getx()][triggerer.gety()].setPlaceholder(null);
+//                    triggerer=null;
+//                }
+//                this.removeHighlights();
+//            }
+//
+//        }
+
+        Square clickedSquare = null;
+
         if (target instanceof Square) {
-            Square square = (Square) target;
-            if(square.getPlaceholder()==null){System.out.println("null");}
-            if(square.getPlaceholder()!=null)
-            {
-                if(triggerer==null)
-                {
-                    triggerer = square;
-                    ArrayList<Square> moves = square.getPlaceholder().getValidMoves(board);
-                    for (Square s: moves) {
-                        highlightedSquares.add(s);
-                        s.setFill(Color.GREEN);
-                    return;
-                }
-                }
-                else
-                {
-                    System.out.println(triggerer.getPlaceholder().getClass().getName());
-                    square.setPlaceholder(triggerer.getPlaceholder());
-                    this.getChildren().remove(triggerer.getPlaceholder().getImage());
-                    this.add(triggerer.getPlaceholder().getImage(), square.getx(), square.gety());
-                    board[triggerer.getx()][triggerer.gety()].setPlaceholder(null);
-                    board[square.getx()][square.gety()].setPlaceholder(square.getPlaceholder());
-                    triggerer = null;
-                }
-                this.removeHighlights();
-
-
-            }
-            else
-            {
-                if(triggerer!=null)
-                {
-                    System.out.println(triggerer.getx()+" "+triggerer.gety());
-                    System.out.println(triggerer.getPlaceholder().getClass().getName());
-                    this.getChildren().remove(triggerer.getPlaceholder().getImage());
-                    this.add(triggerer.getPlaceholder().getImage(), square.getx(), square.gety());
-                    board[square.getx()][square.gety()].setPlaceholder(triggerer.getPlaceholder());
-                    board[triggerer.getx()][triggerer.gety()].setPlaceholder(null);
-                    triggerer=null;
-                }
-                this.removeHighlights();
-            }
-
+            clickedSquare = (Square) target;
         }
-        else
-        {
-            if(target instanceof ImageView)
-            {
-                ImageView image = (ImageView) target;
-                int x = GridPane.getColumnIndex(image);
-                int y = GridPane.getRowIndex(image);
-                if(board[x][y].getPlaceholder()!=null)
-                {
-                    this.removeHighlights();
 
-                    ArrayList<Square> moves = board[x][y].getPlaceholder().getValidMoves(board);
-                    for (Square s: moves) {
-                        highlightedSquares.add(s);
-                        s.setFill(Color.GREEN);
-                    }
+        else if (target instanceof ImageView) {
+            ImageView image = (ImageView) target;
+            int x = GridPane.getColumnIndex(image);
+            int y = GridPane.getRowIndex(image);
+            clickedSquare = board[x][y];
+        }
+
+        if (clickedSquare != null) {
+
+            if(clickedSquare.getPlaceholder()!=null)
+            {
+                this.removeHighlights();
+
+                ArrayList<Square> moves = clickedSquare.getPlaceholder().getValidMoves(board);
+                for (Square s: moves) {
+                    highlightedSquares.add(s);
+                    s.setFill(Color.GREEN);
                 }
             }
         }
 
-        
     
     }
 
