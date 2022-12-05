@@ -7,7 +7,8 @@ import javafx.scene.paint.ImagePattern;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-abstract class Piece {
+abstract class
+Piece {
     protected String name;
     protected boolean isWhite;
     protected Square location;
@@ -148,7 +149,7 @@ class King extends Piece {
 
         for (int i= xSrc-1; i <= xSrc+1; i++) {
             for (int j=ySrc-1; j <= ySrc+1; j++) {
-                if (0<=i && i<=7 && 0<=j && j<=7 && this.canOccupySquare(i, j, board))
+                if (isInRange(i) && isInRange(j) && this.canOccupySquare(i, j, board))
                     validMoves.add(board[i][j]);
             }
         }
@@ -216,7 +217,7 @@ class Rook extends Piece {
                 break;
         }
 
-        // Moving up
+        // Moving down
         for (int i=ySrc+1; i<=7; i++) {
             if (this.canOccupySquare(xSrc, i, board)) {
                 validMoves.add(board[xSrc][i]);
@@ -227,7 +228,7 @@ class Rook extends Piece {
                 break;
         }
 
-        //Moving down
+        //Moving up
         for (int i=ySrc-1; i>=0; i--) {
             if (this.canOccupySquare(xSrc, i, board)) {
                 validMoves.add(board[xSrc][i]);
@@ -258,7 +259,7 @@ class Bishop extends Piece {
         int ySrc = this.getLocation().gety();
         ArrayList<Square> validMoves = new ArrayList<Square>();
 
-        //Moving top-right
+        //Moving bottom-right
         for (int i=xSrc+1, j=ySrc+1; i<=7 && j<=7; i++, j++) {
             if (this.canOccupySquare(i, j, board)) {
                 validMoves.add(board[i][j]);
@@ -269,7 +270,7 @@ class Bishop extends Piece {
                 break;
         }
 
-        //Moving top-left
+        //Moving bottom-left
         for (int i=xSrc-1, j=ySrc+1; i>=0 && j<=7; i--, j++) {
             if (this.canOccupySquare(i, j, board)) {
                 validMoves.add(board[i][j]);
@@ -280,7 +281,7 @@ class Bishop extends Piece {
                 break;
         }
 
-        //Moving bottom-right
+        //Moving top-right
         for (int i=xSrc+1, j=ySrc-1; i<=7 && j>=0; i++, j--) {
             if (this.canOccupySquare(i, j, board)) {
                 validMoves.add(board[i][j]);
@@ -291,7 +292,7 @@ class Bishop extends Piece {
                 break;
         }
 
-        //Moving bottom-left
+        //Moving top-left
         for (int i=xSrc-1, j=ySrc-1; i>=0 && j>=0; i--, j--) {
             if (this.canOccupySquare(i, j, board)) {
                 validMoves.add(board[i][j]);
@@ -335,7 +336,7 @@ class Knight extends Piece {
         for (int i=0; i<8; i++) {
             int x = standardPossibleSquares[i][0];
             int y = standardPossibleSquares[i][1];
-            if (0<=x && x<=7 && 0<=y && y<=7 && this.canOccupySquare(x, y, board))
+            if (isInRange(x) && isInRange(y) && this.canOccupySquare(x, y, board))
                 validMoves.add(board[x][y]);
         }
 

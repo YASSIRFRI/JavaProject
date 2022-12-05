@@ -39,4 +39,5 @@ I'm working on that
 
 
 
+
 - TODO for Ilyas: Change getValidMoves to use isInRange()

@@ -61,11 +61,30 @@ public abstract class GameBoard extends GridPane {
 class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
     private ArrayList<Square> highlightedSquares;
+    private Piece blackKing;
+    private Piece whiteKing;
+
 //    public static Square triggerer;
 
     ChessBoard() {
         super(8);
         highlightedSquares = new ArrayList<Square>();
+    }
+
+    public Piece getBlackKing() {
+        return blackKing;
+    }
+
+    public void setBlackKing(Piece blackKing) {
+        this.blackKing = blackKing;
+    }
+
+    public Piece getWhiteKing() {
+        return whiteKing;
+    }
+
+    public void setWhiteKing(Piece whiteKing) {
+        this.whiteKing = whiteKing;
     }
 
     @Override
@@ -77,7 +96,6 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
         board[0][0].setPlaceholder(new Rook(true, board[0][0]));
         board[0][7].setPlaceholder(new Rook(false, board[0][7]));
-        board[7][7].setPlaceholder(new Rook(false, board[7][7]));
         board[1][0].setPlaceholder(new Knight(true, board[1][0]));
         board[6][0].setPlaceholder(new Knight(true, board[6][0]));
         board[1][7].setPlaceholder(new Knight(false, board[1][7]));
@@ -86,12 +104,15 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         board[5][0].setPlaceholder(new Bishop(true, board[5][0]));
         board[2][7].setPlaceholder(new Bishop(false, board[2][7]));
         board[5][7].setPlaceholder(new Bishop(false, board[5][7]));
-        board[3][0].setPlaceholder(new Queen(true, board[3][0]));
-        board[3][7].setPlaceholder(new Queen(false, board[3][7]));
-        board[4][0].setPlaceholder(new King(true, board[4][0]));
+        board[3][0].setPlaceholder(new King(true, board[3][0]));
+        board[3][7].setPlaceholder(new King(false, board[3][7]));
+        board[4][0].setPlaceholder(new Queen(true, board[4][0]));
+        board[4][7].setPlaceholder(new Queen(false, board[4][7]));
         board[7][7].setPlaceholder(new Rook(false, board[7][7]));
         board[7][0].setPlaceholder(new Rook(true, board[7][0]));
-        board[4][7].setPlaceholder(new King(false, board[4][7]));
+
+        this.setBlackKing(board[3][7].getPlaceholder());
+        this.setWhiteKing(board[3][0].getPlaceholder());
 
         for (int i=0;i<8;i++) {
             for (int j=0;j<8;j++) {
