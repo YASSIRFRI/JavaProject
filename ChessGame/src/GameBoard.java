@@ -193,6 +193,8 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         ////////
         board[3][3].setPlaceholder(new King(false, board[3][3]));
         board[5][3].setPlaceholder(new Rook(false, board[5][3]));
+        board[1][5].setPlaceholder(new Bishop(true, board[1][5]));
+        board[2][4].setPlaceholder(new Rook(false, board[2][4]));
         board[7][3].setPlaceholder(new Rook(true, board[7][3]));
 
         this.setBlackKing((King) board[3][3].getPlaceholder());
