@@ -31,6 +31,8 @@ I'm working on that
 #image and square events problem fixed
 
 
+- I will add gameboard attribute for pieces (the game board to which the piece belongs)
+
 
 
 
