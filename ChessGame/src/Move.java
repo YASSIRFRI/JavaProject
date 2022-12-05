@@ -77,7 +77,7 @@ class Move {
 	}
     public void updateStatus(Move move, ChessBoard chessBoard){
 //        Square[][] board = new Square[8][8];
-        if(piece.validateMove(move, chessBoard))
+        if(piece.validateMove(move.getDestinationSquare(), chessBoard))
             status = MoveStatus.VALID;
         else
     

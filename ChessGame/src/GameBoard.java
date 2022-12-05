@@ -74,12 +74,32 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
     private final ArrayList<Square> highlightedSquares;
     private King blackKing;
     private King whiteKing;
+    private ArrayList<Piece> whitePieces;
+    private ArrayList<Piece> blackPieces;
 
 //    public static Square triggerer;
 
     ChessBoard() {
         super(8);
         highlightedSquares = new ArrayList<Square>();
+        this.whitePieces = new ArrayList<Piece>();
+        this.blackPieces = new ArrayList<Piece>();
+    }
+
+    public ArrayList<Piece> getWhitePieces() {
+        return whitePieces;
+    }
+
+    public void setWhitePieces(ArrayList<Piece> whitePieces) {
+        this.whitePieces = whitePieces;
+    }
+
+    public ArrayList<Piece> getBlackPieces() {
+        return blackPieces;
+    }
+
+    public void setBlackPieces(ArrayList<Piece> blackPieces) {
+        this.blackPieces = blackPieces;
     }
 
     public King getBlackKing() {
@@ -98,6 +118,13 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         this.whiteKing = whiteKing;
     }
 
+    public ArrayList<Piece> getEnemyPieces(boolean teamIsWhite) {
+        if (teamIsWhite)
+            return this.getBlackPieces();
+        else
+            return this.getWhitePieces();
+    }
+
     public boolean isKingInThreat(boolean teamIsWhite) {
         King king;
         if (teamIsWhite)
@@ -105,52 +132,12 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         else
             king = this.getBlackKing();
 
-        int x = king.getLocation().getx();
-        int y = king.getLocation().gety();
+        // Iterating over enemy pieces to see if they can kill him
+        for (Piece enemy: getEnemyPieces(teamIsWhite)) {
+            if (enemy.validateMove(king.getLocation(), this))
+                return true;
+        }
 
-//        // Checking threat by an enemy Pawn
-//        Pawn tempPawn = new Pawn(king.getIsWhite(), this.getBoard()[x][y]);
-//        for (Square s: tempPawn.getValidMoves(this)) {
-//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Pawn")
-//                return true;
-//        }
-//
-//        // Checking threat by an enemy Knight
-//        Knight tempKnight = new Knight(king.getIsWhite(), this.getBoard()[x][y]);
-//        for (Square s: tempKnight.getValidMoves(this)) {
-//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Knight")
-//                return true;
-//        }
-//
-//        // Checking threat by an enemy Bishop
-//        Bishop tempBishop = new Bishop(king.getIsWhite(), this.getBoard()[x][y]);
-//        for (Square s: tempBishop.getValidMoves(this)) {
-//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Bishop")
-//                return true;
-//        }
-
-//        // Checking threat by an enemy Rook
-//        Rook tempRook = new Rook(king.getIsWhite(), this.getBoard()[x][y]);
-//        for (Square s: tempRook.getValidMoves(this)) {
-//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Rook")
-//                return true;
-//        }
-
-//        // Checking threat by an enemy King
-//        King tempKing = new King(king.getIsWhite(), this.getBoard()[x][y]);
-//        for (Square s: tempKing.getValidMoves(this)) {
-//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "King")
-//                return true;
-//        }
-//
-//        // Checking threat by an enemy Queen
-//        Queen tempQueen = new Queen(king.getIsWhite(), this.getBoard()[x][y]);
-//        for (Square s: tempQueen.getValidMoves(this)) {
-//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Queen")
-//                return true;
-//        }
-
-        // If none of those cases are true, then the king is not in threat
         return false;
 
     }
@@ -209,6 +196,17 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         board[7][3].setPlaceholder(new Rook(true, board[7][3]));
 
         this.setBlackKing((King) board[3][3].getPlaceholder());
+
+        for (int i=0; i<8; i++) {
+            for (int j=0; j<8; j++) {
+                if (board[i][j].getPlaceholder() != null && board[i][j].getPlaceholder().getName() != "King") {
+                    if (board[i][j].getPlaceholder().getIsWhite())
+                        this.whitePieces.add(board[i][j].getPlaceholder());
+                    else
+                        this.blackPieces.add(board[i][j].getPlaceholder());
+                }
+            }
+        }
         /////
 
 
@@ -306,11 +304,11 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
             {
                 this.removeHighlights();
 
-                ArrayList<Square> moves = clickedSquare.getPlaceholder().getValidMoves(this);
+                ArrayList<Square> moves = clickedSquare.getPlaceholder().getFinalValidMoves(this);
                 for (Square s: moves) {
                     highlightedSquares.add(s);
                     if ((! s.isEmpty()) && clickedSquare.getPlaceholder().isEnemy(s.getPlaceholder()))
-                        s.setFill(Color.RED);
+                        s.setFill(Color.DARKRED);
                     else
                         s.setFill(Color.GREEN);
                 }
