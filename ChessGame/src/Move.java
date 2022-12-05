@@ -1,3 +1,5 @@
+import javafx.css.Size;
+
 enum MoveStatus
 {
     VALID,INVALID,COMMITED,CHECK,CHECKMATE;
@@ -54,5 +56,26 @@ class Move {
     }
 
     public void setGame(Game game) { this.game = game; }
+
+    public boolean begin(){
+
+        return status == MoveStatus.VALID;
+
+
+    }
+    public boolean equals(Move anotherMove) {
+		if(this.getSourceSquare() == anotherMove.getSourceSquare() && this.getDestinationSquare() == anotherMove.getDestinationSquare() ){
+			return true;
+		}
+		return false;
+	}
+    public void updateStatus(Move move){
+        Square[][] board = new Square[8][8];
+        if(piece.validateMove(move, board))
+            status = MoveStatus.VALID;
+        else
+    
+            status = MoveStatus.INVALID;
+    }
     
 }
