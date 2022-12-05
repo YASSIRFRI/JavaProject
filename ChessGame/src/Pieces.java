@@ -351,6 +351,11 @@ class Pawn extends Piece {
     public Pawn(boolean isWhite) {
         super("Pawn", isWhite);
         this.hasMoved = false;
+
+        if (isWhite)
+            this.pawnOrientation = 1;
+        else
+            this.pawnOrientation = -1;
     }
 
     public Pawn(boolean isWhite, Square location) {
