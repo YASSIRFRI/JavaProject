@@ -26,7 +26,7 @@ public class Square extends Rectangle {
         this.placeholder = null;
     }
 
-
+    // Getters and setters
     public Piece getPlaceholder() {
         return placeholder;
     }
