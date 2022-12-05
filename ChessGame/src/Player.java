@@ -6,7 +6,8 @@ public class Player {
         this.userName = userName;
         this.color = color;
     }
-
+    
+    // Getters and setters
     public String getUserName() {
         return userName;
     }

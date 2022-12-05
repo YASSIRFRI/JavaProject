@@ -17,7 +17,8 @@ class Move {
         this.status = status;
         this.game = game;
     }
-
+    
+    // Getters and setters
     public Square getSourceSquare() {
         return sourceSquare;
     }
@@ -53,4 +54,5 @@ class Move {
     }
 
     public void setGame(Game game) { this.game = game; }
+    
 }

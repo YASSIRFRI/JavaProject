@@ -25,7 +25,7 @@ public class Game extends Application{
     private Player[] players;
     
     public static double windowWidth = 700.0;
-
+    // Getters and setters
     public GameStatus getStatus()
     {
         return status;
