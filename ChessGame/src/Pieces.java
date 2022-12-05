@@ -13,7 +13,6 @@ Piece {
     protected boolean isWhite;
     protected Square location;
     protected ImageView image;
-    protected ChessBoard chessBoard;
 
 
     public Piece(String name, boolean isWhite, Square location) {
@@ -73,8 +72,6 @@ Piece {
     public void setImage(ImageView image) {
         this.image = image;
     }
-    public ChessBoard getChessBoard() { return chessBoard; }
-    public void setChessBoard(ChessBoard chessBoard) { this.chessBoard = chessBoard; }
 
     /**
      * This method returns whether the piece is dead or not (present on the board or not)
