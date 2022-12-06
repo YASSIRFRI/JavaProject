@@ -132,9 +132,58 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         else
             king = this.getBlackKing();
 
-        // Iterating over enemy pieces to see if they can kill him
-        for (Piece enemy: getEnemyPieces(teamIsWhite)) {
-            if (enemy.validateMove(king.getLocation(), this))
+        ///////////////////////////// Yassir's algorithm ////////////////////////////////////////////
+
+//        // Iterating over enemy pieces to see if they can kill him
+//        for (Piece enemy: getEnemyPieces(teamIsWhite)) {
+//            if (enemy.validateMove(king.getLocation(), this))
+//                return true;
+//        }
+
+        ///////////////////////////// Ilyas's algorithm /////////////////////////////////////////////
+
+        int x = king.getLocation().getx();
+        int y = king.getLocation().gety();
+
+        // Checking threat by an enemy Pawn
+        Pawn tempPawn = new Pawn(king.getIsWhite(), this.getBoard()[x][y]);
+        for (Square s: tempPawn.getValidMoves(this)) {
+            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Pawn")
+                return true;
+        }
+
+        // Checking threat by an enemy Knight
+        Knight tempKnight = new Knight(king.getIsWhite(), this.getBoard()[x][y]);
+        for (Square s: tempKnight.getValidMoves(this)) {
+            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Knight")
+                return true;
+        }
+
+        // Checking threat by an enemy Bishop
+        Bishop tempBishop = new Bishop(king.getIsWhite(), this.getBoard()[x][y]);
+        for (Square s: tempBishop.getValidMoves(this)) {
+            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Bishop")
+                return true;
+        }
+
+        // Checking threat by an enemy Rook
+        Rook tempRook = new Rook(king.getIsWhite(), this.getBoard()[x][y]);
+        for (Square s: tempRook.getValidMoves(this)) {
+            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Rook")
+                return true;
+        }
+
+        // Checking threat by an enemy King
+        King tempKing = new King(king.getIsWhite(), this.getBoard()[x][y]);
+        for (Square s: tempKing.getValidMoves(this)) {
+            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "King")
+                return true;
+        }
+
+        // Checking threat by an enemy Queen
+        Queen tempQueen = new Queen(king.getIsWhite(), this.getBoard()[x][y]);
+        for (Square s: tempQueen.getValidMoves(this)) {
+            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Queen")
                 return true;
         }
 
