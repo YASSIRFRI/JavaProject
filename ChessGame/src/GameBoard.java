@@ -48,9 +48,6 @@ public abstract class GameBoard extends GridPane {
                 else
                     board[i][j] = new Square(i, j, Color.DEEPSKYBLUE);
 
-//                board[i][j].setStrokeWidth(0.5); //
-//                board[i][j].setStroke(Color.BLACK); //
-
                 this.add(board[i][j], i, j);
                 count++;
             }
@@ -288,8 +285,36 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         this.highlightedSquares.clear();
     }
 
-    public void handle(MouseEvent event) {
+    public Square getClickedSquare(MouseEvent event) {
         EventTarget target = event.getTarget();
+        Square clickedSquare = null;
+        if (target instanceof Square)
+            clickedSquare = (Square) target;
+        else if (target instanceof ImageView) {
+            ImageView image = (ImageView) target;
+            int x = GridPane.getColumnIndex(image);
+            int y = GridPane.getRowIndex(image);
+            clickedSquare = this.board[x][y];
+        }
+
+        return clickedSquare;
+    }
+
+    public void highlightValidMoves(Piece piece) {
+        this.removeHighlights();
+        ArrayList<Square> moves = piece.getFinalValidMoves(this);
+        for (Square s: moves) {
+            highlightedSquares.add(s);
+            if ((! s.isEmpty()) && piece.isEnemy(s.getPlaceholder()))
+                s.setFill(Color.RED);
+            else
+                s.setFill(Color.GREEN);
+        }
+    }
+
+    public void handle(MouseEvent event) {
+
+
 //        if (target instanceof Square) {
 //            Square square = (Square) target;
 //            if(square.getPlaceholder()==null){System.out.println("null");}
@@ -336,33 +361,12 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 //
 //        }
 
-        Square clickedSquare = null;
-
-        if (target instanceof Square) {
-            clickedSquare = (Square) target;
-        }
-
-        else if (target instanceof ImageView image) {
-            int x = GridPane.getColumnIndex(image);
-            int y = GridPane.getRowIndex(image);
-            clickedSquare = board[x][y];
-        }
+        Square clickedSquare = getClickedSquare(event);
 
         if (clickedSquare != null) {
 
             if(clickedSquare.getPlaceholder()!=null)
-            {
-                this.removeHighlights();
-
-                ArrayList<Square> moves = clickedSquare.getPlaceholder().getFinalValidMoves(this);
-                for (Square s: moves) {
-                    highlightedSquares.add(s);
-                    if ((! s.isEmpty()) && clickedSquare.getPlaceholder().isEnemy(s.getPlaceholder()))
-                        s.setFill(Color.RED);
-                    else
-                        s.setFill(Color.GREEN);
-                }
-            }
+                this.highlightValidMoves(clickedSquare.getPlaceholder());
         }
 
     
