@@ -134,7 +134,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
         ///////////////////////////// Yassir's algorithm ////////////////////////////////////////////
 
-//        // Iterating over enemy pieces to see if they can kill him
+        // Iterating over enemy pieces to see if they can kill him
 //        for (Piece enemy: getEnemyPieces(teamIsWhite)) {
 //            if (enemy.validateMove(king.getLocation(), this))
 //                return true;
@@ -232,7 +232,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         board[5][0].setPlaceholder(new Bishop(true, board[5][0]));
         board[2][7].setPlaceholder(new Bishop(false, board[2][7]));
         board[5][7].setPlaceholder(new Bishop(false, board[5][7]));
-        board[3][0].setPlaceholder(new King(true, board[3][0]));
+        board[1][3].setPlaceholder(new King(true, board[1][3]));
         board[3][7].setPlaceholder(new King(false, board[3][7]));
         board[4][0].setPlaceholder(new Queen(true, board[4][0]));
         board[4][7].setPlaceholder(new Queen(false, board[4][7]));
@@ -250,7 +250,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
         for (int i=0; i<8; i++) {
             for (int j=0; j<8; j++) {
-                if (board[i][j].getPlaceholder() != null && board[i][j].getPlaceholder().getName() != "King") {
+                if (board[i][j].getPlaceholder() != null) {
                     if (board[i][j].getPlaceholder().getIsWhite())
                         this.whitePieces.add(board[i][j].getPlaceholder());
                     else
@@ -262,7 +262,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
 
 //        this.setBlackKing((King) board[3][7].getPlaceholder());
-        this.setWhiteKing((King) board[3][0].getPlaceholder());
+        this.setWhiteKing((King) board[1][3].getPlaceholder());
 
         for (int i=0;i<8;i++) {
             for (int j=0;j<8;j++) {
