@@ -135,57 +135,57 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         ///////////////////////////// Yassir's algorithm ////////////////////////////////////////////
 
         // Iterating over enemy pieces to see if they can kill him
-//        for (Piece enemy: getEnemyPieces(teamIsWhite)) {
-//            if (enemy.validateMove(king.getLocation(), this))
-//                return true;
-//        }
+        for (Piece enemy: getEnemyPieces(teamIsWhite)) {
+            if (enemy.validateMove(king.getLocation(), this))
+                return true;
+        }
 
         ///////////////////////////// Ilyas's algorithm /////////////////////////////////////////////
 
-        int x = king.getLocation().getx();
-        int y = king.getLocation().gety();
-
-        // Checking threat by an enemy Pawn
-        Pawn tempPawn = new Pawn(king.getIsWhite(), this.getBoard()[x][y]);
-        for (Square s: tempPawn.getValidMoves(this)) {
-            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Pawn")
-                return true;
-        }
-
-        // Checking threat by an enemy Knight
-        Knight tempKnight = new Knight(king.getIsWhite(), this.getBoard()[x][y]);
-        for (Square s: tempKnight.getValidMoves(this)) {
-            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Knight")
-                return true;
-        }
-
-        // Checking threat by an enemy Bishop
-        Bishop tempBishop = new Bishop(king.getIsWhite(), this.getBoard()[x][y]);
-        for (Square s: tempBishop.getValidMoves(this)) {
-            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Bishop")
-                return true;
-        }
-
-        // Checking threat by an enemy Rook
-        Rook tempRook = new Rook(king.getIsWhite(), this.getBoard()[x][y]);
-        for (Square s: tempRook.getValidMoves(this)) {
-            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Rook")
-                return true;
-        }
-
-        // Checking threat by an enemy King
-        King tempKing = new King(king.getIsWhite(), this.getBoard()[x][y]);
-        for (Square s: tempKing.getValidMoves(this)) {
-            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "King")
-                return true;
-        }
-
-        // Checking threat by an enemy Queen
-        Queen tempQueen = new Queen(king.getIsWhite(), this.getBoard()[x][y]);
-        for (Square s: tempQueen.getValidMoves(this)) {
-            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Queen")
-                return true;
-        }
+//        int x = king.getLocation().getx();
+//        int y = king.getLocation().gety();
+//
+//        // Checking threat by an enemy Pawn
+//        Pawn tempPawn = new Pawn(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempPawn.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Pawn")
+//                return true;
+//        }
+//
+//        // Checking threat by an enemy Knight
+//        Knight tempKnight = new Knight(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempKnight.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Knight")
+//                return true;
+//        }
+//
+//        // Checking threat by an enemy Bishop
+//        Bishop tempBishop = new Bishop(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempBishop.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Bishop")
+//                return true;
+//        }
+//
+//        // Checking threat by an enemy Rook
+//        Rook tempRook = new Rook(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempRook.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Rook")
+//                return true;
+//        }
+//
+//        // Checking threat by an enemy King
+//        King tempKing = new King(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempKing.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "King")
+//                return true;
+//        }
+//
+//        // Checking threat by an enemy Queen
+//        Queen tempQueen = new Queen(king.getIsWhite(), this.getBoard()[x][y]);
+//        for (Square s: tempQueen.getValidMoves(this)) {
+//            if (s.getPlaceholder() != null && s.getPlaceholder().getName() == "Queen")
+//                return true;
+//        }
 
         return false;
 
@@ -240,13 +240,13 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         board[7][0].setPlaceholder(new Rook(true, board[7][0]));
 
         ////////
-        board[3][3].setPlaceholder(new King(false, board[3][3]));
+        board[3][2].setPlaceholder(new King(false, board[3][2]));
         board[5][3].setPlaceholder(new Rook(false, board[5][3]));
         board[1][5].setPlaceholder(new Bishop(true, board[1][5]));
         board[2][4].setPlaceholder(new Rook(false, board[2][4]));
         board[7][3].setPlaceholder(new Rook(true, board[7][3]));
 
-        this.setBlackKing((King) board[3][3].getPlaceholder());
+        this.setBlackKing((King) board[3][2].getPlaceholder());
 
         for (int i=0; i<8; i++) {
             for (int j=0; j<8; j++) {
@@ -274,7 +274,6 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
         this.setGridLinesVisible(true);
         this.setAlignment(Pos.CENTER);
-        
     }
 
     public void removeHighlights() {
@@ -359,7 +358,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
                 for (Square s: moves) {
                     highlightedSquares.add(s);
                     if ((! s.isEmpty()) && clickedSquare.getPlaceholder().isEnemy(s.getPlaceholder()))
-                        s.setFill(Color.DARKRED);
+                        s.setFill(Color.RED);
                     else
                         s.setFill(Color.GREEN);
                 }
