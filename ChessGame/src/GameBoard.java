@@ -275,12 +275,8 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
     public void removeHighlights() {
 
-        for (Square s: highlightedSquares) {
-            if ((s.getx() + s.gety()) % 2 != 0)
-                s.setFill(Color.BLUE);
-            else
-                s.setFill(Color.DEEPSKYBLUE);
-        }
+        for (Square s: highlightedSquares)
+            s.resetColor();
 
         this.highlightedSquares.clear();
     }
@@ -302,13 +298,15 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
     public void highlightValidMoves(Piece piece) {
         this.removeHighlights();
+        piece.getLocation().setFill(Color.DARKSLATEBLUE);
+        highlightedSquares.add(piece.getLocation());
         ArrayList<Square> moves = piece.getFinalValidMoves(this);
         for (Square s: moves) {
             highlightedSquares.add(s);
             if ((! s.isEmpty()) && piece.isEnemy(s.getPlaceholder()))
-                s.setFill(Color.RED);
+                s.setFill(Color.DARKRED);
             else
-                s.setFill(Color.GREEN);
+                s.setFill(Color.LIMEGREEN);
         }
     }
 
@@ -364,10 +362,12 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         Square clickedSquare = getClickedSquare(event);
 
         if (clickedSquare != null) {
-
-            if(clickedSquare.getPlaceholder()!=null)
+            if (! clickedSquare.isEmpty())
                 this.highlightValidMoves(clickedSquare.getPlaceholder());
+            else
+                removeHighlights();
         }
+
 
     
     }

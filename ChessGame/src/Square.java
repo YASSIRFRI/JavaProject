@@ -53,4 +53,11 @@ public class Square extends Rectangle {
     public boolean isEmpty() {
         return this.getPlaceholder() == null;
     }
+
+    public void resetColor() {
+        if ((this.getx() + this.gety()) % 2 != 0)
+            this.setFill(Color.BLUE);
+        else
+            this.setFill(Color.DEEPSKYBLUE);
+    }
 }
