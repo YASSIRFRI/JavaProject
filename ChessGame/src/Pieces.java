@@ -13,7 +13,7 @@ Piece {
     protected boolean isWhite;
     protected Square location;
     protected ImageView image;
-
+    protected boolean hasMoved;
 
 
     public Piece(String name, boolean isWhite, Square location) {
@@ -73,6 +73,8 @@ Piece {
     public void setImage(ImageView image) {
         this.image = image;
     }
+    public boolean isHasMoved() { return hasMoved; }
+    public void setHasMoved(boolean hasMoved) { this.hasMoved = hasMoved; }
 
     /**
      * This method returns whether the piece is dead or not (present on the board or not)
@@ -369,7 +371,6 @@ class Knight extends Piece {
 
 class Pawn extends Piece {
 
-    private boolean hasMoved;
     private int pawnOrientation;
 
     public Pawn(boolean isWhite) {
@@ -389,14 +390,6 @@ class Pawn extends Piece {
             this.pawnOrientation = 1;
         else
             this.pawnOrientation = -1;
-    }
-
-    public boolean isHasMoved() {
-        return hasMoved;
-    }
-
-    public void setHasMoved(boolean hasMoved) {
-        this.hasMoved = hasMoved;
     }
 
     public int getPawnOrientation() {

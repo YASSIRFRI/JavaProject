@@ -73,6 +73,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
     private King whiteKing;
     private ArrayList<Piece> whitePieces;
     private ArrayList<Piece> blackPieces;
+    private boolean isWhiteTurn;
 
     public static Square trigger = null;
 
@@ -81,6 +82,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         highlightedSquares = new ArrayList<Square>();
         this.whitePieces = new ArrayList<Piece>();
         this.blackPieces = new ArrayList<Piece>();
+        this.isWhiteTurn = true;
     }
 
     public ArrayList<Piece> getWhitePieces() {
@@ -121,6 +123,10 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         else
             return this.getWhitePieces();
     }
+
+    public boolean isWhiteTurn() { return isWhiteTurn; }
+
+    public void setWhiteTurn(boolean whiteTurn) { isWhiteTurn = whiteTurn; }
 
     public boolean isKingInThreat(boolean teamIsWhite) {
         King king;
@@ -297,6 +303,10 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
             else
                 s.setFill(Color.LIMEGREEN);
         }
+    }
+
+    public void switchTurn() {
+        this.isWhiteTurn = this.isWhiteTurn() ? false : true;
     }
 
     public void handle(MouseEvent event) {

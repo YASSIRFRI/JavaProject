@@ -78,7 +78,6 @@ class Move {
     }
 
     public void doMove(ChessBoard chessBoard) {
-//        Square[][] board = chessBoard.getBoard();
 
         if ( ! destinationSquare.isEmpty()) {
             Piece killedPiece = destinationSquare.getPlaceholder();
@@ -97,7 +96,11 @@ class Move {
         this.piece.setLocation(destinationSquare);
         chessBoard.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
         sourceSquare.setPlaceholder(null);
+
+        // In case it is a pawn, change hasMoved attribute to true
+        if (piece.getName() == "Pawn")
+            this.piece.setHasMoved(true);
+
     }
-    public 
     
 }
