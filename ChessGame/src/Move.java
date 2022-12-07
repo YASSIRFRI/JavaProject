@@ -55,8 +55,9 @@ class Move {
     }
 
     public boolean begin(){
+        
 
-        return status == MoveStatus.VALID;
+        return status == MoveStatus.VALID ;
 
 
     }
