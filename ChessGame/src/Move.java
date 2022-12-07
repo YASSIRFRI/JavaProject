@@ -95,6 +95,7 @@ class Move {
         destinationSquare.setPlaceholder(piece);
         chessBoard.getChildren().remove(piece.getImage());
         this.piece.setLocation(destinationSquare);
+        chessBoard.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
         sourceSquare.setPlaceholder(null);
     }
     
