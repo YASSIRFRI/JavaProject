@@ -1,3 +1,7 @@
+import javafx.geometry.Insets;
+import javafx.scene.control.Label;
+import javafx.scene.text.Font;
+
 enum MoveStatus
 {
     VALID,INVALID,COMMITED,CHECK,CHECKMATE
@@ -102,8 +106,13 @@ class Move {
 
         chessBoard.switchTurn();
 
-        if (chessBoard.isCheckmate())
-            System.out.println(chessBoard.isWhiteTurn() ? "White" : "Black" + " is checkmated");
+        if (chessBoard.isCheckmate()) {
+            String text = (chessBoard.isWhiteTurn() ? "White" : "Black") + " is checkmated !";
+            Label label = new Label(text);
+            label.setPadding(new Insets(50));
+            label.setFont(new Font(25));
+            chessBoard.add(label, 9, 0, 1, 6);
+        }
 
         if (chessBoard.isStalemate())
             System.out.println("Stalemate");

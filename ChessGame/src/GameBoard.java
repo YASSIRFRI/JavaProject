@@ -268,8 +268,8 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         this.setBlackKing((King) board[3][7].getPlaceholder());
         this.setWhiteKing((King) board[3][0].getPlaceholder());
 
-        this.setGridLinesVisible(true);
-        this.setAlignment(Pos.CENTER);
+//        this.setGridLinesVisible(true);
+        this.setAlignment(Pos.BASELINE_LEFT);
     }
 
     public void removeHighlights() {
@@ -285,8 +285,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         Square clickedSquare = null;
         if (target instanceof Square)
             clickedSquare = (Square) target;
-        else if (target instanceof ImageView) {
-            ImageView image = (ImageView) target;
+        else if (target instanceof ImageView image) {
             int x = GridPane.getColumnIndex(image);
             int y = GridPane.getRowIndex(image);
             clickedSquare = this.board[x][y];
@@ -310,7 +309,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
     }
 
     public void switchTurn() {
-        this.isWhiteTurn = this.isWhiteTurn() ? false : true;
+        this.isWhiteTurn = !this.isWhiteTurn();
     }
 
     public boolean isCheckmate() {
