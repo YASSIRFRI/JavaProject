@@ -73,6 +73,7 @@ public class Game extends Application{
     public void updatingStatus(ChessBoard chessBoard ){
         ArrayList<Piece> wpieces = chessBoard.getWhitePieces();
         ArrayList<Piece> bpieces = chessBoard.getBlackPieces();
+        ArrayList<Piece> AllPieces = new  ArrayList<Piece>();
         for (Piece p : wpieces) {
             if (p.getValidMoves(chessBoard).isEmpty()) {
                 status = GameStatus.BLACK_WIN;
@@ -80,6 +81,14 @@ public class Game extends Application{
         for (Piece pi : bpieces) {
             if (pi.getValidMoves(chessBoard).isEmpty()) {
                     status = GameStatus.WHITE_WIN;
+            }
+        for (Piece pe : AllPieces) {
+            if (pe.isHasMoved() == true) {
+                status = GameStatus.ACTIVE;
+
+
+
+                }
             }
 
                          
