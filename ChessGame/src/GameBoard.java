@@ -124,6 +124,10 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
             return this.getWhitePieces();
     }
 
+    public ArrayList<Piece> getAlliesPieces(boolean teamIsWhite) {
+        return teamIsWhite ? this.getWhitePieces() : this.getBlackPieces();
+    }
+
     public boolean isWhiteTurn() { return isWhiteTurn; }
 
     public void setWhiteTurn(boolean whiteTurn) { isWhiteTurn = whiteTurn; }
@@ -307,6 +311,29 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
     public void switchTurn() {
         this.isWhiteTurn = this.isWhiteTurn() ? false : true;
+    }
+
+    public boolean isCheckmate() {
+        if (isKingInThreat(isWhiteTurn)) {
+            for (Piece piece: this.getAlliesPieces(isWhiteTurn)) {
+                if (! piece.getFinalValidMoves(this).isEmpty())
+                        return false;
+            }
+            return true;  // If all pieces don't have any legal moves
+        }
+        return false;
+    }
+
+    public boolean isStalemate() {
+        if ( ! isKingInThreat(isWhiteTurn)) {
+            for (Piece piece: this.getAlliesPieces(isWhiteTurn)) {
+                if (! piece.getFinalValidMoves(this).isEmpty())
+                    return false;
+            }
+            return true; // If all pieces don't have any legal moves
+        }
+
+        return false;
     }
 
     public void handle(MouseEvent event) {

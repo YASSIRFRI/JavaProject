@@ -101,6 +101,11 @@ class Move {
 
         chessBoard.switchTurn();
 
+        if (chessBoard.isCheckmate())
+            System.out.println(chessBoard.isWhiteTurn() ? "White" : "Black" + " is checkmated");
+
+        if (chessBoard.isStalemate())
+            System.out.println("Stalemate");
     }
     
 }
