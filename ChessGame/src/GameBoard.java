@@ -376,8 +376,14 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
                     }
 
                     else {
-                        highlightValidMoves(clickedSquare.getPlaceholder());
-                        trigger = clickedSquare;
+                        if (clickedSquare.getPlaceholder().getIsWhite() == isWhiteTurn()) {
+                            highlightValidMoves(clickedSquare.getPlaceholder());
+                            trigger = clickedSquare;
+                        }
+
+                        else
+                            removeHighlights();
+
                     }
                 }
 
@@ -388,8 +394,12 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
                 if (clickedSquare.isEmpty())
                     removeHighlights();
                 else {
-                    highlightValidMoves(clickedSquare.getPlaceholder());
-                    trigger = clickedSquare;
+                    // Show valid moves only for same team pieces
+                    if (clickedSquare.getPlaceholder().getIsWhite() == isWhiteTurn()) {
+                        highlightValidMoves(clickedSquare.getPlaceholder());
+                        trigger = clickedSquare;
+                    }
+
                 }
             }
         }

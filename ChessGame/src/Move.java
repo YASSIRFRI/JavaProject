@@ -99,6 +99,8 @@ class Move {
         if (piece.getName().equals("Pawn"))
             this.piece.setHasMoved(true);
 
+        chessBoard.switchTurn();
+
     }
     
 }
