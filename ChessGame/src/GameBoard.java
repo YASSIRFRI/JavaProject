@@ -74,7 +74,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
     private ArrayList<Piece> whitePieces;
     private ArrayList<Piece> blackPieces;
 
-//    public static Square triggerer;
+    public static Square trigger = null;
 
     ChessBoard() {
         super(8);
@@ -362,8 +362,18 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         Square clickedSquare = getClickedSquare(event);
 
         if (clickedSquare != null) {
-            if (! clickedSquare.isEmpty())
+
+            if (! clickedSquare.isEmpty()) {
+                if (trigger != null && (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED)) {
+                    Move move = new Move(trigger, clickedSquare, trigger.getPlaceholder());
+                    move.doMove(this);
+                }
                 this.highlightValidMoves(clickedSquare.getPlaceholder());
+                System.out.println(board[2][4].getPlaceholder().getImage() == board[5][3].getPlaceholder().getImage());
+            }
+
+
+
             else
                 removeHighlights();
         }

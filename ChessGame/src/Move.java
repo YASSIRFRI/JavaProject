@@ -10,14 +10,12 @@ class Move {
     private Square destinationSquare;
     private Piece piece;
     private MoveStatus status;
-    private Game game;
 
-    public Move(Square sourceSquare, Square destinationSquare, Piece piece, MoveStatus status, Game game) {
+    public Move(Square sourceSquare, Square destinationSquare, Piece piece, MoveStatus status) {
         this.sourceSquare = sourceSquare;
         this.destinationSquare = destinationSquare;
         this.piece = piece;
         this.status = status;
-        this.game = game;
     }
 
     public Move(Square sourceSquare, Square destinationSquare, Piece piece) {
@@ -41,9 +39,6 @@ class Move {
     public MoveStatus getStatus() {
         return this.status;
     }
-    public Game getGame() {
-        return game;
-    }
 
     public void setSource(Square sourceSquare) {
         this.sourceSquare = sourceSquare;
@@ -60,8 +55,6 @@ class Move {
     public void setStatus(MoveStatus status) {
         this.status = status;
     }
-
-    public void setGame(Game game) { this.game = game; }
 
     public boolean begin(){
 
@@ -82,6 +75,27 @@ class Move {
         else
     
             status = MoveStatus.INVALID;
+    }
+
+    public void doMove(ChessBoard chessBoard) {
+//        Square[][] board = chessBoard.getBoard();
+
+        if ( ! destinationSquare.isEmpty()) {
+            Piece killedPiece = destinationSquare.getPlaceholder();
+            chessBoard.getChildren().remove(killedPiece.getImage());  // Removing the image of the killed piece
+
+            if (killedPiece.getIsWhite())
+                chessBoard.getWhitePieces().remove(killedPiece);
+            else
+                chessBoard.getBlackPieces().remove(killedPiece);
+
+            destinationSquare.getPlaceholder().setLocation(null);
+        }
+
+        destinationSquare.setPlaceholder(piece);
+        chessBoard.getChildren().remove(piece.getImage());
+        this.piece.setLocation(destinationSquare);
+        sourceSquare.setPlaceholder(null);
     }
     
 }
