@@ -61,7 +61,38 @@ public class Game extends Application{
     public void setPlayers(Player[] players) {
         this.players = players;
     }
+	public static void enemysMoves(GameBoard board) {
+		ArrayList<Square> allEnemysMove = new ArrayList<Square>();
+        ArrayList<Piece> AllPieces = new ArrayList<Piece>();
+		for (Piece p : AllPieces) {
+			if (p.getIsWhite() != true) {
+                allEnemysMove.add(p.getLocation());
+			}
+		}
+	}
+    public void updatingStatus(ChessBoard chessBoard ){
+        ArrayList<Piece> wpieces = chessBoard.getWhitePieces();
+        ArrayList<Piece> bpieces = chessBoard.getBlackPieces();
+        for (Piece p : wpieces) {
+            if (p.getValidMoves(chessBoard).isEmpty()) {
+                status = GameStatus.BLACK_WIN;
+            }
+        for (Piece pi : bpieces) {
+            if (pi.getValidMoves(chessBoard).isEmpty()) {
+                    status = GameStatus.WHITE_WIN;
+            }
 
+                         
+    
+                    
+                
+                    
+        }
+
+    }
+}
+
+            
     @Override
     public void start(Stage primaryStage){
         ChessBoard chessBoard = new ChessBoard();

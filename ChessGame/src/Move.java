@@ -98,6 +98,6 @@ class Move {
         chessBoard.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
         sourceSquare.setPlaceholder(null);
     }
-    public 
+     
     
 }
