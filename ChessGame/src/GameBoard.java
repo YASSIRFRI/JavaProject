@@ -198,8 +198,11 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         // Simulating the move (to check if king will be in threat)
         this.getBoard()[x_src][y_src].setPlaceholder(null);
         Piece killedPiece = board[x_dest][y_dest].getPlaceholder();
+        if (killedPiece != null)
+            this.getEnemyPieces(piece.getIsWhite()).remove(killedPiece);
         this.getBoard()[x_dest][y_dest].setPlaceholder(piece);
         piece.setLocation(board[x_dest][y_dest]);
+
 
         // Retrieving the result
         boolean result = this.isKingInThreat(piece.getIsWhite());
@@ -208,6 +211,8 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         this.getBoard()[x_src][y_src].setPlaceholder(piece);
         piece.setLocation(board[x_src][y_src]);
         this.getBoard()[x_dest][y_dest].setPlaceholder(killedPiece);
+        if (killedPiece != null)
+            this.getEnemyPieces(piece.getIsWhite()).add(killedPiece);
 
         return result;
     }
