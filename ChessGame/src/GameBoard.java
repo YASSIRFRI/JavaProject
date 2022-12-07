@@ -234,25 +234,18 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         board[5][0].setPlaceholder(new Bishop(true, board[5][0]));
         board[2][7].setPlaceholder(new Bishop(false, board[2][7]));
         board[5][7].setPlaceholder(new Bishop(false, board[5][7]));
-        board[1][3].setPlaceholder(new King(true, board[1][3]));
+        board[3][0].setPlaceholder(new King(true, board[3][0]));
         board[3][7].setPlaceholder(new King(false, board[3][7]));
         board[4][0].setPlaceholder(new Queen(true, board[4][0]));
         board[4][7].setPlaceholder(new Queen(false, board[4][7]));
         board[7][7].setPlaceholder(new Rook(false, board[7][7]));
         board[7][0].setPlaceholder(new Rook(true, board[7][0]));
 
-        ////////
-        board[4][3].setPlaceholder(new King(false, board[4][3]));
-        board[5][3].setPlaceholder(new Rook(false, board[5][3]));
-        board[1][5].setPlaceholder(new Bishop(true, board[1][5]));
-        board[2][4].setPlaceholder(new Rook(false, board[2][4]));
-        board[7][3].setPlaceholder(new Rook(true, board[7][3]));
-
-        this.setBlackKing((King) board[4][3].getPlaceholder());
-
         for (int i=0; i<8; i++) {
             for (int j=0; j<8; j++) {
                 if (board[i][j].getPlaceholder() != null) {
+                    this.add(board[i][j].getPlaceholder().getImage(), i, j);
+
                     if (board[i][j].getPlaceholder().getIsWhite())
                         this.whitePieces.add(board[i][j].getPlaceholder());
                     else
@@ -260,19 +253,10 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
                 }
             }
         }
-        /////
 
 
-//        this.setBlackKing((King) board[3][7].getPlaceholder());
-        this.setWhiteKing((King) board[1][3].getPlaceholder());
-
-        for (int i=0;i<8;i++) {
-            for (int j=0;j<8;j++) {
-                if(board[i][j].getPlaceholder()!=null) {
-                    this.add(board[i][j].getPlaceholder().getImage(), i, j);
-                }
-            }
-        }
+        this.setBlackKing((King) board[3][7].getPlaceholder());
+        this.setWhiteKing((King) board[3][0].getPlaceholder());
 
         this.setGridLinesVisible(true);
         this.setAlignment(Pos.CENTER);
@@ -373,15 +357,21 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
                     removeHighlights();
                     Move move = new Move(trigger, clickedSquare, trigger.getPlaceholder());
                     move.doMove(this);
+                    trigger = null;
                 }
                 else {
-                    if (clickedSquare.isEmpty())
+                    if (clickedSquare.isEmpty()) {
                         removeHighlights();
-                    else
+                        trigger = null;
+                    }
+
+                    else {
                         highlightValidMoves(clickedSquare.getPlaceholder());
+                        trigger = clickedSquare;
+                    }
                 }
 
-                trigger = null;
+
             }
 
             else {
