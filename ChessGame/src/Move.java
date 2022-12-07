@@ -1,8 +1,6 @@
-import javafx.css.Size;
-
 enum MoveStatus
 {
-    VALID,INVALID,COMMITED,CHECK,CHECKMATE;
+    VALID,INVALID,COMMITED,CHECK,CHECKMATE
 }
 
 class Move {
@@ -98,7 +96,7 @@ class Move {
         sourceSquare.setPlaceholder(null);
 
         // In case it is a pawn, change hasMoved attribute to true
-        if (piece.getName() == "Pawn")
+        if (piece.getName().equals("Pawn"))
             this.piece.setHasMoved(true);
 
     }
