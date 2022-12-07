@@ -1,4 +1,5 @@
 import java.io.Console;
+import java.util.ArrayList;
 
 import javax.sound.midi.SysexMessage;
 
@@ -60,6 +61,7 @@ public class Game extends Application{
     public void setPlayers(Player[] players) {
         this.players = players;
     }
+
     @Override
     public void start(Stage primaryStage){
         ChessBoard chessBoard = new ChessBoard();
