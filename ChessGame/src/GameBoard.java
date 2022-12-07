@@ -237,13 +237,13 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         board[7][0].setPlaceholder(new Rook(true, board[7][0]));
 
         ////////
-        board[3][2].setPlaceholder(new King(false, board[3][2]));
+        board[4][3].setPlaceholder(new King(false, board[4][3]));
         board[5][3].setPlaceholder(new Rook(false, board[5][3]));
         board[1][5].setPlaceholder(new Bishop(true, board[1][5]));
         board[2][4].setPlaceholder(new Rook(false, board[2][4]));
         board[7][3].setPlaceholder(new Rook(true, board[7][3]));
 
-        this.setBlackKing((King) board[3][2].getPlaceholder());
+        this.setBlackKing((King) board[4][3].getPlaceholder());
 
         for (int i=0; i<8; i++) {
             for (int j=0; j<8; j++) {
@@ -362,7 +362,6 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         Square clickedSquare = getClickedSquare(event);
 
         if (clickedSquare != null) {
-
 
             if (trigger != null) {
                 if (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED) {
