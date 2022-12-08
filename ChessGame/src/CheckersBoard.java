@@ -12,27 +12,27 @@ import javafx.stage.Stage;
 
 public class CheckersBoard extends GameBoard{
 
-    private ArrayList<Piece> whitePieces;
-    private ArrayList<Piece> blackPieces;
+    private ArrayList<CheckersPawn> whitePieces;
+    private ArrayList<CheckersPawn> blackPieces;
     public CheckersBoard(){
         super(8);
     }
-    public ArrayList<Piece> getWhitePieces() {
+    public ArrayList<CheckersPawn> getWhitePieces() {
         return whitePieces;
     }
 
-    public void setWhitePieces(ArrayList<Piece> whitePieces) {
+    public void setWhitePieces(ArrayList<CheckersPawn> whitePieces) {
         this.whitePieces = whitePieces;
     }
 
-    public ArrayList<Piece> getBlackPieces() {
+    public ArrayList<CheckersPawn> getBlackPieces() {
         return blackPieces;
     }
 
-    public void setBlackPieces(ArrayList<Piece> blackPieces) {
+    public void setBlackPieces(ArrayList<CheckersPawn> blackPieces) {
         this.blackPieces = blackPieces;
     }
-    
+
     @Override
     public void start(Stage primaryStage){
         CheckersBoard checkersBoard = new CheckersBoard();
@@ -45,6 +45,11 @@ public class CheckersBoard extends GameBoard{
 
         
     }
+    public CheckersPawn makeCheckersPawn(boolean isWhite, Square location){
+        CheckersPawn checkersPawn = new CheckersPawn(isWhite,location);
+        return checkersPawn; 
+
+    }
 
 
  
@@ -53,14 +58,19 @@ public class CheckersBoard extends GameBoard{
         for (int i = 0; i < 8; i++) {
             for (int j= 0; j<8; j++)
             {
+                CheckersPawn checkersPawn = null;
+
                 if (i <= 2 && (i+j) % 2 != 0){
-                    board[i][j].setPlaceholder(new CheckersPawn(true,board[i][j]));
+                    //board[i][j].setPlaceholder(new CheckersPawn(true,board[i][j]));
+                    checkersPawn = makeCheckersPawn(true, board[i][j]);
 
 
 
                 }
                 if (j >= 5 && (i+j) % 2 != 0){
-                    board[i][j].setPlaceholder(new CheckersPawn(false,board[i][j]));
+                    //board[i][j].setPlaceholder(new CheckersPawn(false,board[i][j]));
+                    checkersPawn = makeCheckersPawn(false, board[i][j]);
+
                     
 
 
@@ -74,16 +84,12 @@ public class CheckersBoard extends GameBoard{
                 if (board[i][j].getPlaceholder() != null) {
                     this.add(board[i][j].getPlaceholder().getImage(), i, j);
 
-                    if (board[i][j].getPlaceholder().getIsWhite())
-                        this.whitePieces.add(board[i][j].getPlaceholder());
-                    else
-                        this.blackPieces.add(board[i][j].getPlaceholder());
-                }
             }
         }
 
         
     }
+
 
     
 }
