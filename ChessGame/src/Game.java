@@ -15,7 +15,9 @@ enum GameStatus {
     WHITE_WIN,
     FORFEIT,
     STALEMATE,
-    RESIGNATION
+    RESIGNATION,
+    CHECKMATE,
+    CHECK
 }   
 
 public class Game extends Application{
@@ -107,7 +109,6 @@ public class Game extends Application{
         ChessBoard chessBoard = new ChessBoard();
         chessBoard.fillBoard();
         chessBoard.setOnMouseClicked(chessBoard);
-//        Scene scene = new Scene(chessBoard, windowWidth+4, windowWidth+4);
         Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
         primaryStage.setScene(scene);
         primaryStage.show();

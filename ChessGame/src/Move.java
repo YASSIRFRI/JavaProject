@@ -1,5 +1,7 @@
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
 enum MoveStatus
@@ -83,7 +85,7 @@ class Move {
 
     public void doMove(ChessBoard chessBoard) {
 
-        if ( ! destinationSquare.isEmpty()) {
+        if (!destinationSquare.isEmpty()) {
             Piece killedPiece = destinationSquare.getPlaceholder();
             chessBoard.getChildren().remove(killedPiece.getImage());  // Removing the image of the killed piece
 
@@ -105,18 +107,5 @@ class Move {
         if (piece.getName().equals("Pawn"))
             this.piece.setHasMoved(true);
 
-        chessBoard.switchTurn();
-
-        if (chessBoard.isCheckmate()) {
-            String text = (chessBoard.isWhiteTurn() ? "White" : "Black") + " is checkmated !";
-            Label label = new Label(text);
-            label.setPadding(new Insets(50));
-            label.setFont(new Font(25));
-            chessBoard.add(label, 9, 0, 1, 6);
-        }
-
-        if (chessBoard.isStalemate())
-            System.out.println("Stalemate");
     }
-    
 }
