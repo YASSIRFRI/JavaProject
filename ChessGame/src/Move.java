@@ -76,6 +76,7 @@ class Move {
             status = MoveStatus.INVALID;
     }
 
+
     public void doMove(ChessBoard chessBoard) {
 
         if ( ! destinationSquare.isEmpty()) {
