@@ -67,6 +67,9 @@ class Move {
 
 
     }
+    public void reverse(){
+        
+    }
     public boolean equals(Move anotherMove) {
 		if(this.getSourceSquare() == anotherMove.getSourceSquare() && this.getDestinationSquare() == anotherMove.getDestinationSquare() ){
 			return true;
