@@ -14,12 +14,17 @@ class Move {
     private Square destinationSquare;
     private Piece piece;
     private MoveStatus status;
+    private Piece enemyPiece;
 
     public Move(Square sourceSquare, Square destinationSquare, Piece piece, MoveStatus status) {
         this.sourceSquare = sourceSquare;
         this.destinationSquare = destinationSquare;
         this.piece = piece;
         this.status = status;
+        if(destinationSquare.getPlaceholder()!=null)
+        {
+            this.enemyPiece=destinationSquare.getPlaceholder();
+        }
     }
 
     public Move(Square sourceSquare, Square destinationSquare, Piece piece) {
@@ -35,6 +40,14 @@ class Move {
 
     public Square getDestinationSquare() {
         return destinationSquare;
+    }
+    public Piece getEnemyPiece()
+    {
+        return enemyPiece;
+    }
+    public void setEnemyPiece(Piece enemyPiece)
+    {
+        this.enemyPiece=enemyPiece;
     }
 
     public Piece getPiece() {
@@ -104,4 +117,28 @@ class Move {
         this.piece.setHasMoved(true);
 
     }
+    public void reverseMove(GameBoard chessBoard)
+    {
+        if(this.enemyPiece!=null)
+        {
+            chessBoard.add(this.enemyPiece.getImage(), this.destinationSquare.getx(), this.destinationSquare.gety());
+            sourceSquare.setPlaceholder(piece);
+            chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
+            chessBoard.board[this.destinationSquare.getx()][this.destinationSquare.gety()].setPlaceholder(this.enemyPiece);
+            chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
+            this.enemyPiece.setLocation(this.destinationSquare);
+            this.piece.setLocation(this.sourceSquare);
+            this.piece.setHasMoved(false);
+    }
+    else
+    {
+        sourceSquare.setPlaceholder(piece);
+        chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
+        chessBoard.getChildren().remove(this.destinationSquare.getPlaceholder().getImage());
+        chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
+        this.piece.setLocation(this.sourceSquare);
+        this.piece.setHasMoved(false);
+    }
+    }
+   
 }
