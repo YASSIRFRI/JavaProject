@@ -70,10 +70,14 @@ public class Game extends Application{
         for (Piece p : wpieces) {
             if (p.getValidMoves(chessBoard).isEmpty()) {
                 status = GameStatus.BLACK_WIN;
+                System.out.println(" black is the winner");
+
             }
         for (Piece pi : bpieces) {
             if (pi.getValidMoves(chessBoard).isEmpty()) {
                     status = GameStatus.WHITE_WIN;
+                    System.out.println(" white is the winner");
+
             }
         for (Piece pe : AllPieces) {
             if (pe.isHasMoved() == true) {
@@ -82,7 +86,9 @@ public class Game extends Application{
 
 
                 }
+        
             }
+
 
                          
     
@@ -93,6 +99,24 @@ public class Game extends Application{
 
     }
 }
+    public boolean play(){
+        Move move ;
+        ChessBoard chessBoard;
+        if( move != null) {
+            if(move.getStatus() == MoveStatus.VALID) {
+                updatingStatus(chessBoard);
+                return true;
+            }
+            else
+                System.out.println(" entered an illegal move, try again please");
+        }
+        else
+            System.out.println( " entered an illegal move format, try again please");
+
+        return false;
+    }
+
+
 
             
     @Override
@@ -106,6 +130,18 @@ public class Game extends Application{
         
     }
 
+    
+    public void start1(Stage primaryStage){
+        CheckersBoard checkersBoard = new CheckersBoard(0);
+        checkersBoard.fillBoard();
+        Scene scene = new Scene(checkersBoard);
+        primaryStage.setTitle("Checkers app");
+        primaryStage.setScene(scene);
+        primaryStage.show();
+        
+
+        
+    }
     public static void main(String[] args) {
         launch(args);
     }
