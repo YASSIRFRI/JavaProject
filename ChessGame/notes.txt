@@ -32,10 +32,6 @@ I'm working on that
 
 
 
-- To talk about: Optimize checkmate and stalemate and check: (avoid recalling the functions)
-
-
-
 
 
 
