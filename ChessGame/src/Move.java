@@ -127,6 +127,7 @@ class Move {
         {
             chessBoard.add(this.enemyPiece.getImage(), this.destinationSquare.getx(), this.destinationSquare.gety());
             sourceSquare.setPlaceholder(piece);
+            chessBoard.getChildren().remove(this.piece.getImage());
             chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
             chessBoard.board[this.destinationSquare.getx()][this.destinationSquare.gety()].setPlaceholder(this.enemyPiece);
             chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
@@ -137,9 +138,11 @@ class Move {
     else
     {
         sourceSquare.setPlaceholder(piece);
-        chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
+        chessBoard.getChildren().remove(this.piece.getImage());
         chessBoard.getChildren().remove(this.destinationSquare.getPlaceholder().getImage());
+        chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
         chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
+        destinationSquare.setPlaceholder(null);
         this.piece.setLocation(this.sourceSquare);
         this.piece.setHasMoved(false);
     }

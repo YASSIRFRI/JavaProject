@@ -58,11 +58,18 @@ public abstract class GameBoard extends GridPane {
         }
         this.gameHistory = new ArrayList<Move>();
         Button reverseMove= new Button("Reverse Move");
+        
+        reverseMove.styleProperty();
         this.add(reverseMove,10,2,1,1);
         reverseMove.setOnAction(e->{
             if(gameHistory.size()>0){
                 Move lastMove=gameHistory.get(gameHistory.size()-1);
                 lastMove.reverseMove(this);
+                this.gameHistory.remove(lastMove);
+        }
+        else
+        {
+            System.out.println("Empty History");
         }
     });
     }
