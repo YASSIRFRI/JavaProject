@@ -113,6 +113,32 @@ Piece {
                 finalValidMoves.add(validMove);
         }
 
+        // Checking castling if the piece is a king
+        if ( this.getName().equals("King") && (! this.isHasMoved())) {
+            Square[][] board = chessBoard.getBoard();
+            int xSrc = this.getLocation().getx();
+            int ySrc = this.getLocation().gety();
+            Rook rightRook = this.isWhite ? chessBoard.getRightWhiteRook() : chessBoard.getRightBlackRook();
+            Rook leftRook = this.isWhite ? chessBoard.getLeftWhiteRook() : chessBoard.getLeftBlackRook();
+
+            // Checking the right side
+            if ( (! rightRook.isHasMoved()) && (! chessBoard.isKingInThreat(this.isWhite)) ) {
+                if (board[xSrc+1][ySrc].isEmpty() && board[xSrc+2][ySrc].isEmpty() && board[xSrc+3][ySrc].isEmpty()) {
+                    if (this.kingWillNotBeThreatened(board[xSrc+1][ySrc], chessBoard) && this.kingWillNotBeThreatened(board[xSrc+2][ySrc], chessBoard))
+                        finalValidMoves.add(board[xSrc+2][ySrc]);
+
+                }
+            }
+
+            // Checking the left side
+            if ( (! leftRook.isHasMoved()) && (!chessBoard.isKingInThreat(this.isWhite)) ) {
+                if (board[xSrc-1][ySrc].isEmpty() && board[xSrc-2][ySrc].isEmpty()) {
+                    if (this.kingWillNotBeThreatened(board[xSrc-1][ySrc], chessBoard) && this.kingWillNotBeThreatened(board[xSrc-2][ySrc], chessBoard))
+                        finalValidMoves.add(board[xSrc-2][ySrc]);
+                }
+            }
+        }
+
         return finalValidMoves;
     }
 
@@ -173,25 +199,6 @@ class King extends Piece {
                 if (isInRange(i) && isInRange(j) && this.canOccupySquare(i, j, board))
                     validMoves.add(board[i][j]);
             }
-        }
-
-        Rook rightRook = this.isWhite ? chessBoard.getRightWhiteRook() : chessBoard.getRightBlackRook();
-        Rook leftRook = this.isWhite ? chessBoard.getLeftWhiteRook() : chessBoard.getLeftBlackRook();
-
-        // Checking castling
-        if ( (! this.isHasMoved())) {
-
-            // Checking the right side
-            if ((! rightRook.isHasMoved()) && ( ! chessBoard.isKingInThreat(this.isWhite))) {
-                if (board[xSrc+1][ySrc].isEmpty() && board[xSrc+2][ySrc].isEmpty() && board[xSrc+3][ySrc].isEmpty()) {
-                    if (this.kingWillNotBeThreatened(board[xSrc+1][ySrc], chessBoard) && this.kingWillNotBeThreatened(board[xSrc+2][ySrc], chessBoard))
-                        validMoves.add(board[xSrc+2][ySrc]);
-
-                }
-            }
-
-            // Checking the left side
-            // TODO
         }
 
         return validMoves;
