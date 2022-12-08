@@ -127,13 +127,18 @@ class Move {
             chessBoard.getChildren().remove(killedPiece.getImage());  // Removing the image of the killed piece
 
             if (killedPiece.getIsWhite())
+            {
+                this.enemyPiece=killedPiece;
                 chessBoard.getWhitePieces().remove(killedPiece);
+            }
             else
+            {
+                this.enemyPiece=killedPiece;
                 chessBoard.getBlackPieces().remove(killedPiece);
-
-            destinationSquare.getPlaceholder().setLocation(null);
+                destinationSquare.getPlaceholder().setLocation(null);
+            }
         }
-
+        
         destinationSquare.setPlaceholder(piece);
         chessBoard.getChildren().remove(piece.getImage());
         this.piece.setLocation(destinationSquare);

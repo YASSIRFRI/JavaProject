@@ -58,7 +58,7 @@ public abstract class GameBoard extends GridPane {
         }
         this.gameHistory = new ArrayList<Move>();
         Button reverseMove= new Button("Reverse Move");
-        
+
         reverseMove.styleProperty();
         this.add(reverseMove,10,2,1,1);
         reverseMove.setOnAction(e->{
