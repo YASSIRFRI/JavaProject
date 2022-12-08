@@ -8,19 +8,34 @@ enum MoveStatus
 {
     VALID,INVALID,COMMITED,CHECK,CHECKMATE
 }
+enum MoveType
+{
+    NONE, NORMAL, KILL
+
+}
 
 class Move {
     private Square sourceSquare;
     private Square destinationSquare;
     private Piece piece;
     private MoveStatus status;
+    private MoveType type;
     private Piece enemyPiece;
 
+    public Move(MoveType type, Piece piece){
+        this.type = type;
+        this.piece = piece;
+    }
+    public Move(MoveType type){
+        this.type = type;
+        this.piece = null;
+    }
     public Move(Square sourceSquare, Square destinationSquare, Piece piece, MoveStatus status) {
         this.sourceSquare = sourceSquare;
         this.destinationSquare = destinationSquare;
         this.piece = piece;
         this.status = status;
+
         if(destinationSquare.getPlaceholder()!=null)
         {
             this.enemyPiece=destinationSquare.getPlaceholder();
@@ -56,6 +71,9 @@ class Move {
     public MoveStatus getStatus() {
         return this.status;
     }
+    public MoveType getType() {
+        return this.type;
+    }
 
     public void setSource(Square sourceSquare) {
         this.sourceSquare = sourceSquare;
@@ -71,6 +89,9 @@ class Move {
 
     public void setStatus(MoveStatus status) {
         this.status = status;
+    }
+    public void setType(MoveType type) {
+        this.type = type;
     }
 
     public boolean begin(){
