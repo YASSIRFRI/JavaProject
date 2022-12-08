@@ -103,9 +103,8 @@ class Move {
         chessBoard.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
         sourceSquare.setPlaceholder(null);
 
-        // In case it is a pawn, change hasMoved attribute to true
-        if (piece.getName().equals("Pawn"))
-            this.piece.setHasMoved(true);
+
+        this.piece.setHasMoved(true);
 
     }
 }
