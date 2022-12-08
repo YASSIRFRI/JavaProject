@@ -7,8 +7,8 @@ import javafx.scene.paint.ImagePattern;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-abstract class
-Piece {
+abstract class Piece {
+    
     protected String name;
     protected boolean isWhite;
     protected Square location;
@@ -456,22 +456,22 @@ class Pawn extends Piece {
     }
 }
 
-//class CheckersPawn extends Piece {
-//    public CheckersPawn(boolean isWhite) {
-//        super("CheckersPawn", isWhite);
-//    }
-//
-//    public CheckersPawn(boolean isWhite, Square location) {
-//        super("CheckersPawn", isWhite, location);
-//    }
-//
-//    @Override
-//    public boolean validateMove(Move move) {
-//        // TODO Auto-generated method stub
-//        return false;
-//    }
-//
-//}
+class CheckersPawn extends Piece {
+    public CheckersPawn(boolean isWhite) {
+        super("CheckersPawn", isWhite);
+    }
+
+    public CheckersPawn(boolean isWhite, Square location) {
+        super("CheckersPawn", isWhite, location);
+    }
+
+    @Override
+    public boolean validateMove(Move move) {
+        // TODO Auto-generated method stub
+        return false;
+    }
+
+}
 
 
 

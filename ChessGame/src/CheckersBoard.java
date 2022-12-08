@@ -13,10 +13,29 @@ public class CheckersBoard extends GameBoard{
     }
 
 
-
+ 
     @Override
-    void fillBoard(){
-        return
+    public void fillBoard(){
+        for (int i = 0; i < 8; i++) {
+            for (int j= 0; j<8; j++)
+            {
+                if (i <= 2 && (i+j) % 2 != 0){
+                    board[i][j].setPlaceholder(new CheckersPawn(true,board[i][j]));
+
+
+
+                }
+                if (j >= 5 && (i+j) % 2 != 0){
+                    board[i][j].setPlaceholder(new CheckersPawn(false,board[i][j]));
+                    
+
+
+                }
+
+            }
+        }
+
+        
     }
 
     
