@@ -1,10 +1,13 @@
 import java.io.Console;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.sound.midi.SysexMessage;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -120,12 +123,17 @@ public class Game extends Application{
 
             
     @Override
-    public void start(Stage primaryStage){
-        ChessBoard chessBoard = new ChessBoard();
-        chessBoard.fillBoard();
-        chessBoard.setOnMouseClicked(chessBoard);
-        Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
-        primaryStage.setScene(scene);
+    public void start(Stage primaryStage) throws IOException{
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("menu.fxml"));
+        loader.setController(Controller.class);
+        Scene scene1 = new Scene(loader.load());
+        primaryStage.setScene(scene1);
+        primaryStage.setTitle("ChessGame");
+        //ChessBoard chessBoard = new ChessBoard();
+        //chessBoard.fillBoard();
+        //chessBoard.setOnMouseClicked(chessBoard);
+        //Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
+        //primaryStage.setScene(scene);
         primaryStage.show();
         
     }
