@@ -335,6 +335,30 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         return isKingInThreat(isWhiteTurn) ? GameStatus.CHECKMATE : GameStatus.STALEMATE; // If all pieces don't have any legal moves
     }
 
+    public void updateStatusLabel() {
+        String text="";
+
+        switch (this.getBoardStatus()) {
+            case ACTIVE:
+                text = (this.isWhiteTurn() ? "White" : "Black") + "'s turn";
+                break;
+
+            case CHECKMATE:
+                text = (this.isWhiteTurn() ? "White" : "Black") + " is checkmated !";
+                break;
+
+            case CHECK:
+                text = (this.isWhiteTurn() ? "White" : "Black") + " king is checked !";
+                break;
+
+            case STALEMATE:
+                text = "Stalemate !";
+                break;
+        }
+
+        this.getStatusLabel().setText(text);
+    }
+
     public void handle(MouseEvent event) {
 
         Square clickedSquare = getClickedSquare(event);
@@ -345,7 +369,9 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
                 if (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED) {
                     removeHighlights();
                     Move move = new Move(trigger, clickedSquare, trigger.getPlaceholder());
-                    move.doMove(this);  // Switch turn and checking (stalemate / checkmate / check) are included in doMove() method
+                    move.doMove(this);
+                    this.switchTurn();
+                    this.updateStatusLabel();
                     trigger = null;
                 }
                 else {

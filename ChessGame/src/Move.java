@@ -106,28 +106,5 @@ class Move {
         if (piece.getName().equals("Pawn"))
             this.piece.setHasMoved(true);
 
-        chessBoard.switchTurn();
-
-        String text="";
-
-        switch (chessBoard.getBoardStatus()) {
-            case ACTIVE:
-                text = (chessBoard.isWhiteTurn() ? "White" : "Black") + "'s turn";
-                break;
-
-            case CHECKMATE:
-                text = (chessBoard.isWhiteTurn() ? "White" : "Black") + " is checkmated !";
-                break;
-
-            case CHECK:
-                text = (chessBoard.isWhiteTurn() ? "White" : "Black") + " king is checked !";
-                break;
-
-            case STALEMATE:
-                text = "Stalemate !";
-                break;
-        }
-
-        chessBoard.getStatusLabel().setText(text);
     }
 }
