@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.geometry.HPos;
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -15,6 +17,7 @@ import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 
 import javax.management.monitor.MonitorNotification;
 
@@ -74,6 +77,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
     private ArrayList<Piece> whitePieces;
     private ArrayList<Piece> blackPieces;
     private boolean isWhiteTurn;
+    private Label statusLabel;
 
     public static Square trigger = null;
 
@@ -83,6 +87,13 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         this.whitePieces = new ArrayList<Piece>();
         this.blackPieces = new ArrayList<Piece>();
         this.isWhiteTurn = true;
+
+        this.statusLabel = new Label("White's turn");
+        this.add(statusLabel, 9, 3, 1, 2);
+        statusLabel.setPadding(new Insets(50));
+        statusLabel.setFont(new Font(30));
+        statusLabel.setAlignment(Pos.CENTER);
+        statusLabel.setTextFill(Color.RED);
     }
 
     public ArrayList<Piece> getWhitePieces() {
@@ -226,6 +237,9 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
         return result;
     }
+    public Label getStatusLabel() { return statusLabel; }
+    public void setStatusLabel(Label statusLabel) { this.statusLabel = statusLabel; }
+
 
     @Override
     public void fillBoard() {
@@ -312,27 +326,13 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         this.isWhiteTurn = !this.isWhiteTurn();
     }
 
-    public boolean isCheckmate() {
-        if (isKingInThreat(isWhiteTurn)) {
-            for (Piece piece: this.getAlliesPieces(isWhiteTurn)) {
-                if (! piece.getFinalValidMoves(this).isEmpty())
-                        return false;
-            }
-            return true;  // If all pieces don't have any legal moves
-        }
-        return false;
-    }
+    public GameStatus getBoardStatus() {
 
-    public boolean isStalemate() {
-        if ( ! isKingInThreat(isWhiteTurn)) {
-            for (Piece piece: this.getAlliesPieces(isWhiteTurn)) {
-                if (! piece.getFinalValidMoves(this).isEmpty())
-                    return false;
-            }
-            return true; // If all pieces don't have any legal moves
+        for (Piece piece: this.getAlliesPieces(isWhiteTurn)) {
+            if (! piece.getFinalValidMoves(this).isEmpty())
+                return isKingInThreat(isWhiteTurn) ? GameStatus.CHECK : GameStatus.ACTIVE;
         }
-
-        return false;
+        return isKingInThreat(isWhiteTurn) ? GameStatus.CHECKMATE : GameStatus.STALEMATE; // If all pieces don't have any legal moves
     }
 
     public void handle(MouseEvent event) {
@@ -345,7 +345,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
                 if (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED) {
                     removeHighlights();
                     Move move = new Move(trigger, clickedSquare, trigger.getPlaceholder());
-                    move.doMove(this);
+                    move.doMove(this);  // Switch turn and checking (stalemate / checkmate / check) are included in doMove() method
                     trigger = null;
                 }
                 else {
