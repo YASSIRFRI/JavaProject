@@ -101,8 +101,6 @@ class Move {
         this.piece.setLocation(destinationSquare);
         chessBoard.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
         sourceSquare.setPlaceholder(null);
-
-
         this.piece.setHasMoved(true);
 
     }
