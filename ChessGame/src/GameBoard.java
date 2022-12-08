@@ -117,38 +117,6 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
         });
     }
 
-    public Rook getRightWhiteRook() {
-        return rightWhiteRook;
-    }
-
-    public void setRightWhiteRook(Rook rightWhiteRook) {
-        this.rightWhiteRook = rightWhiteRook;
-    }
-
-    public Rook getLeftWhiteRook() {
-        return leftWhiteRook;
-    }
-
-    public void setLeftWhiteRook(Rook leftWhiteRook) {
-        this.leftWhiteRook = leftWhiteRook;
-    }
-
-    public Rook getRightBlackRook() {
-        return rightBlackRook;
-    }
-
-    public void setRightBlackRook(Rook rightBlackRook) {
-        this.rightBlackRook = rightBlackRook;
-    }
-
-    public Rook getLeftBlackRook() {
-        return leftBlackRook;
-    }
-
-    public void setLeftBlackRook(Rook leftBlackRook) {
-        this.leftBlackRook = leftBlackRook;
-    }
-
     public ArrayList<Piece> getWhitePieces() {
         return whitePieces;
     }
@@ -344,11 +312,6 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
 
         this.setBlackKing((King) board[3][7].getPlaceholder());
         this.setWhiteKing((King) board[3][0].getPlaceholder());
-
-        this.setLeftBlackRook((Rook) board[0][7].getPlaceholder());
-        this.setRightBlackRook((Rook) board[7][7].getPlaceholder());
-        this.setLeftWhiteRook((Rook) board[0][0].getPlaceholder());
-        this.setRightWhiteRook((Rook) board[7][0].getPlaceholder());
 
 //        this.setGridLinesVisible(true);
         this.setAlignment(Pos.BASELINE_LEFT);

@@ -4,43 +4,12 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-enum MoveStatus
-{
-    VALID,INVALID,COMMITED,CHECK,CHECKMATE
-}
-enum MoveType
-{
-    NONE, NORMAL, KILL
-
-}
 
 class Move {
     private Square sourceSquare;
     private Square destinationSquare;
     private Piece piece;
-    private MoveStatus status;
-    private MoveType type;
     private Piece enemyPiece;
-
-    public Move(MoveType type, Piece piece){
-        this.type = type;
-        this.piece = piece;
-    }
-    public Move(MoveType type){
-        this.type = type;
-        this.piece = null;
-    }
-    public Move(Square sourceSquare, Square destinationSquare, Piece piece, MoveStatus status) {
-        this.sourceSquare = sourceSquare;
-        this.destinationSquare = destinationSquare;
-        this.piece = piece;
-        this.status = status;
-
-        if(destinationSquare.getPlaceholder()!=null)
-        {
-            this.enemyPiece=destinationSquare.getPlaceholder();
-        }
-    }
 
     public Move(Square sourceSquare, Square destinationSquare, Piece piece) {
         this.sourceSquare = sourceSquare;
@@ -68,12 +37,6 @@ class Move {
     public Piece getPiece() {
         return piece;
     }
-    public MoveStatus getStatus() {
-        return this.status;
-    }
-    public MoveType getType() {
-        return this.type;
-    }
 
     public void setSource(Square sourceSquare) {
         this.sourceSquare = sourceSquare;
@@ -87,40 +50,35 @@ class Move {
         this.piece = piece;
     }
 
-    public void setStatus(MoveStatus status) {
-        this.status = status;
-    }
-    public void setType(MoveType type) {
-        this.type = type;
-    }
-
-    public boolean begin(){
-        
-
-        return status == MoveStatus.VALID ;
-
-
-    }
-    public void reverse(){
-        
-    }
     public boolean equals(Move anotherMove) {
 		if(this.getSourceSquare() == anotherMove.getSourceSquare() && this.getDestinationSquare() == anotherMove.getDestinationSquare() ){
 			return true;
 		}
 		return false;
 	}
-    public void updateStatus(Move move, ChessBoard chessBoard){
-//        Square[][] board = new Square[8][8];
-        if(piece.validateMove(move.getDestinationSquare(), chessBoard))
-            status = MoveStatus.VALID;
-        else
-    
-            status = MoveStatus.INVALID;
-    }
 
 
     public void doMove(ChessBoard chessBoard) {
+
+        // Handling castling
+        if (piece.getName().equals("King")) {
+            int difference = piece.getLocation().getx() - destinationSquare.getx();
+
+            if (difference == 2) {
+                Square rookSource = chessBoard.getBoard()[piece.getLocation().getx() - 3][piece.getLocation().gety()];
+                Square rookDestination = chessBoard.getBoard()[piece.getLocation().getx() - 1][piece.getLocation().gety()];
+                Move rookMove = new Move(rookSource, rookDestination, rookSource.getPlaceholder());
+                rookMove.doMove(chessBoard);
+            }
+
+            else if (difference == -2) {
+                Square rookSource = chessBoard.getBoard()[piece.getLocation().getx() + 4][piece.getLocation().gety()];
+                Square rookDestination = chessBoard.getBoard()[piece.getLocation().getx() + 1][piece.getLocation().gety()];
+                Move rookMove = new Move(rookSource, rookDestination, rookSource.getPlaceholder());
+                rookMove.doMove(chessBoard);
+            }
+        }
+        //////////////////////////////////////////
 
         if (!destinationSquare.isEmpty()) {
             Piece killedPiece = destinationSquare.getPlaceholder();
@@ -147,7 +105,7 @@ class Move {
     }
     public void reverseMove(ChessBoard chessBoard)
     {
-        if (this.enemyPiece!=null) {
+        if (this.enemyPiece != null) {
             chessBoard.add(this.enemyPiece.getImage(), this.destinationSquare.getx(), this.destinationSquare.gety());
             sourceSquare.setPlaceholder(piece);
             chessBoard.getChildren().remove(this.piece.getImage());

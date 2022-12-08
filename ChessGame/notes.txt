@@ -1,1 +1,2 @@
 - We need to update the state of pieces (the array of blackPieces and whitePieces, as well as right/left white/black rooks
+- Castling is working but if you reverse the move, the rook will not return to its place
