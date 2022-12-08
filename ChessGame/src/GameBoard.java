@@ -7,6 +7,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -15,7 +16,6 @@ import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.ImagePattern;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
@@ -24,6 +24,7 @@ import javax.management.monitor.MonitorNotification;
 public abstract class GameBoard extends GridPane {
 
     protected Square[][] board;
+    protected ArrayList<Move> gameHistory;
 
     protected int size;
     public GameBoard(int size) {
@@ -55,6 +56,15 @@ public abstract class GameBoard extends GridPane {
                 count++;
             }
         }
+        this.gameHistory = new ArrayList<Move>();
+        Button reverseMove= new Button("Reverse Move");
+        this.add(reverseMove,10,2,1,1);
+        reverseMove.setOnAction(e->{
+            if(gameHistory.size()>0){
+                Move lastMove=gameHistory.get(gameHistory.size()-1);
+                lastMove.reverseMove(this);
+        }
+    });
     }
 
     public Square[][] getBoard() {
@@ -386,6 +396,8 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
                 if (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED) {
                     removeHighlights();
                     Move move = new Move(trigger, clickedSquare, trigger.getPlaceholder());
+                    System.out.println(move);
+                    this.gameHistory.add(move);
                     move.doMove(this);
                     this.switchTurn();
                     this.updateStatusLabel();

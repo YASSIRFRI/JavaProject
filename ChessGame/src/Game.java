@@ -24,7 +24,6 @@ public class Game extends Application{
 
     private GameStatus status; 
     private GameBoard gameBoard;
-    private Move[] moveHistory;
     private Player[] players;
     
     public static double windowWidth = 700.0;
@@ -39,14 +38,6 @@ public class Game extends Application{
         this.status = status;
     }
    
-
-
-    public Move[] getMoveHistory() {
-        return moveHistory;
-    }
-    public void setMoveHistory(Move[] moveHistory) {
-        this.moveHistory = moveHistory;
-    }
 
     public GameBoard getGameBoard() {
         return gameBoard;
