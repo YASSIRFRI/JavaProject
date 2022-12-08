@@ -130,18 +130,7 @@ public class Game extends Application{
         
     }
 
-    
-    public void start1(Stage primaryStage){
-        CheckersBoard checkersBoard = new CheckersBoard(0);
-        checkersBoard.fillBoard();
-        Scene scene = new Scene(checkersBoard);
-        primaryStage.setTitle("Checkers app");
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        
 
-        
-    }
     public static void main(String[] args) {
         launch(args);
     }
