@@ -317,7 +317,8 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         Square clickedSquare = null;
         if (target instanceof Square)
             clickedSquare = (Square) target;
-        else if (target instanceof ImageView image) {
+        else if (target instanceof ImageView ) {
+            ImageView image= (ImageView)target;
             int x = GridPane.getColumnIndex(image);
             int y = GridPane.getRowIndex(image);
             clickedSquare = this.board[x][y];
