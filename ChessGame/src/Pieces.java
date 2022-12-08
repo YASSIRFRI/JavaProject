@@ -456,32 +456,32 @@ class Pawn extends Piece {
     }
 }
 
-class CheckersPawn extends Piece {
-    public CheckersPawn(boolean isWhite) {
-        super("CheckersPawn", isWhite);
-    }
-
-    public CheckersPawn(boolean isWhite, Square location) {
-        super("CheckersPawn", isWhite, location);
-    }
-
-    public boolean validateMove(Move move) {
-        public boolean validateMove(Square destination, ChessBoard chessBoard) {
-            ArrayList<Square> validMoves = this.getValidMoves(chessBoard);
-            int xDest = destination.getx();
-            int yDest = destination.gety();
-            for (int i=0; i<validMoves.size(); i++) {
-                int i_x = validMoves.get(i).getx();
-                int i_y = validMoves.get(i).gety();
-    
-                if (i_x == xDest && i_y == yDest)       // Checking if the move is in valid moves
-                    return true;
-            }
-            return false;
-        }
-    }
-
-}
+//class CheckersPawn extends Piece {
+//    public CheckersPawn(boolean isWhite) {
+//        super("CheckersPawn", isWhite);
+//    }
+//
+//    public CheckersPawn(boolean isWhite, Square location) {
+//        super("CheckersPawn", isWhite, location);
+//    }
+//
+//    public boolean validateMove(Move move) {
+//        public boolean validateMove(Square destination, ChessBoard chessBoard) {
+//            ArrayList<Square> validMoves = this.getValidMoves(chessBoard);
+//            int xDest = destination.getx();
+//            int yDest = destination.gety();
+//            for (int i=0; i<validMoves.size(); i++) {
+//                int i_x = validMoves.get(i).getx();
+//                int i_y = validMoves.get(i).gety();
+//
+//                if (i_x == xDest && i_y == yDest)       // Checking if the move is in valid moves
+//                    return true;
+//            }
+//            return false;
+//        }
+//    }
+//
+//}
 
 
 

@@ -11,11 +11,7 @@ import javafx.stage.Stage;
 
 enum GameStatus {
     ACTIVE,
-    BLACK_WIN,
-    WHITE_WIN,
-    FORFEIT,
     STALEMATE,
-    RESIGNATION,
     CHECKMATE,
     CHECK
 }   
@@ -54,71 +50,7 @@ public class Game extends Application{
     public void setPlayers(Player[] players) {
         this.players = players;
     }
-	public static void enemysMoves(GameBoard board) {
-		ArrayList<Square> allEnemysMove = new ArrayList<Square>();
-        ArrayList<Piece> AllPieces = new ArrayList<Piece>();
-		for (Piece p : AllPieces) {
-			if (p.getIsWhite() != true) {
-                allEnemysMove.add(p.getLocation());
-			}
-		}
-	}
-    public void updatingStatus(ChessBoard chessBoard ){
-        ArrayList<Piece> wpieces = chessBoard.getWhitePieces();
-        ArrayList<Piece> bpieces = chessBoard.getBlackPieces();
-        ArrayList<Piece> AllPieces = new  ArrayList<Piece>();
-        for (Piece p : wpieces) {
-            if (p.getValidMoves(chessBoard).isEmpty()) {
-                status = GameStatus.BLACK_WIN;
-                System.out.println(" black is the winner");
 
-            }
-        for (Piece pi : bpieces) {
-            if (pi.getValidMoves(chessBoard).isEmpty()) {
-                    status = GameStatus.WHITE_WIN;
-                    System.out.println(" white is the winner");
-
-            }
-        for (Piece pe : AllPieces) {
-            if (pe.isHasMoved() == true) {
-                status = GameStatus.ACTIVE;
-
-
-
-                }
-        
-            }
-
-
-                         
-    
-                    
-                
-                    
-        }
-
-    }
-}
-    public boolean play(){
-        Move move ;
-        ChessBoard chessBoard;
-        if( move != null) {
-            if(move.getStatus() == MoveStatus.VALID) {
-                updatingStatus(chessBoard);
-                return true;
-            }
-            else
-                System.out.println(" entered an illegal move, try again please");
-        }
-        else
-            System.out.println( " entered an illegal move format, try again please");
-
-        return false;
-    }
-
-
-
-            
     @Override
     public void start(Stage primaryStage){
         ChessBoard chessBoard = new ChessBoard();

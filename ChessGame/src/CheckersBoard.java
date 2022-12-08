@@ -32,7 +32,7 @@ public class CheckersBoard extends GameBoard{
     public void setBlackPieces(ArrayList<Piece> blackPieces) {
         this.blackPieces = blackPieces;
     }
-    
+
     @Override
     public void start(Stage primaryStage){
         CheckersBoard checkersBoard = new CheckersBoard();
@@ -41,13 +41,13 @@ public class CheckersBoard extends GameBoard{
         primaryStage.setTitle("Checkers app");
         primaryStage.setScene(scene);
         primaryStage.show();
-        
 
-        
+
+
     }
 
 
- 
+
     @Override
     public void fillBoard(){
         for (int i = 0; i < 8; i++) {
@@ -61,7 +61,7 @@ public class CheckersBoard extends GameBoard{
                 }
                 if (j >= 5 && (i+j) % 2 != 0){
                     board[i][j].setPlaceholder(new CheckersPawn(false,board[i][j]));
-                    
+
 
 
                 }
@@ -82,8 +82,8 @@ public class CheckersBoard extends GameBoard{
             }
         }
 
-        
+
     }
 
-    
+
 }
