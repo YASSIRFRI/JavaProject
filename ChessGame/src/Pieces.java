@@ -22,10 +22,10 @@ abstract class Piece {
         this.isWhite = isWhite;
         this.location = location;
         if(isWhite){
-            this.image = new ImageView(new Image("file:static/White/" + name + ".png"));
+            this.image = new ImageView(new Image("/static/White/" + name + ".png"));
         }
         else{
-            this.image = new ImageView(new Image("file:static/Black/" + name + ".png"));
+            this.image = new ImageView(new Image("/static/Black/" + name + ".png"));
         }
 
         this.image.setFitHeight(Square.squareWidth - 25);
@@ -37,10 +37,10 @@ abstract class Piece {
         this.isWhite = isWhite;
         this.location = null;
         if(isWhite){
-            this.image = new ImageView(new Image("file:static/White/" + name + ".png"));
+            this.image = new ImageView(new Image("/static/White/" + name + ".png"));
         }
         else{
-            this.image = new ImageView(new Image("file:static/Black/" + name + ".png"));
+            this.image = new ImageView(new Image("/static/Black/" + name + ".png"));
         }
 
         this.image.setFitHeight(Square.squareWidth - 25);
