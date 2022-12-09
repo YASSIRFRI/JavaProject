@@ -2,6 +2,7 @@ import javax.print.attribute.standard.Destination;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 
 import java.lang.reflect.Array;
@@ -14,6 +15,8 @@ abstract class Piece {
     protected Square location;
     protected ImageView image;
     protected boolean hasMoved;
+
+
 
 
     public Piece(String name, boolean isWhite, Square location) {

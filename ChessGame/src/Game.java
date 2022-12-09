@@ -11,6 +11,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 enum GameStatus {
@@ -54,9 +55,10 @@ public class Game extends Application{
     public void setPlayers(Player[] players) {
         this.players = players;
     }
-    public void startGame(MouseEvent event) throws IOException{
+    public void startGame(MouseEvent event,Color[] colors) throws IOException{
         System.out.println("start");
-        ChessBoard chessBoard = new ChessBoard();
+
+        ChessBoard chessBoard = new ChessBoard(colors);
         chessBoard.fillBoard();
         chessBoard.setOnMouseClicked(chessBoard);
         Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
@@ -76,7 +78,7 @@ public class Game extends Application{
         primaryStage.show();
         controller.start.addEventHandler(MouseEvent.MOUSE_CLICKED, arg0 -> {
             try {
-                startGame(arg0);
+                startGame(arg0,controller.getColors());
             } catch (IOException e) {
                 e.printStackTrace();
             }
