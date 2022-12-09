@@ -22,7 +22,7 @@ public class Game extends Application{
     private GameBoard gameBoard;
     private Player[] players;
     
-    public static double windowWidth = 700.0;
+    public static double windowWidth = 400.0;
     // Getters and setters
     public GameStatus getStatus()
     {

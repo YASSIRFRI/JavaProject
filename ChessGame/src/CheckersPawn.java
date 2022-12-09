@@ -18,16 +18,16 @@ public class CheckersPawn  {
         else{
             this.image = new ImageView(new Image( name + ".png"));
                 }
-        
+
         this.image.setFitHeight(Square.squareWidth - 25);
         this.image.setFitWidth(Square.squareWidth - 25);
-        
+
     }
     public CheckersPawn(boolean isWhite ) {
             this.isWhite = isWhite;
             this.location = null;
-    
-            
+
+
 
     if(isWhite){
         this.image = new ImageView(new Image( name + ".png"));
@@ -35,7 +35,7 @@ public class CheckersPawn  {
     else{
         this.image = new ImageView(new Image(name + ".png"));
             }
-    
+
     this.image.setFitHeight(Square.squareWidth - 25);
     this.image.setFitWidth(Square.squareWidth - 25);
     }
@@ -73,8 +73,8 @@ public class CheckersPawn  {
     public boolean isDead() {
         return this.location == null;
     }
-    
-    
+
+
     public boolean validateMove(Move move) {
         return true;
 
@@ -85,7 +85,7 @@ public class CheckersPawn  {
             return null;
         }
 
-    
-    
+
+
 }
 
