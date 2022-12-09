@@ -4,28 +4,46 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TitledPane?>
-<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.control.RadioButton?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<TitledPane animated="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="565.0" prefWidth="678.0" text="ChessGame" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/19">
-  <content>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" style="-fx-background-color: White;">
-         <children>
-            <ChoiceBox fx:id="gametype" layoutX="200.0" layoutY="104.0" prefHeight="51.0" prefWidth="179.0" style="-fx-background-color: grey;" AnchorPane.bottomAnchor="374.07824894064566" AnchorPane.leftAnchor="200.0" AnchorPane.rightAnchor="286.0697131359937" AnchorPane.topAnchor="104.0" />
-            <Label layoutX="152.0" layoutY="38.0" prefHeight="60.0" prefWidth="340.0" text="Select a Game: ">
-               <font>
-                  <Font name="Fira Code Medium" size="33.0" />
-               </font>
-               <padding>
-                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-               </padding>
-            </Label>
-            <Button fx:id="start" layoutX="189.0" layoutY="415.0" mnemonicParsing="false" prefHeight="73.0" prefWidth="283.0" text="Start Game">
-               <font>
-                  <Font name="FontAwesome" size="40.0" />
-               </font>
-            </Button>
-         </children></AnchorPane>
-  </content>
-</TitledPane>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="716.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button fx:id="start" layoutX="201.0" layoutY="517.0" mnemonicParsing="false" onAction="#printValue" onMouseClicked="#getInfo" prefHeight="62.0" prefWidth="291.0" style="-fx-background-color: red; -fx-font-weight: Bolder;" text="Start Game" textFill="WHITE">
+         <font>
+            <Font size="32.0" />
+         </font>
+      </Button>
+      <ChoiceBox fx:id="gametype" layoutX="193.0" layoutY="187.0" prefHeight="48.0" prefWidth="330.0" style="-fx-background-color: red;" />
+      <Label layoutX="216.0" layoutY="106.0" prefHeight="69.0" prefWidth="284.0" style="-fx-font-weight: 800; -fx-text-alignment: end;" text="Select A Game:">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <RadioButton fx:id="single" layoutX="127.0" layoutY="350.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="193.0" text="Single Player">
+         <font>
+            <Font size="19.0" />
+         </font>
+      </RadioButton>
+      <RadioButton fx:id="two" layoutX="440.0" layoutY="354.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="167.0" text="2 Players">
+         <font>
+            <Font size="21.0" />
+         </font>
+      </RadioButton>
+      <Label fx:id="mode" layoutX="205.0" layoutY="285.0" prefHeight="69.0" prefWidth="284.0" style="-fx-font-weight: 800; -fx-text-alignment: end;" text="Select  A Mode:">
+         <font>
+            <Font size="30.0" />
+         </font>
+         <padding>
+            <Insets left="10.0" />
+         </padding>
+      </Label>
+      <ImageView fitHeight="101.0" fitWidth="708.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</Pane>

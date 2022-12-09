@@ -5,7 +5,6 @@ import java.io.Console;
 import javax.sound.midi.SysexMessage;
 
 import javafx.application.Application;
-import javafx.event.EvegintHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -34,18 +33,18 @@ public class CheckersBoard extends GameBoard{
         this.blackPieces = blackPieces;
     }
 
-    @Override
-    public void start(Stage primaryStage){
-        CheckersBoard checkersBoard = new CheckersBoard();
-        checkersBoard.fillBoard();
-        Scene scene = new Scene(checkersBoard);
-        primaryStage.setTitle("Checkers app");
-        primaryStage.setScene(scene);
-        primaryStage.show();
+    //@Override
+    //public void start(Stage primaryStage){
+        //CheckersBoard checkersBoard = new CheckersBoard();
+        //checkersBoard.fillBoard();
+        //Scene scene = new Scene(checkersBoard);
+        //primaryStage.setTitle("Checkers app");
+        //primaryStage.setScene(scene);
+        //primaryStage.show();
 
 
 
-    }
+    //}
 
 
 
