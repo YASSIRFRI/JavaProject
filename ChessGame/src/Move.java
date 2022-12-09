@@ -28,6 +28,14 @@ class Move {
         this.destinationSquare = destinationSquare;
         this.checkersPawn = checkersPawn;
     }
+    public Move(moveType type, CheckersPawn checkersPawn) {
+        this.type = type;
+        this.checkersPawn = checkersPawn;
+    }
+    public Move(moveType type) {
+        this.type = type;
+        this.checkersPawn = null;
+    }
     
     // Getters and setters
     public Square getSourceSquare() {
