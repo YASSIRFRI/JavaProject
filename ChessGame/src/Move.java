@@ -4,22 +4,41 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
+enum moveType{
+    NONE, NORMAL,KILL
+}
 
 class Move {
     private Square sourceSquare;
     private Square destinationSquare;
+    private moveType type;
     private Piece piece;
+    private CheckersPawn checkersPawn;
     private Piece enemyPiece;
+    private CheckersPawn enemyPawns;
+
 
     public Move(Square sourceSquare, Square destinationSquare, Piece piece) {
         this.sourceSquare = sourceSquare;
         this.destinationSquare = destinationSquare;
         this.piece = piece;
     }
+    public Move(Square sourceSquare, Square destinationSquare, CheckersPawn checkersPawn) {
+        this.sourceSquare = sourceSquare;
+        this.destinationSquare = destinationSquare;
+        this.checkersPawn = checkersPawn;
+    }
     
     // Getters and setters
     public Square getSourceSquare() {
         return sourceSquare;
+    }
+    public moveType getType(){
+        return type;
+    }
+    public void setType(moveType type){
+        this.type = type;
+
     }
 
     public Square getDestinationSquare() {
@@ -33,9 +52,20 @@ class Move {
     {
         this.enemyPiece=enemyPiece;
     }
+    public CheckersPawn getEnemyPawns()
+    {
+        return enemyPawns;
+    }
+    public void setEnemyPawns(CheckersPawn enemyPawns)
+    {
+        this.enemyPawns=enemyPawns;
+    }
 
     public Piece getPiece() {
         return piece;
+    }
+    public CheckersPawn getCheckersPawn() {
+        return checkersPawn;
     }
 
     public void setSource(Square sourceSquare) {
@@ -48,6 +78,9 @@ class Move {
 
     public void setPiece(Piece piece) {
         this.piece = piece;
+    }
+    public void setCheckersPawn(CheckersPawn checkersPawn) {
+        this.checkersPawn = checkersPawn;
     }
 
     public boolean equals(Move anotherMove) {
