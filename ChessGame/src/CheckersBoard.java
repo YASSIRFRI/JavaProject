@@ -30,7 +30,7 @@ public class CheckersBoard extends GameBoard{
         return blackPieces;
     }
 
-    public void setBlackPieces(ArrayList<Piece> blackPieces) {
+    public void setBlackPieces(ArrayList<CheckersPawn> blackPieces) {
         this.blackPieces = blackPieces;
     }
 
