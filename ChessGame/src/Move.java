@@ -4,53 +4,49 @@ import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
-enum MoveStatus
-{
-    VALID,INVALID,COMMITED,CHECK,CHECKMATE
-}
-enum MoveType
-{
-    NONE, NORMAL, KILL
-
+enum moveType{
+    NONE, NORMAL,KILL
 }
 
 class Move {
     private Square sourceSquare;
     private Square destinationSquare;
+    private moveType type;
     private Piece piece;
-    private MoveStatus status;
-    private MoveType type;
+    private CheckersPawn checkersPawn;
     private Piece enemyPiece;
+    private CheckersPawn enemyPawns;
 
-    public Move(MoveType type, Piece piece){
-        this.type = type;
-        this.piece = piece;
-    }
-    public Move(MoveType type){
-        this.type = type;
-        this.piece = null;
-    }
-    public Move(Square sourceSquare, Square destinationSquare, Piece piece, MoveStatus status) {
-        this.sourceSquare = sourceSquare;
-        this.destinationSquare = destinationSquare;
-        this.piece = piece;
-        this.status = status;
-
-        if(destinationSquare.getPlaceholder()!=null)
-        {
-            this.enemyPiece=destinationSquare.getPlaceholder();
-        }
-    }
 
     public Move(Square sourceSquare, Square destinationSquare, Piece piece) {
         this.sourceSquare = sourceSquare;
         this.destinationSquare = destinationSquare;
         this.piece = piece;
     }
+    public Move(Square sourceSquare, Square destinationSquare, CheckersPawn checkersPawn) {
+        this.sourceSquare = sourceSquare;
+        this.destinationSquare = destinationSquare;
+        this.checkersPawn = checkersPawn;
+    }
+    public Move(moveType type, CheckersPawn checkersPawn) {
+        this.type = type;
+        this.checkersPawn = checkersPawn;
+    }
+    public Move(moveType type) {
+        this.type = type;
+        this.checkersPawn = null;
+    }
     
     // Getters and setters
     public Square getSourceSquare() {
         return sourceSquare;
+    }
+    public moveType getType(){
+        return type;
+    }
+    public void setType(moveType type){
+        this.type = type;
+
     }
 
     public Square getDestinationSquare() {
@@ -64,15 +60,20 @@ class Move {
     {
         this.enemyPiece=enemyPiece;
     }
+    public CheckersPawn getEnemyPawns()
+    {
+        return enemyPawns;
+    }
+    public void setEnemyPawns(CheckersPawn enemyPawns)
+    {
+        this.enemyPawns=enemyPawns;
+    }
 
     public Piece getPiece() {
         return piece;
     }
-    public MoveStatus getStatus() {
-        return this.status;
-    }
-    public MoveType getType() {
-        return this.type;
+    public CheckersPawn getCheckersPawn() {
+        return checkersPawn;
     }
 
     public void setSource(Square sourceSquare) {
@@ -86,57 +87,53 @@ class Move {
     public void setPiece(Piece piece) {
         this.piece = piece;
     }
-
-    public void setStatus(MoveStatus status) {
-        this.status = status;
-    }
-    public void setType(MoveType type) {
-        this.type = type;
+    public void setCheckersPawn(CheckersPawn checkersPawn) {
+        this.checkersPawn = checkersPawn;
     }
 
-    public boolean begin(){
-        
-
-        return status == MoveStatus.VALID ;
-
-
-    }
-    public void reverse(){
-        
-    }
     public boolean equals(Move anotherMove) {
 		if(this.getSourceSquare() == anotherMove.getSourceSquare() && this.getDestinationSquare() == anotherMove.getDestinationSquare() ){
 			return true;
 		}
 		return false;
 	}
-    public void updateStatus(Move move, ChessBoard chessBoard){
-//        Square[][] board = new Square[8][8];
-        if(piece.validateMove(move.getDestinationSquare(), chessBoard))
-            status = MoveStatus.VALID;
-        else
-    
-            status = MoveStatus.INVALID;
-    }
 
 
     public void doMove(ChessBoard chessBoard) {
 
+        // Handling castling
+        if (piece.getName().equals("King")) {
+            int difference = piece.getLocation().getx() - destinationSquare.getx();
+
+            if (difference == 2) {
+                Square rookSource = chessBoard.getBoard()[piece.getLocation().getx() - 3][piece.getLocation().gety()];
+                Square rookDestination = chessBoard.getBoard()[piece.getLocation().getx() - 1][piece.getLocation().gety()];
+                Move rookMove = new Move(rookSource, rookDestination, rookSource.getPlaceholder());
+                rookMove.doMove(chessBoard);
+            }
+
+            else if (difference == -2) {
+                Square rookSource = chessBoard.getBoard()[piece.getLocation().getx() + 4][piece.getLocation().gety()];
+                Square rookDestination = chessBoard.getBoard()[piece.getLocation().getx() + 1][piece.getLocation().gety()];
+                Move rookMove = new Move(rookSource, rookDestination, rookSource.getPlaceholder());
+                rookMove.doMove(chessBoard);
+            }
+        }
+        //////////////////////////////////////////
+
         if (!destinationSquare.isEmpty()) {
             Piece killedPiece = destinationSquare.getPlaceholder();
             chessBoard.getChildren().remove(killedPiece.getImage());  // Removing the image of the killed piece
+            this.enemyPiece=killedPiece;
 
-            if (killedPiece.getIsWhite())
-            {
-                this.enemyPiece=killedPiece;
+            if (killedPiece.getIsWhite()) {
                 chessBoard.getWhitePieces().remove(killedPiece);
             }
-            else
-            {
-                this.enemyPiece=killedPiece;
+            else {
                 chessBoard.getBlackPieces().remove(killedPiece);
-                destinationSquare.getPlaceholder().setLocation(null);
             }
+
+            destinationSquare.getPlaceholder().setLocation(null);
         }
         
         destinationSquare.setPlaceholder(piece);
@@ -147,10 +144,9 @@ class Move {
         this.piece.setHasMoved(true);
 
     }
-    public void reverseMove(GameBoard chessBoard)
+    public void reverseMove(ChessBoard chessBoard)
     {
-        if(this.enemyPiece!=null)
-        {
+        if (this.enemyPiece != null) {
             chessBoard.add(this.enemyPiece.getImage(), this.destinationSquare.getx(), this.destinationSquare.gety());
             sourceSquare.setPlaceholder(piece);
             chessBoard.getChildren().remove(this.piece.getImage());
@@ -158,20 +154,23 @@ class Move {
             chessBoard.board[this.destinationSquare.getx()][this.destinationSquare.gety()].setPlaceholder(this.enemyPiece);
             chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
             this.enemyPiece.setLocation(this.destinationSquare);
-            this.piece.setLocation(this.sourceSquare);
-            this.piece.setHasMoved(false);
-    }
-    else
-    {
-        sourceSquare.setPlaceholder(piece);
-        chessBoard.getChildren().remove(this.piece.getImage());
-        chessBoard.getChildren().remove(this.destinationSquare.getPlaceholder().getImage());
-        chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
-        chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
-        destinationSquare.setPlaceholder(null);
+        }
+
+        else {
+            sourceSquare.setPlaceholder(piece);
+            chessBoard.getChildren().remove(this.piece.getImage());
+            chessBoard.getChildren().remove(this.destinationSquare.getPlaceholder().getImage());
+            chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
+            chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
+            destinationSquare.setPlaceholder(null);
+        }
+
         this.piece.setLocation(this.sourceSquare);
-        this.piece.setHasMoved(false);
-    }
+        if (this.piece.isHasMoved())
+            this.piece.setHasMoved(false);
+
+        chessBoard.switchTurn();
+        chessBoard.updateStatusLabel();
     }
    
 }

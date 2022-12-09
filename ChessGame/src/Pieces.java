@@ -22,10 +22,10 @@ abstract class Piece {
         this.isWhite = isWhite;
         this.location = location;
         if(isWhite){
-            this.image = new ImageView(new Image("file:static/White/" + name + ".png"));
+            this.image = new ImageView(new Image("/static/White/" + name + ".png"));
         }
         else{
-            this.image = new ImageView(new Image("file:static/Black/" + name + ".png"));
+            this.image = new ImageView(new Image("/static/Black/" + name + ".png"));
         }
 
         this.image.setFitHeight(Square.squareWidth - 25);
@@ -37,10 +37,10 @@ abstract class Piece {
         this.isWhite = isWhite;
         this.location = null;
         if(isWhite){
-            this.image = new ImageView(new Image("file:static/White/" + name + ".png"));
+            this.image = new ImageView(new Image("/static/White/" + name + ".png"));
         }
         else{
-            this.image = new ImageView(new Image("file:static/Black/" + name + ".png"));
+            this.image = new ImageView(new Image("/static/Black/" + name + ".png"));
         }
 
         this.image.setFitHeight(Square.squareWidth - 25);
@@ -118,11 +118,11 @@ abstract class Piece {
             Square[][] board = chessBoard.getBoard();
             int xSrc = this.getLocation().getx();
             int ySrc = this.getLocation().gety();
-            Rook rightRook = this.isWhite ? chessBoard.getRightWhiteRook() : chessBoard.getRightBlackRook();
-            Rook leftRook = this.isWhite ? chessBoard.getLeftWhiteRook() : chessBoard.getLeftBlackRook();
+            Rook rightRook = (Rook) (this.isWhite ? chessBoard.getBoard()[7][0].getPlaceholder() : chessBoard.getBoard()[7][7].getPlaceholder());
+            Rook leftRook = (Rook) (this.isWhite ? chessBoard.getBoard()[0][0].getPlaceholder() : chessBoard.getBoard()[0][7].getPlaceholder());
 
             // Checking the right side
-            if ( (! rightRook.isHasMoved()) && (! chessBoard.isKingInThreat(this.isWhite)) ) {
+            if ( (rightRook != null) && (! rightRook.isHasMoved()) && (! chessBoard.isKingInThreat(this.isWhite)) ) {
                 if (board[xSrc+1][ySrc].isEmpty() && board[xSrc+2][ySrc].isEmpty() && board[xSrc+3][ySrc].isEmpty()) {
                     if (this.kingWillNotBeThreatened(board[xSrc+1][ySrc], chessBoard) && this.kingWillNotBeThreatened(board[xSrc+2][ySrc], chessBoard))
                         finalValidMoves.add(board[xSrc+2][ySrc]);
@@ -131,7 +131,7 @@ abstract class Piece {
             }
 
             // Checking the left side
-            if ( (! leftRook.isHasMoved()) && (!chessBoard.isKingInThreat(this.isWhite)) ) {
+            if ( (leftRook != null) && (! leftRook.isHasMoved()) && (!chessBoard.isKingInThreat(this.isWhite)) ) {
                 if (board[xSrc-1][ySrc].isEmpty() && board[xSrc-2][ySrc].isEmpty()) {
                     if (this.kingWillNotBeThreatened(board[xSrc-1][ySrc], chessBoard) && this.kingWillNotBeThreatened(board[xSrc-2][ySrc], chessBoard))
                         finalValidMoves.add(board[xSrc-2][ySrc]);
@@ -456,32 +456,36 @@ class Pawn extends Piece {
     }
 }
 
-class CheckersPawn extends Piece {
-    public CheckersPawn(boolean isWhite) {
-        super("CheckersPawn", isWhite);
-    }
+<<<<<<< HEAD
 
-    public CheckersPawn(boolean isWhite, Square location) {
-        super("CheckersPawn", isWhite, location);
-    }
-
-    public boolean validateMove(Move move) {
-        public boolean validateMove(Square destination, ChessBoard chessBoard) {
-            ArrayList<Square> validMoves = this.getValidMoves(chessBoard);
-            int xDest = destination.getx();
-            int yDest = destination.gety();
-            for (int i=0; i<validMoves.size(); i++) {
-                int i_x = validMoves.get(i).getx();
-                int i_y = validMoves.get(i).gety();
-    
-                if (i_x == xDest && i_y == yDest)       // Checking if the move is in valid moves
-                    return true;
-            }
-            return false;
-        }
-    }
-
-}
+=======
+//class CheckersPawn extends Piece {
+//    public CheckersPawn(boolean isWhite) {
+//        super("CheckersPawn", isWhite);
+//    }
+//
+//    public CheckersPawn(boolean isWhite, Square location) {
+//        super("CheckersPawn", isWhite, location);
+//    }
+//
+//    public boolean validateMove(Move move) {
+//        public boolean validateMove(Square destination, ChessBoard chessBoard) {
+//            ArrayList<Square> validMoves = this.getValidMoves(chessBoard);
+//            int xDest = destination.getx();
+//            int yDest = destination.gety();
+//            for (int i=0; i<validMoves.size(); i++) {
+//                int i_x = validMoves.get(i).getx();
+//                int i_y = validMoves.get(i).gety();
+//
+//                if (i_x == xDest && i_y == yDest)       // Checking if the move is in valid moves
+//                    return true;
+//            }
+//            return false;
+//        }
+//    }
+//
+//}
+>>>>>>> ead387b84b76dd4cbd02590e7f48aed03150f4ee
 
 
 
