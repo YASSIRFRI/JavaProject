@@ -5,7 +5,7 @@ import java.io.Console;
 import javax.sound.midi.SysexMessage;
 
 import javafx.application.Application;
-import javafx.event.EvegintHandler;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -34,7 +34,7 @@ public class CheckersBoard extends GameBoard{
         this.blackPieces = blackPieces;
     }
 
-    @Override
+    /*@Override
     public void start(Stage primaryStage){
         CheckersBoard checkersBoard = new CheckersBoard();
         checkersBoard.fillBoard();
@@ -46,7 +46,7 @@ public class CheckersBoard extends GameBoard{
 
 
     }
-
+*/
 
 
     @Override
