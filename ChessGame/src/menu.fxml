@@ -5,7 +5,10 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
+<<<<<<< Updated upstream
 <?import javafx.scene.image.ImageView?>
+=======
+>>>>>>> Stashed changes
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
@@ -26,12 +29,20 @@
             <Insets left="10.0" />
          </padding>
       </Label>
+<<<<<<< Updated upstream
       <RadioButton fx:id="single" layoutX="127.0" layoutY="350.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="193.0" text="Single Player">
+=======
+      <RadioButton fx:id="single" layoutX="33.0" layoutY="415.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="193.0" text="Single Player">
+>>>>>>> Stashed changes
          <font>
             <Font size="19.0" />
          </font>
       </RadioButton>
+<<<<<<< Updated upstream
       <RadioButton fx:id="two" layoutX="440.0" layoutY="354.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="167.0" text="2 Players">
+=======
+      <RadioButton fx:id="two" layoutX="442.0" layoutY="418.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="167.0" text="2 Players">
+>>>>>>> Stashed changes
          <font>
             <Font size="21.0" />
          </font>
@@ -44,6 +55,9 @@
             <Insets left="10.0" />
          </padding>
       </Label>
+<<<<<<< Updated upstream
       <ImageView fitHeight="101.0" fitWidth="708.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true" />
+=======
+>>>>>>> Stashed changes
    </children>
 </Pane>

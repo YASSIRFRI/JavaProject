@@ -2,6 +2,7 @@ import java.io.Console;
 import java.io.IOException;
 import java.util.ArrayList;
 
+
 import javax.sound.midi.SysexMessage;
 
 import javafx.application.Application;
@@ -54,10 +55,46 @@ public class Game extends Application{
         this.players = players;
     }
 
+<<<<<<< Updated upstream
+=======
+            }
+        for (Piece pi : bpieces) {
+            if (pi.getValidMoves(chessBoard).isEmpty()) {
+                    status = GameStatus.WHITE_WIN;
+                    System.out.println(" white is the winner");
+
+            }
+        for (Piece pe : AllPieces) {
+            if (pe.isHasMoved() == true) {
+                status = GameStatus.ACTIVE;
+
+
+
+                }
+        
+            }
+
+
+                         
+    
+                    
+                
+                    
+        }
+
+    }
+}
+  
+
+
+
+            
+>>>>>>> Stashed changes
     @Override
     public void start(Stage primaryStage) throws IOException{
         FXMLLoader loader= new FXMLLoader(getClass().getResource("menu.fxml"));
-        loader.setController(Controller.class);
+        Controller controller = new Controller();
+        loader.setController(controller);
         Scene scene1 = new Scene(loader.load());
         primaryStage.setScene(scene1);
         primaryStage.setTitle("ChessGame");
@@ -67,9 +104,10 @@ public class Game extends Application{
         //Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
         //primaryStage.setScene(scene);
         primaryStage.show();
+        String[] gameType = controller.getInfo();
+        System.out.println(gameType);
         
     }
-
 
     public static void main(String[] args) {
         launch(args);
