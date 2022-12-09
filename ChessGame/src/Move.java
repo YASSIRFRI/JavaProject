@@ -125,15 +125,18 @@ class Move {
         if (!destinationSquare.isEmpty()) {
             Piece killedPiece = destinationSquare.getPlaceholder();
             chessBoard.getChildren().remove(killedPiece.getImage());  // Removing the image of the killed piece
+            this.enemyPiece=killedPiece;
 
-            if (killedPiece.getIsWhite())
+            if (killedPiece.getIsWhite()) {
                 chessBoard.getWhitePieces().remove(killedPiece);
-            else
+            }
+            else {
                 chessBoard.getBlackPieces().remove(killedPiece);
+            }
 
             destinationSquare.getPlaceholder().setLocation(null);
         }
-
+        
         destinationSquare.setPlaceholder(piece);
         chessBoard.getChildren().remove(piece.getImage());
         this.piece.setLocation(destinationSquare);
@@ -142,28 +145,33 @@ class Move {
         this.piece.setHasMoved(true);
 
     }
-    public void reverseMove(GameBoard chessBoard)
+    public void reverseMove(ChessBoard chessBoard)
     {
-        if(this.enemyPiece!=null)
-        {
+        if (this.enemyPiece!=null) {
             chessBoard.add(this.enemyPiece.getImage(), this.destinationSquare.getx(), this.destinationSquare.gety());
             sourceSquare.setPlaceholder(piece);
+            chessBoard.getChildren().remove(this.piece.getImage());
             chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
             chessBoard.board[this.destinationSquare.getx()][this.destinationSquare.gety()].setPlaceholder(this.enemyPiece);
             chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
             this.enemyPiece.setLocation(this.destinationSquare);
-            this.piece.setLocation(this.sourceSquare);
-            this.piece.setHasMoved(false);
-    }
-    else
-    {
-        sourceSquare.setPlaceholder(piece);
-        chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
-        chessBoard.getChildren().remove(this.destinationSquare.getPlaceholder().getImage());
-        chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
+        }
+
+        else {
+            sourceSquare.setPlaceholder(piece);
+            chessBoard.getChildren().remove(this.piece.getImage());
+            chessBoard.getChildren().remove(this.destinationSquare.getPlaceholder().getImage());
+            chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
+            chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
+            destinationSquare.setPlaceholder(null);
+        }
+
         this.piece.setLocation(this.sourceSquare);
-        this.piece.setHasMoved(false);
-    }
+        if (this.piece.isHasMoved())
+            this.piece.setHasMoved(false);
+
+        chessBoard.switchTurn();
+        chessBoard.updateStatusLabel();
     }
    
 }

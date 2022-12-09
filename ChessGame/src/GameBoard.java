@@ -24,9 +24,8 @@ import javax.management.monitor.MonitorNotification;
 public abstract class GameBoard extends GridPane {
 
     protected Square[][] board;
-    protected ArrayList<Move> gameHistory;
-
     protected int size;
+
     public GameBoard(int size) {
         super();
         this.size = size;
@@ -56,15 +55,7 @@ public abstract class GameBoard extends GridPane {
                 count++;
             }
         }
-        this.gameHistory = new ArrayList<Move>();
-        Button reverseMove= new Button("Reverse Move");
-        this.add(reverseMove,10,2,1,1);
-        reverseMove.setOnAction(e->{
-            if(gameHistory.size()>0){
-                Move lastMove=gameHistory.get(gameHistory.size()-1);
-                lastMove.reverseMove(this);
-        }
-    });
+
     }
 
     public Square[][] getBoard() {
@@ -79,8 +70,9 @@ public abstract class GameBoard extends GridPane {
 }
 
 
-class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
+class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
 
+    public static Square trigger = null;
     private final ArrayList<Square> highlightedSquares;
     private King blackKing;
     private King whiteKing;
@@ -92,8 +84,8 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
     private ArrayList<Piece> blackPieces;
     private boolean isWhiteTurn;
     private Label statusLabel;
+    private ArrayList<Move> gameHistory;
 
-    public static Square trigger = null;
 
     ChessBoard() {
         super(8);
@@ -108,16 +100,54 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         statusLabel.setFont(new Font(30));
         statusLabel.setAlignment(Pos.CENTER);
         statusLabel.setTextFill(Color.RED);
+
+        this.gameHistory = new ArrayList<Move>();
+        Button reverseMove = new Button("Reverse Move");
+
+        reverseMove.styleProperty();
+        this.add(reverseMove, 10, 2, 1, 1);
+        reverseMove.setOnAction(e -> {
+            if (gameHistory.size() > 0) {
+                Move lastMove = gameHistory.get(gameHistory.size() - 1);
+                lastMove.reverseMove(this);
+                this.gameHistory.remove(lastMove);
+            } else {
+                System.out.println("Empty History");
+            }
+        });
     }
 
-    public Rook getRightWhiteRook() { return rightWhiteRook; }
-    public void setRightWhiteRook(Rook rightWhiteRook) { this.rightWhiteRook = rightWhiteRook; }
-    public Rook getLeftWhiteRook() { return leftWhiteRook; }
-    public void setLeftWhiteRook(Rook leftWhiteRook) { this.leftWhiteRook = leftWhiteRook; }
-    public Rook getRightBlackRook() { return rightBlackRook; }
-    public void setRightBlackRook(Rook rightBlackRook) { this.rightBlackRook = rightBlackRook; }
-    public Rook getLeftBlackRook() { return leftBlackRook; }
-    public void setLeftBlackRook(Rook leftBlackRook) { this.leftBlackRook = leftBlackRook; }
+    public Rook getRightWhiteRook() {
+        return rightWhiteRook;
+    }
+
+    public void setRightWhiteRook(Rook rightWhiteRook) {
+        this.rightWhiteRook = rightWhiteRook;
+    }
+
+    public Rook getLeftWhiteRook() {
+        return leftWhiteRook;
+    }
+
+    public void setLeftWhiteRook(Rook leftWhiteRook) {
+        this.leftWhiteRook = leftWhiteRook;
+    }
+
+    public Rook getRightBlackRook() {
+        return rightBlackRook;
+    }
+
+    public void setRightBlackRook(Rook rightBlackRook) {
+        this.rightBlackRook = rightBlackRook;
+    }
+
+    public Rook getLeftBlackRook() {
+        return leftBlackRook;
+    }
+
+    public void setLeftBlackRook(Rook leftBlackRook) {
+        this.leftBlackRook = leftBlackRook;
+    }
 
     public ArrayList<Piece> getWhitePieces() {
         return whitePieces;
@@ -162,9 +192,13 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         return teamIsWhite ? this.getWhitePieces() : this.getBlackPieces();
     }
 
-    public boolean isWhiteTurn() { return isWhiteTurn; }
+    public boolean isWhiteTurn() {
+        return isWhiteTurn;
+    }
 
-    public void setWhiteTurn(boolean whiteTurn) { isWhiteTurn = whiteTurn; }
+    public void setWhiteTurn(boolean whiteTurn) {
+        isWhiteTurn = whiteTurn;
+    }
 
     public boolean isKingInThreat(boolean teamIsWhite) {
         King king;
@@ -176,7 +210,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         ///////////////////////////// Yassir's algorithm ////////////////////////////////////////////
 
         // Iterating over enemy pieces to see if they can kill him
-        for (Piece enemy: getEnemyPieces(teamIsWhite)) {
+        for (Piece enemy : getEnemyPieces(teamIsWhite)) {
             if (enemy.validateMove(king.getLocation(), this))
                 return true;
         }
@@ -260,8 +294,14 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
         return result;
     }
-    public Label getStatusLabel() { return statusLabel; }
-    public void setStatusLabel(Label statusLabel) { this.statusLabel = statusLabel; }
+
+    public Label getStatusLabel() {
+        return statusLabel;
+    }
+
+    public void setStatusLabel(Label statusLabel) {
+        this.statusLabel = statusLabel;
+    }
 
 
     @Override
@@ -288,8 +328,8 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         board[7][7].setPlaceholder(new Rook(false, board[7][7]));
         board[7][0].setPlaceholder(new Rook(true, board[7][0]));
 
-        for (int i=0; i<8; i++) {
-            for (int j=0; j<8; j++) {
+        for (int i = 0; i < 8; i++) {
+            for (int j = 0; j < 8; j++) {
                 if (board[i][j].getPlaceholder() != null) {
                     this.add(board[i][j].getPlaceholder().getImage(), i, j);
 
@@ -316,7 +356,7 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
 
     public void removeHighlights() {
 
-        for (Square s: highlightedSquares)
+        for (Square s : highlightedSquares)
             s.resetColor();
 
         this.highlightedSquares.clear();
@@ -327,8 +367,8 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         Square clickedSquare = null;
         if (target instanceof Square)
             clickedSquare = (Square) target;
-        else if (target instanceof ImageView ) {
-            ImageView image= (ImageView)target;
+        else if (target instanceof ImageView) {
+            ImageView image = (ImageView) target;
             int x = GridPane.getColumnIndex(image);
             int y = GridPane.getRowIndex(image);
             clickedSquare = this.board[x][y];
@@ -342,28 +382,30 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         piece.getLocation().setFill(Color.DARKSLATEBLUE);
         highlightedSquares.add(piece.getLocation());
         ArrayList<Square> moves = piece.getFinalValidMoves(this);
-        for (Square s: moves) {
+        for (Square s : moves) {
             highlightedSquares.add(s);
-            if ((! s.isEmpty()) && piece.isEnemy(s.getPlaceholder()))
+            if ((!s.isEmpty()) && piece.isEnemy(s.getPlaceholder()))
                 s.setFill(Color.DARKRED);
             else
                 s.setFill(Color.LIMEGREEN);
         }
     }
 
-    public void switchTurn() { this.isWhiteTurn = !this.isWhiteTurn(); }
+    public void switchTurn() {
+        this.isWhiteTurn = !this.isWhiteTurn();
+    }
 
     public GameStatus getBoardStatus() {
 
-        for (Piece piece: this.getAlliesPieces(isWhiteTurn)) {
-            if (! piece.getFinalValidMoves(this).isEmpty())
+        for (Piece piece : this.getAlliesPieces(isWhiteTurn)) {
+            if (!piece.getFinalValidMoves(this).isEmpty())
                 return isKingInThreat(isWhiteTurn) ? GameStatus.CHECK : GameStatus.ACTIVE;
         }
         return isKingInThreat(isWhiteTurn) ? GameStatus.CHECKMATE : GameStatus.STALEMATE; // If all pieces don't have any legal moves
     }
 
     public void updateStatusLabel() {
-        String text="";
+        String text = "";
 
         switch (this.getBoardStatus()) {
             case ACTIVE:
@@ -402,29 +444,22 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
                     this.switchTurn();
                     this.updateStatusLabel();
                     trigger = null;
-                }
-                else {
+                } else {
                     if (clickedSquare.isEmpty()) {
                         removeHighlights();
                         trigger = null;
-                    }
-
-                    else {
+                    } else {
                         if (clickedSquare.getPlaceholder().getIsWhite() == isWhiteTurn()) {
                             highlightValidMoves(clickedSquare.getPlaceholder());
                             trigger = clickedSquare;
-                        }
-
-                        else
+                        } else
                             removeHighlights();
 
                     }
                 }
 
 
-            }
-
-            else {
+            } else {
                 if (clickedSquare.isEmpty())
                     removeHighlights();
                 else {
@@ -439,7 +474,6 @@ class ChessBoard extends GameBoard implements  EventHandler<MouseEvent> {
         }
 
 
-    
     }
 
 }
