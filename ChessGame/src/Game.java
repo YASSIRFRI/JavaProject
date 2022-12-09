@@ -54,42 +54,17 @@ public class Game extends Application{
     public void setPlayers(Player[] players) {
         this.players = players;
     }
-
-<<<<<<< Updated upstream
-=======
-            }
-        for (Piece pi : bpieces) {
-            if (pi.getValidMoves(chessBoard).isEmpty()) {
-                    status = GameStatus.WHITE_WIN;
-                    System.out.println(" white is the winner");
-
-            }
-        for (Piece pe : AllPieces) {
-            if (pe.isHasMoved() == true) {
-                status = GameStatus.ACTIVE;
-
-
-
-                }
-        
-            }
-
-
-                         
-    
-                    
-                
-                    
-        }
-
+    public void startGame(MouseEvent event) throws IOException{
+        System.out.println("start");
+        ChessBoard chessBoard = new ChessBoard();
+        chessBoard.fillBoard();
+        chessBoard.setOnMouseClicked(chessBoard);
+        Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
-}
-  
 
-
-
-            
->>>>>>> Stashed changes
     @Override
     public void start(Stage primaryStage) throws IOException{
         FXMLLoader loader= new FXMLLoader(getClass().getResource("menu.fxml"));
@@ -98,15 +73,18 @@ public class Game extends Application{
         Scene scene1 = new Scene(loader.load());
         primaryStage.setScene(scene1);
         primaryStage.setTitle("ChessGame");
-        //ChessBoard chessBoard = new ChessBoard();
-        //chessBoard.fillBoard();
-        //chessBoard.setOnMouseClicked(chessBoard);
-        //Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
-        //primaryStage.setScene(scene);
         primaryStage.show();
-        String[] gameType = controller.getInfo();
-        System.out.println(gameType);
-        
+        controller.start.addEventHandler(MouseEvent.MOUSE_CLICKED, arg0 -> {
+            try {
+                startGame(arg0);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+
+
     }
 
     public static void main(String[] args) {

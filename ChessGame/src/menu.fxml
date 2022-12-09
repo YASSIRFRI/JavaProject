@@ -5,23 +5,19 @@
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
-<<<<<<< Updated upstream
 <?import javafx.scene.image.ImageView?>
-=======
->>>>>>> Stashed changes
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="603.0" prefWidth="716.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="726.0" style="-fx-background-image: url(&quot;file:/home/attirpunk/Desktop/LBD3/JavaProject/ChessGame/src/static/61564.jpg&quot;);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Button fx:id="start" layoutX="201.0" layoutY="517.0" mnemonicParsing="false" onAction="#printValue" onMouseClicked="#getInfo" prefHeight="62.0" prefWidth="291.0" style="-fx-background-color: red; -fx-font-weight: Bolder;" text="Start Game" textFill="WHITE">
+      <Button fx:id="start" layoutX="213.0" layoutY="513.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="291.0" style="-fx-background-color: #966F33; -fx-font-weight: Bolder;" text="Start Game" textFill="WHITE">
          <font>
             <Font size="32.0" />
          </font>
       </Button>
-      <ChoiceBox fx:id="gametype" layoutX="193.0" layoutY="187.0" prefHeight="48.0" prefWidth="330.0" style="-fx-background-color: red;" />
-      <Label layoutX="216.0" layoutY="106.0" prefHeight="69.0" prefWidth="284.0" style="-fx-font-weight: 800; -fx-text-alignment: end;" text="Select A Game:">
+      <ChoiceBox fx:id="gametype" layoutX="193.0" layoutY="187.0" prefHeight="48.0" prefWidth="330.0" style="-fx-background-color: #966F33;" />
+      <Label layoutX="216.0" layoutY="106.0" prefHeight="69.0" prefWidth="284.0" style="-fx-font-weight: 800; -fx-text-alignment: end;" text="Select A Game:" textAlignment="CENTER" textFill="#335b96">
          <font>
             <Font size="30.0" />
          </font>
@@ -29,25 +25,17 @@
             <Insets left="10.0" />
          </padding>
       </Label>
-<<<<<<< Updated upstream
-      <RadioButton fx:id="single" layoutX="127.0" layoutY="350.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="193.0" text="Single Player">
-=======
-      <RadioButton fx:id="single" layoutX="33.0" layoutY="415.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="193.0" text="Single Player">
->>>>>>> Stashed changes
+      <RadioButton fx:id="single" layoutX="97.0" layoutY="347.0" mnemonicParsing="false" prefHeight="48.0" prefWidth="222.0" text="Single Player" textFill="#335b96">
          <font>
-            <Font size="19.0" />
+            <Font name="System Bold" size="21.0" />
          </font>
       </RadioButton>
-<<<<<<< Updated upstream
-      <RadioButton fx:id="two" layoutX="440.0" layoutY="354.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="167.0" text="2 Players">
-=======
-      <RadioButton fx:id="two" layoutX="442.0" layoutY="418.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="167.0" text="2 Players">
->>>>>>> Stashed changes
+      <RadioButton fx:id="two" layoutX="426.0" layoutY="351.0" mnemonicParsing="false" prefHeight="41.0" prefWidth="167.0" text="2 Players" textFill="#335b96">
          <font>
-            <Font size="21.0" />
+            <Font name="System Bold" size="22.0" />
          </font>
       </RadioButton>
-      <Label fx:id="mode" layoutX="205.0" layoutY="285.0" prefHeight="69.0" prefWidth="284.0" style="-fx-font-weight: 800; -fx-text-alignment: end;" text="Select  A Mode:">
+      <Label fx:id="mode" layoutX="205.0" layoutY="285.0" prefHeight="69.0" prefWidth="284.0" style="-fx-font-weight: 800; -fx-text-alignment: end;" text="Select  A Mode:" textFill="#335b96">
          <font>
             <Font size="30.0" />
          </font>
@@ -55,9 +43,6 @@
             <Insets left="10.0" />
          </padding>
       </Label>
-<<<<<<< Updated upstream
       <ImageView fitHeight="101.0" fitWidth="708.0" layoutX="5.0" pickOnBounds="true" preserveRatio="true" />
-=======
->>>>>>> Stashed changes
    </children>
 </Pane>

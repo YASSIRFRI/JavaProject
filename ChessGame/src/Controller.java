@@ -4,6 +4,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.RadioButton;
+import javafx.scene.input.MouseEvent;
 
 public class Controller implements Initializable{
 
@@ -11,8 +12,10 @@ public class Controller implements Initializable{
     private ChoiceBox<String> gametype;
 
     @FXML
-    private Button start;
+    public Button start;
 
+    public boolean state=false;
+    public String[] info;
 
     @FXML
     private RadioButton single;
@@ -24,34 +27,21 @@ public class Controller implements Initializable{
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle resourceBundle) {
         gametype.getItems().addAll("Chess", "Checkers");
-        gametype.setValue("Chess");
-    }
-    @FXML
-    public String getSelectedGame(ActionEvent event){
-        System.out.println(gametype.getValue());
-        return gametype.getValue();
+        gametype.setValue(null);
     }
 
-
-
-    @FXML
-    public void printValue(ActionEvent event){
-        System.out.println(gametype.getValue());
-    }
-
-    @FXML
-    public String[] getInfo()
-    {
+    public String[] startGame(){
         String[] info = new String[2];
         info[0] = gametype.getValue();
-        if(single.isSelected())
-        {
+        if(single.isSelected()){
             info[1] = "single";
         }
-        else if(two.isSelected())
-        {
+        else if(two.isSelected()){
             info[1] = "two";
         }
-        return info;
+        return info; 
     }
+
+
+
 }
