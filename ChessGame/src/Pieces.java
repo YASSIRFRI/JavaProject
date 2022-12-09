@@ -456,6 +456,9 @@ class Pawn extends Piece {
     }
 }
 
+<<<<<<< HEAD
+
+=======
 //class CheckersPawn extends Piece {
 //    public CheckersPawn(boolean isWhite) {
 //        super("CheckersPawn", isWhite);
@@ -482,6 +485,7 @@ class Pawn extends Piece {
 //    }
 //
 //}
+>>>>>>> ead387b84b76dd4cbd02590e7f48aed03150f4ee
 
 
 

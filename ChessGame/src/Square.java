@@ -10,6 +10,8 @@ public class Square extends Rectangle {
     private int y;
     public static double squareWidth = Game.windowWidth / 8;
     private Piece placeholder;
+    private CheckersPawn placeHolder;
+
 
     public Square(int x, int y, Piece placeholder) {
         super(squareWidth,squareWidth,squareWidth,squareWidth);
@@ -18,20 +20,38 @@ public class Square extends Rectangle {
         this.placeholder = placeholder;
     }
 
+    public Square(int x, int y, CheckersPawn placeHolder) {
+        super(squareWidth,squareWidth,squareWidth,squareWidth);
+        this.x = x;
+        this.y = y;
+        this.placeHolder = placeHolder;
+
+    }
+
     public Square(int x, int y, Color color) {
         super(squareWidth,squareWidth,squareWidth,squareWidth);
         this.x = x;
         this.y = y;
         this.setFill(color);
         this.placeholder = null;
+        this.placeHolder = null;
     }
 
     // Getters and setters
     public Piece getPlaceholder() {
         return placeholder;
     }
+    public CheckersPawn getPlaceHolder() {
+        return placeHolder;
+    }
+    public void setPlaceHolder(CheckersPawn placeHolder) {
+        this.placeHolder = placeHolder;
+    }
     public int getx() {
         return x;
+    }
+    public boolean hasPiece() {
+        return placeHolder != null;
     }
 
     public int gety() {
