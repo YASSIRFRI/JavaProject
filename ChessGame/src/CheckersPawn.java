@@ -74,7 +74,6 @@ public class CheckersPawn  {
         return this.location == null;
     }
 
-
     public boolean validateMove(Move move) {
         return true;
 

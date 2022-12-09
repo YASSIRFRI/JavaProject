@@ -5,7 +5,7 @@ import java.io.Console;
 import javax.sound.midi.SysexMessage;
 
 import javafx.application.Application;
-import javafx.event.EventHandler;
+//import javafx.event.EvegintHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -47,7 +47,11 @@ public class CheckersBoard extends GameBoard{
 //
 //    }
 
-    
+
+//    }
+
+
+
     @Override
     public void fillBoard(){
         for (int i = 0; i < 8; i++) {
@@ -79,6 +83,19 @@ public class CheckersBoard extends GameBoard{
 
 
 }
+    public moveType doMove( CheckersPawn checkersPawn,Square s, Square y) {
+        //Move move = new Move(s, y, checkersPawn);
+        if (board[y.getx()][y.gety()].hasPiece() || (y.getx()+ y.gety())% 2 ==0){
+            //move.setType(moveType.NONE);
+            //move.setCheckersPawn(board[y.getx()][y.gety()].getPlaceHolder());
+            return moveType.NONE;
+
+
+
+        }
+        return null;
+
+    }
 }
 
 
