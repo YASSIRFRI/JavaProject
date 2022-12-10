@@ -459,7 +459,10 @@ class Pawn extends Piece {
     }
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> e945e381ef15c97739557cc29f2124ddece08d75
 
 
 

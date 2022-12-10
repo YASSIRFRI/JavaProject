@@ -5,6 +5,10 @@ import java.io.Console;
 import javax.sound.midi.SysexMessage;
 
 import javafx.application.Application;
+<<<<<<< HEAD
+=======
+//import javafx.event.EvegintHandler;
+>>>>>>> e945e381ef15c97739557cc29f2124ddece08d75
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -33,6 +37,7 @@ public class CheckersBoard extends GameBoard{
         this.blackPieces = blackPieces;
     }
 
+<<<<<<< HEAD
     //@Override
     //public void start(Stage primaryStage){
         //CheckersBoard checkersBoard = new CheckersBoard();
@@ -45,6 +50,23 @@ public class CheckersBoard extends GameBoard{
 
 
     //}
+=======
+//    @Override
+//    public void start(Stage primaryStage){
+//        CheckersBoard checkersBoard = new CheckersBoard();
+//        checkersBoard.fillBoard();
+//        Scene scene = new Scene(checkersBoard);
+//        primaryStage.setTitle("Checkers app");
+//        primaryStage.setScene(scene);
+//        primaryStage.show();
+//
+//
+//
+//    }
+
+
+//    }
+>>>>>>> e945e381ef15c97739557cc29f2124ddece08d75
 
 
 
@@ -55,7 +77,7 @@ public class CheckersBoard extends GameBoard{
             {
                 if (i <= 2 && (i+j) % 2 != 0){
                     board[i][j].setPlaceHolder(new CheckersPawn(true, board[i][j]));
-                    
+
                 }
                 if (j >= 5 && (i+j) % 2 != 0){
                     board[i][j].setPlaceHolder(new CheckersPawn(false, board[i][j]));
@@ -70,14 +92,12 @@ public class CheckersBoard extends GameBoard{
             }
 
         }
-       
-
-  
-
-        
 
 
-    
+
+
+
+
 
 
 }
@@ -89,7 +109,7 @@ public class CheckersBoard extends GameBoard{
             return moveType.NONE;
 
 
- 
+
         }
         return null;
 
