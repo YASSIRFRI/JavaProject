@@ -1,4 +1,4 @@
-import javafx.scene.image.ImageView;
+/*import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 
 import java.util.ArrayList;
@@ -70,7 +70,7 @@ public class CheckersPawn  {
     /**
      * This method returns whether the piece is dead or not (present on the board or not)
      */
-    public boolean isDead() {
+    /*public boolean isDead() {
         return this.location == null;
     }
 
@@ -86,5 +86,5 @@ public class CheckersPawn  {
 
 
 
-}
+}*/
 

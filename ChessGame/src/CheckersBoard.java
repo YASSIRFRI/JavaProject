@@ -1,5 +1,5 @@
 
-import java.util.ArrayList;
+/*import java.util.ArrayList;
 import java.io.Console;
 
 import javax.sound.midi.SysexMessage;
@@ -15,7 +15,7 @@ public class CheckersBoard extends GameBoard{
     private ArrayList<CheckersPawn> whitePieces;
     private ArrayList<CheckersPawn> blackPieces;
     public CheckersBoard(){
-        super(8);
+        super(8, null,null );
     }
     public ArrayList<CheckersPawn> getWhitePieces() {
         return whitePieces;
@@ -95,7 +95,7 @@ public class CheckersBoard extends GameBoard{
         return null;
 
     }
-}
+}*/
 
 
 
