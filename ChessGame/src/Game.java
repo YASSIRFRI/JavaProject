@@ -1,12 +1,17 @@
 import java.io.Console;
+import java.io.IOException;
 import java.util.ArrayList;
+
 
 import javax.sound.midi.SysexMessage;
 
 import javafx.application.Application;
 import javafx.event.EventHandler;
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 enum GameStatus {
@@ -22,7 +27,11 @@ public class Game extends Application{
     private GameBoard gameBoard;
     private Player[] players;
     
+<<<<<<< HEAD
+    public static double windowWidth = 600.0;
+=======
     public static double windowWidth = 400.0;
+>>>>>>> e945e381ef15c97739557cc29f2124ddece08d75
     // Getters and setters
     public GameStatus getStatus()
     {
@@ -50,18 +59,39 @@ public class Game extends Application{
     public void setPlayers(Player[] players) {
         this.players = players;
     }
+    public void startGame(MouseEvent event,Color[] colors) throws IOException{
+        System.out.println("start");
 
-    @Override
-    public void start(Stage primaryStage){
-        ChessBoard chessBoard = new ChessBoard();
+        ChessBoard chessBoard = new ChessBoard(colors);
         chessBoard.fillBoard();
         chessBoard.setOnMouseClicked(chessBoard);
         Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        
+        Stage stage = new Stage();
+        stage.setScene(scene);
+        stage.show();
     }
 
+    @Override
+    public void start(Stage primaryStage) throws IOException{
+        FXMLLoader loader= new FXMLLoader(getClass().getResource("menu.fxml"));
+        Controller controller = new Controller();
+        loader.setController(controller);
+        Scene scene1 = new Scene(loader.load());
+        primaryStage.setScene(scene1);
+        primaryStage.setTitle("ChessGame");
+        primaryStage.show();
+        controller.start.addEventHandler(MouseEvent.MOUSE_CLICKED, arg0 -> {
+            try {
+                startGame(arg0,controller.getColors());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+
+
+    }
 
     public static void main(String[] args) {
         launch(args);

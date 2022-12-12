@@ -13,6 +13,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.ColumnConstraints;
+import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.RowConstraints;
 import javafx.scene.paint.Color;
@@ -25,11 +26,15 @@ public abstract class GameBoard extends GridPane {
 
     protected Square[][] board;
     protected int size;
+    protected Color color1;
+    protected Color color2;
 
-    public GameBoard(int size) {
+    public GameBoard(int size, Color color1, Color color2) {
         super();
         this.size = size;
         this.board = new Square[size][size];
+        this.color1 = color1;
+        this.color2 = color2;
         int count = 0;
 
         for (int i = 0; i < size; i++) {
@@ -47,9 +52,9 @@ public abstract class GameBoard extends GridPane {
             count++;
             for (int j = 0; j < size; j++) {
                 if (count % 2 == 0)
-                    board[i][j] = new Square(i, j, Color.BLUE);
+                    board[i][j] = new Square(i, j, this.color1);
                 else
-                    board[i][j] = new Square(i, j, Color.DEEPSKYBLUE);
+                    board[i][j] = new Square(i, j,  this.color2);
 
                 this.add(board[i][j], i, j);
                 count++;
@@ -76,30 +81,28 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
     private final ArrayList<Square> highlightedSquares;
     private King blackKing;
     private King whiteKing;
-    private Rook rightWhiteRook;
-    private Rook leftWhiteRook;
-    private Rook rightBlackRook;
-    private Rook leftBlackRook;
     private ArrayList<Piece> whitePieces;
     private ArrayList<Piece> blackPieces;
     private boolean isWhiteTurn;
     private Label statusLabel;
     private ArrayList<Move> gameHistory;
+    private GridPane choices;
 
 
-    ChessBoard() {
-        super(8);
+    ChessBoard(Color[] colors) {
+        super(8, colors[0], colors[1]);
         highlightedSquares = new ArrayList<Square>();
         this.whitePieces = new ArrayList<Piece>();
         this.blackPieces = new ArrayList<Piece>();
         this.isWhiteTurn = true;
 
         this.statusLabel = new Label("White's turn");
+        statusLabel.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5px;");
         this.add(statusLabel, 9, 3, 1, 2);
-        statusLabel.setPadding(new Insets(50));
-        statusLabel.setFont(new Font(30));
-        statusLabel.setAlignment(Pos.CENTER);
-        statusLabel.setTextFill(Color.RED);
+        statusLabel.setFont(new Font("FiraCode", 20));
+        statusLabel.setPadding(new Insets(10, 10, 10, 10));
+        statusLabel.setAlignment(Pos.TOP_CENTER);
+        statusLabel.setTextFill(Color.BLACK);
 
         this.gameHistory = new ArrayList<Move>();
         Button reverseMove = new Button("Reverse Move");
@@ -115,6 +118,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
                 System.out.println("Empty History");
             }
         });
+        
     }
 
     public ArrayList<Piece> getWhitePieces() {
@@ -320,7 +324,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
     public void removeHighlights() {
 
         for (Square s : highlightedSquares)
-            s.resetColor();
+            s.resetColor(this.color1, this.color2);
 
         this.highlightedSquares.clear();
     }
@@ -356,6 +360,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
 
     public void switchTurn() {
         this.isWhiteTurn = !this.isWhiteTurn();
+        this.statusLabel.setStyle("-fx-background-color: " + (this.isWhiteTurn() ? "white" : "black") + "; -fx-text-fill: " + (this.isWhiteTurn() ? "black" : "white") + ";");
     }
 
     public GameStatus getBoardStatus() {

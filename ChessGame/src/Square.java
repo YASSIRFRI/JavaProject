@@ -11,12 +11,15 @@ public class Square extends Rectangle {
     public static double squareWidth = Game.windowWidth / 8;
     private Piece placeholder;
     private CheckersPawn placeHolder;
+    Color color;
 
 
-    public Square(int x, int y, Piece placeholder) {
+    public Square(int x, int y, Piece placeholder, Color color) {
         super(squareWidth,squareWidth,squareWidth,squareWidth);
         this.x = x;
         this.y = y;
+        this.color = color;
+        this.setFill(color);
         this.placeholder = placeholder;
     }
 
@@ -74,10 +77,10 @@ public class Square extends Rectangle {
         return this.getPlaceholder() == null;
     }
 
-    public void resetColor() {
+    public void resetColor(Color color1, Color color2) {
         if ((this.getx() + this.gety()) % 2 != 0)
-            this.setFill(Color.BLUE);
+            this.setFill(color1);
         else
-            this.setFill(Color.DEEPSKYBLUE);
+            this.setFill(color2);
     }
 }

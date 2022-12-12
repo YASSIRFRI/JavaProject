@@ -119,6 +119,8 @@ class Move {
                 rookMove.doMove(chessBoard);
             }
         }
+
+        //Handling pawn promotion
         //////////////////////////////////////////
 
         if (!destinationSquare.isEmpty()) {
@@ -142,6 +144,19 @@ class Move {
         chessBoard.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
         sourceSquare.setPlaceholder(null);
         this.piece.setHasMoved(true);
+        //handling pawn promotion
+        if(piece.getName().equals("Pawn") && (destinationSquare.gety()==0 || destinationSquare.gety()==7)){
+            chessBoard.getChildren().remove(piece.getImage());
+            Piece queen = new Queen(piece.getIsWhite(), destinationSquare);
+            chessBoard.add(queen.getImage(), destinationSquare.getx(), destinationSquare.gety());
+            destinationSquare.setPlaceholder(queen);
+            if(piece.getIsWhite()){
+                chessBoard.getWhitePieces().add(queen);
+            }
+            else{
+                chessBoard.getBlackPieces().add(queen);
+            }
+        }
 
     }
     public void reverseMove(ChessBoard chessBoard)
@@ -159,7 +174,6 @@ class Move {
         else {
             sourceSquare.setPlaceholder(piece);
             chessBoard.getChildren().remove(this.piece.getImage());
-            chessBoard.getChildren().remove(this.destinationSquare.getPlaceholder().getImage());
             chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
             chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
             destinationSquare.setPlaceholder(null);
