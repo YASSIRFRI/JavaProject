@@ -1,7 +1,7 @@
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
-public class CheckersPawn  {
+public class CheckersPawn extends Piece {
     protected String name;
     protected boolean isWhite;
     protected Square location;
@@ -9,6 +9,7 @@ public class CheckersPawn  {
     protected boolean hasMoved;
 
     public CheckersPawn(boolean isWhite , Square location) {
+        super(isWhite, location);
         this.isWhite = isWhite;
         this.location = location;
         if(isWhite){
@@ -25,9 +26,6 @@ public class CheckersPawn  {
     public CheckersPawn(boolean isWhite ) {
             this.isWhite = isWhite;
             this.location = null;
-
-
-
     if(isWhite){
         this.image = new ImageView(new Image( name + ".png"));
             }
@@ -78,9 +76,8 @@ public class CheckersPawn  {
 
         }
 
+    public ArrayList<Square> getValidMoves() {
 
-    public ArrayList<Square> getValidMoves(CheckersBoard checkersBoard) {
-            return null;
         }
 
 

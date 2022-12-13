@@ -21,23 +21,9 @@ class Move {
         this.destinationSquare = destinationSquare;
         this.piece = piece;
     }
-  
-   
-    public Move(moveType type) {
-        this.type = type;
-        this.checkersPawn = null;
-    }
-    
     // Getters and setters
     public Square getSourceSquare() {
         return sourceSquare;
-    }
-    public moveType getType(){
-        return type;
-    }
-    public void setType(moveType type){
-        this.type = type;
-
     }
 
     public Square getDestinationSquare() {
