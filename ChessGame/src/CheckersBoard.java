@@ -84,12 +84,10 @@ public class CheckersBoard extends GameBoard{
 }
     public moveType doMove( CheckersPawn checkersPawn,Square s, Square y) {
         //Move move = new Move(s, y, checkersPawn);
-        if (board[y.getx()][y.gety()].hasPiece() || (y.getx()+ y.gety())% 2 ==0){
+        if (board[y.getx()][y.gety()].hasPiece() || (y.getx()+ y.gety()) % 2 == 0) {
             //move.setType(moveType.NONE);
             //move.setCheckersPawn(board[y.getx()][y.gety()].getPlaceHolder());
             return moveType.NONE;
-
-
 
         }
         return null;

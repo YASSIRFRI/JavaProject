@@ -64,6 +64,7 @@ public class Game extends Application{
         Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
         Stage stage = new Stage();
         stage.setScene(scene);
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -75,6 +76,7 @@ public class Game extends Application{
         Scene scene1 = new Scene(loader.load());
         primaryStage.setScene(scene1);
         primaryStage.setTitle("ChessGame");
+        primaryStage.setResizable(false);
         primaryStage.show();
         controller.start.addEventHandler(MouseEvent.MOUSE_CLICKED, arg0 -> {
             try {

@@ -12,10 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.layout.ColumnConstraints;
-import javafx.scene.layout.CornerRadii;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
@@ -98,7 +95,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
 
         this.statusLabel = new Label("White's turn");
         statusLabel.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5px;");
-        this.add(statusLabel, 9, 3, 1, 2);
+        this.add(statusLabel, 8, 1);
         statusLabel.setFont(new Font("FiraCode", 20));
         statusLabel.setPadding(new Insets(10, 10, 10, 10));
         statusLabel.setAlignment(Pos.TOP_CENTER);
@@ -107,8 +104,10 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
         this.gameHistory = new ArrayList<Move>();
         Button reverseMove = new Button("Reverse Move");
 
-        reverseMove.styleProperty();
-        this.add(reverseMove, 10, 2, 1, 1);
+        reverseMove.setStyle("-fx-background-color: brown; -fx-font-size: 18px; -fx-border-width: 5px; -fx-text-fill: white");
+        this.add(reverseMove, 12, 7);
+        reverseMove.setAlignment(Pos.BOTTOM_CENTER);
+
         reverseMove.setOnAction(e -> {
             if (gameHistory.size() > 0) {
                 Move lastMove = gameHistory.get(gameHistory.size() - 1);
