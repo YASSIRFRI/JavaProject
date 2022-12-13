@@ -398,6 +398,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
 
     public void handle(MouseEvent event) {
 
+
         Square clickedSquare = getClickedSquare(event);
 
         if (clickedSquare != null) {

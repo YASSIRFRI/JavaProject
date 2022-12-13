@@ -26,12 +26,8 @@ public class Game extends Application{
     private GameStatus status; 
     private GameBoard gameBoard;
     private Player[] players;
-    
-<<<<<<< HEAD
+
     public static double windowWidth = 600.0;
-=======
-    public static double windowWidth = 400.0;
->>>>>>> e945e381ef15c97739557cc29f2124ddece08d75
     // Getters and setters
     public GameStatus getStatus()
     {

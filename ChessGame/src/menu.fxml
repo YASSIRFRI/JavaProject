@@ -11,7 +11,7 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="726.0" style="-fx-background-image: url(&quot;file:/home/attirpunk/Desktop/LBD3/JavaProject/ChessGame/src/static/61564.jpg&quot;);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="609.0" prefWidth="726.0" style="-fx-background-image: url(/static/61564.jpg);" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Button fx:id="start" layoutX="213.0" layoutY="513.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="291.0" style="-fx-background-color: #966F33; -fx-font-weight: Bolder;" text="Start Game" textFill="WHITE">
          <font>

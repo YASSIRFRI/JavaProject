@@ -1,5 +1,5 @@
 
-/*import java.util.ArrayList;
+import java.util.ArrayList;
 import java.io.Console;
 
 import javax.sound.midi.SysexMessage;
@@ -95,7 +95,7 @@ public class CheckersBoard extends GameBoard{
         return null;
 
     }
-}*/
+}
 
 
 
