@@ -1,6 +1,5 @@
 import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
-
 import java.util.ArrayList;
 public class CheckersPawn  {
     protected String name;
