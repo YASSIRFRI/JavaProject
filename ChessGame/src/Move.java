@@ -122,6 +122,7 @@ class Move {
                 chessBoard.getBlackPieces().add(queen);
             }
         }
+        chessBoard.gameHistory.add(this);
 
     }
     public void reverseMove(ChessBoard chessBoard)
