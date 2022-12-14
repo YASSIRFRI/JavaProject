@@ -67,6 +67,9 @@ public abstract class GameBoard extends GridPane {
     public void setBoard(Square[][] board) {
         this.board = board;
     }
+    public Square getSquare(int x, int y) {
+        return board[x][y];
+    }
 
     public abstract void fillBoard();
 }
@@ -83,7 +86,6 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
     private boolean isWhiteTurn;
     private Label statusLabel;
     private ArrayList<Move> gameHistory;
-    private GridPane choices;
 
 
     ChessBoard(Color[] colors) {

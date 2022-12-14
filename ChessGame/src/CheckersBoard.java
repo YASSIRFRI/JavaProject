@@ -5,17 +5,24 @@ import java.io.Console;
 import javax.sound.midi.SysexMessage;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 
 
-public class CheckersBoard extends GameBoard{
-
+public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>{
     private ArrayList<CheckersPawn> whitePieces;
     private ArrayList<CheckersPawn> blackPieces;
+
     public CheckersBoard(){
         super(8, null,null );
+    }
+
+    public CheckersBoard(Color[] colors)
+    {
+        super(8, colors[0], colors[1]);
     }
     public ArrayList<CheckersPawn> getWhitePieces() {
         return whitePieces;
@@ -33,64 +40,32 @@ public class CheckersBoard extends GameBoard{
         this.blackPieces = blackPieces;
     }
 
-//    @Override
-//    public void start(Stage primaryStage){
-//        CheckersBoard checkersBoard = new CheckersBoard();
-//        checkersBoard.fillBoard();
-//        Scene scene = new Scene(checkersBoard);
-//        primaryStage.setTitle("Checkers app");
-//        primaryStage.setScene(scene);
-//        primaryStage.show();
-//
-//
-//
-//    }
-
-
-//    }
-
-
-
     @Override
     public void fillBoard(){
         for (int i = 0; i < 8; i++) {
             for (int j= 0; j<8; j++)
             {
-                if (i <= 2 && (i+j) % 2 != 0){
-                    board[i][j].setPlaceHolder(new CheckersPawn(true, board[i][j]));
+                if (j <= 2 && (i+j) % 2 != 0){
+                    board[i][j].setPlaceholder(new CheckersPawn(true, board[i][j]));
 
                 }
                 if (j >= 5 && (i+j) % 2 != 0){
-                    board[i][j].setPlaceHolder(new CheckersPawn(false, board[i][j]));
+                    board[i][j].setPlaceholder(new CheckersPawn(false, board[i][j]));
 
                 }
-                if (board[i][j].hasPiece() ) {
-                    board[i][j].setPlaceHolder(null);
-                    this.add(board[i][j].getPlaceHolder().getImage(), i, j);
+                if (board[i][j].getPlaceholder() != null ) {
+                    this.add(board[i][j].getPlaceholder().getImage(), i, j);
+                }
 
             }
 
             }
-
         }
-
-
-
-
-
-
-
-
-}
-    public moveType doMove( CheckersPawn checkersPawn,Square s, Square y) {
-        //Move move = new Move(s, y, checkersPawn);
-        if (board[y.getx()][y.gety()].hasPiece() || (y.getx()+ y.gety()) % 2 == 0) {
-            //move.setType(moveType.NONE);
-            //move.setCheckersPawn(board[y.getx()][y.gety()].getPlaceHolder());
-            return moveType.NONE;
-
-        }
-        return null;
+    public Square getSquare(int x, int y){
+        return board[x][y];
+    }
+    public void handle(MouseEvent event) {
+        // TODO Auto-generated method stub
 
     }
 }

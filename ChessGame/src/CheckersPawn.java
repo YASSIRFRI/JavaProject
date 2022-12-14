@@ -2,40 +2,38 @@ import javafx.scene.image.ImageView;
 import javafx.scene.image.Image;
 import java.util.ArrayList;
 public class CheckersPawn extends Piece {
-    protected String name;
+    protected String name="Checkers";
     protected boolean isWhite;
     protected Square location;
     protected ImageView image;
     protected boolean hasMoved;
 
-    public CheckersPawn(boolean isWhite , Square location) {
-        super(isWhite, location);
-        this.isWhite = isWhite;
-        this.location = location;
-        if(isWhite){
-            this.image = new ImageView(new Image( name + ".png"));
-                }
-        else{
-            this.image = new ImageView(new Image( name + ".png"));
-                }
-
-        this.image.setFitHeight(Square.squareWidth - 25);
-        this.image.setFitWidth(Square.squareWidth - 25);
-
-    }
     public CheckersPawn(boolean isWhite ) {
-            this.isWhite = isWhite;
-            this.location = null;
+        super("Checkers", isWhite);
     if(isWhite){
-        this.image = new ImageView(new Image( name + ".png"));
+        this.image = new ImageView(new Image("/static/White/"+this.name+ ".png"));
             }
     else{
-        this.image = new ImageView(new Image(name + ".png"));
+        this.image = new ImageView(new Image("/static/Black/"+this.name+".png"));
             }
 
     this.image.setFitHeight(Square.squareWidth - 25);
     this.image.setFitWidth(Square.squareWidth - 25);
     }
+    public CheckersPawn(boolean isWhite, Square location) {
+        super("Checkers", isWhite, location);
+    if(isWhite){
+        System.out.println("/static/White/"+this.name+ ".png");
+        this.image = new ImageView(new Image("/static/White/"+this.name+ ".png"));
+            }
+    else{
+        this.image = new ImageView(new Image("/static/Black/"+this.name+".png"));
+            }
+    this.image.setFitHeight(Square.squareWidth - 25);
+    this.image.setFitWidth(Square.squareWidth - 25);
+    }
+
+
     // Getters and setters
     public String getName() {
         return name;
@@ -56,7 +54,7 @@ public class CheckersPawn extends Piece {
         this.location = location;
     }
     public ImageView getImage(){
-        return image;
+        return this.image;
     }
     public void setImage(ImageView image) {
         this.image = image;
@@ -76,11 +74,29 @@ public class CheckersPawn extends Piece {
 
         }
 
-    public ArrayList<Square> getValidMoves() {
+    @Override
+    public ArrayList<Square> getValidMoves(GameBoard chekersBoard) {
+        ArrayList<Square> validMoves = new ArrayList<Square>();
+        int x = this.location.getx();
+        int y = this.location.gety();
+        if (this.isWhite) {
+            if (x + 1 < 8 && y + 1 < 8 && chekersBoard.getSquare(x + 1, y + 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x + 1, y + 1));
+            }
+            if (x - 1 >= 0 && y + 1 < 8 && chekersBoard.getSquare(x - 1, y + 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x - 1, y + 1));
+            }
+        } else {
+            if (x + 1 < 8 && y - 1 >= 0 && chekersBoard.getSquare(x + 1, y - 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x + 1, y - 1));
+            }
+            if (x - 1 >= 0 && y - 1 >= 0 && chekersBoard.getSquare(x - 1, y - 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x - 1, y - 1));
+            }
+
 
         }
-
-
-
+        return validMoves;
+}
 }
 
