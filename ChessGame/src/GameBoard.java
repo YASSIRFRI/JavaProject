@@ -67,6 +67,9 @@ public abstract class GameBoard extends GridPane {
     public void setBoard(Square[][] board) {
         this.board = board;
     }
+    public Square getSquare(int x, int y) {
+        return board[x][y];
+    }
 
     public abstract void fillBoard();
 }
@@ -82,8 +85,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
     private ArrayList<Piece> blackPieces;
     private boolean isWhiteTurn;
     private Label statusLabel;
-    private ArrayList<Move> gameHistory;
-    private GridPane choices;
+    public ArrayList<Move> gameHistory;
 
 
     ChessBoard(Color[] colors) {
@@ -407,7 +409,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
                     removeHighlights();
                     Move move = new Move(trigger, clickedSquare, trigger.getPlaceholder());
                     System.out.println(move);
-                    this.gameHistory.add(move);
+                   // this.gameHistory.add(move);
                     move.doMove(this);
                     this.switchTurn();
                     this.updateStatusLabel();

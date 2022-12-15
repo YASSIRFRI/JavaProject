@@ -106,7 +106,8 @@ abstract class Piece {
      * @param chessBoard the board of the game;
      * @return an arraylist of all the squares the piece can move to;
      */
-    public abstract ArrayList<Square> getValidMoves(ChessBoard chessBoard);
+    public abstract ArrayList<Square> getValidMoves(GameBoard chessBoard);
+
     public ArrayList<Square> getFinalValidMoves(ChessBoard chessBoard) {
         ArrayList<Square> validMoves = this.getValidMoves(chessBoard);
         ArrayList<Square> finalValidMoves = new ArrayList<Square>();
@@ -191,7 +192,7 @@ class King extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
+    public ArrayList<Square> getValidMoves(GameBoard chessBoard) {
         int xSrc = this.getLocation().getx();
         int ySrc = this.getLocation().gety();
         Square[][] board = chessBoard.getBoard();
@@ -219,7 +220,7 @@ class Queen extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
+    public ArrayList<Square> getValidMoves(GameBoard chessBoard) {
         // The queen's valid moves are the (bishop + rook) valid moves
         Rook temp_rook = new Rook(this.isWhite, this.location);
         Bishop temp_bishop = new Bishop(this.isWhite, this.location);
@@ -242,7 +243,7 @@ class Rook extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
+    public ArrayList<Square> getValidMoves(GameBoard chessBoard) {
         int xSrc = this.getLocation().getx();
         int ySrc = this.getLocation().gety();
         Square[][] board = chessBoard.getBoard();
@@ -306,7 +307,7 @@ class Bishop extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
+    public ArrayList<Square> getValidMoves(GameBoard chessBoard) {
         int xSrc = this.getLocation().getx();
         int ySrc = this.getLocation().gety();
         Square[][] board = chessBoard.getBoard();
@@ -370,7 +371,7 @@ class Knight extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
+    public ArrayList<Square> getValidMoves(GameBoard chessBoard) {
         int xSrc = this.getLocation().getx();
         int ySrc = this.getLocation().gety();
         Square[][] board = chessBoard.getBoard();
@@ -427,7 +428,7 @@ class Pawn extends Piece {
     }
 
     @Override
-    public ArrayList<Square> getValidMoves(ChessBoard chessBoard) {
+    public ArrayList<Square> getValidMoves(GameBoard chessBoard) {
         int xSrc = this.getLocation().getx();
         int ySrc = this.getLocation().gety();
         Square[][] board = chessBoard.getBoard();

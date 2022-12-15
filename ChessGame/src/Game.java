@@ -55,17 +55,28 @@ public class Game extends Application{
     public void setPlayers(Player[] players) {
         this.players = players;
     }
-    public void startGame(MouseEvent event,Color[] colors) throws IOException{
-        System.out.println("start");
+    public void startGame(MouseEvent event,Color[] colors,String game) throws IOException{
+        if(game=="Chess"){
 
-        ChessBoard chessBoard = new ChessBoard(colors);
-        chessBoard.fillBoard();
-        chessBoard.setOnMouseClicked(chessBoard);
-        Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
-        Stage stage = new Stage();
-        stage.setScene(scene);
-        stage.setResizable(false);
-        stage.show();
+            ChessBoard chessBoard = new ChessBoard(colors);
+            chessBoard.fillBoard();
+            chessBoard.setOnMouseClicked(chessBoard);
+            Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        }
+        else{
+            CheckersBoard checkersBoard = new CheckersBoard(colors);
+            checkersBoard.fillBoard();
+            //checkersBoard.setOnMouseClicked(checkersBoard);
+            Scene scene = new Scene(checkersBoard, windowWidth+400, windowWidth+4);
+            Stage stage = new Stage();
+            stage.setScene(scene);
+            stage.setResizable(false);
+            stage.show();
+        }
     }
 
     @Override
@@ -80,7 +91,7 @@ public class Game extends Application{
         primaryStage.show();
         controller.start.addEventHandler(MouseEvent.MOUSE_CLICKED, arg0 -> {
             try {
-                startGame(arg0,controller.getColors());
+                startGame(arg0,controller.getColors(),controller.getGameType());
             } catch (IOException e) {
                 e.printStackTrace();
             }

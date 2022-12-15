@@ -57,6 +57,10 @@ public class Controller implements Initializable{
         return colors;
     }
 
+    public String getGameType(){
+        return gametype.getValue();
+    }
+
 
 
 }

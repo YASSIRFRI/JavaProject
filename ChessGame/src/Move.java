@@ -13,9 +13,7 @@ class Move {
     private Square destinationSquare;
     private moveType type;
     private Piece piece;
-    private CheckersPawn checkersPawn;
     private Piece enemyPiece;
-    private CheckersPawn enemyPawns;
 
 
     public Move(Square sourceSquare, Square destinationSquare, Piece piece) {
@@ -23,30 +21,9 @@ class Move {
         this.destinationSquare = destinationSquare;
         this.piece = piece;
     }
-    public Move(Square sourceSquare, Square destinationSquare, CheckersPawn checkersPawn) {
-        this.sourceSquare = sourceSquare;
-        this.destinationSquare = destinationSquare;
-        this.checkersPawn = checkersPawn;
-    }
-    public Move(moveType type, CheckersPawn checkersPawn) {
-        this.type = type;
-        this.checkersPawn = checkersPawn;
-    }
-    public Move(moveType type) {
-        this.type = type;
-        this.checkersPawn = null;
-    }
-    
     // Getters and setters
     public Square getSourceSquare() {
         return sourceSquare;
-    }
-    public moveType getType(){
-        return type;
-    }
-    public void setType(moveType type){
-        this.type = type;
-
     }
 
     public Square getDestinationSquare() {
@@ -60,22 +37,12 @@ class Move {
     {
         this.enemyPiece=enemyPiece;
     }
-    public CheckersPawn getEnemyPawns()
-    {
-        return enemyPawns;
-    }
-    public void setEnemyPawns(CheckersPawn enemyPawns)
-    {
-        this.enemyPawns=enemyPawns;
-    }
+   
 
     public Piece getPiece() {
         return piece;
     }
-    public CheckersPawn getCheckersPawn() {
-        return checkersPawn;
-    }
-
+  
     public void setSource(Square sourceSquare) {
         this.sourceSquare = sourceSquare;
     }
@@ -87,9 +54,7 @@ class Move {
     public void setPiece(Piece piece) {
         this.piece = piece;
     }
-    public void setCheckersPawn(CheckersPawn checkersPawn) {
-        this.checkersPawn = checkersPawn;
-    }
+ 
 
     public boolean equals(Move anotherMove) {
 		if(this.getSourceSquare() == anotherMove.getSourceSquare() && this.getDestinationSquare() == anotherMove.getDestinationSquare() ){
@@ -157,6 +122,7 @@ class Move {
                 chessBoard.getBlackPieces().add(queen);
             }
         }
+        chessBoard.gameHistory.add(this);
 
     }
     public void reverseMove(ChessBoard chessBoard)

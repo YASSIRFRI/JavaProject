@@ -20,7 +20,7 @@ public class PiecePicker extends GridPane {
 
     public void handle(MouseEvent event) {
         Square square = (Square) event.getSource();
-        if (square.hasPiece()) {
+        if (square.getPlaceholder() != null && selectedPiece == null) {
             selectedPiece = square.getPlaceholder();
         }
     }
