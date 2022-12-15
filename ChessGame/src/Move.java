@@ -125,6 +125,15 @@ class Move {
         chessBoard.gameHistory.add(this);
 
     }
+
+    public void doMove(CheckersBoard checkersboard)
+    {
+
+        
+        
+
+    }
+    
     public void reverseMove(ChessBoard chessBoard)
     {
         if (this.enemyPiece != null) {
@@ -151,6 +160,8 @@ class Move {
 
         chessBoard.switchTurn();
         chessBoard.updateStatusLabel();
+    }
+    public void reverseMove(CheckersBoard checkersBoard) {
     }
    
 }

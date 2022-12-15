@@ -67,4 +67,8 @@ public class Square extends Rectangle {
         else
             this.setFill(color2);
     }
+
+
+    public void highlightValidMoves() {
+    }
 }

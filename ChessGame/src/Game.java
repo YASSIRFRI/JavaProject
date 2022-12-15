@@ -70,7 +70,7 @@ public class Game extends Application{
         else{
             CheckersBoard checkersBoard = new CheckersBoard(colors);
             checkersBoard.fillBoard();
-            //checkersBoard.setOnMouseClicked(checkersBoard);
+            checkersBoard.setOnMouseClicked(checkersBoard);
             Scene scene = new Scene(checkersBoard, windowWidth+400, windowWidth+4);
             Stage stage = new Stage();
             stage.setScene(scene);
