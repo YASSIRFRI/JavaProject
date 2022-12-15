@@ -24,7 +24,7 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
     private ArrayList<CheckersPawn> blackPieces;
     public static Square triggerer;
     public ArrayList<Square> highlightedSquares=new ArrayList<Square>();
-    public boolean isWhiteTurn;
+    public boolean isWhiteTurn=true;
     public Label statusLabel;
     public ArrayList<Move> gameHistory;
 
@@ -131,7 +131,6 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
             int y = GridPane.getRowIndex(image);
             clickedSquare = this.board[x][y];
         }
-
         return clickedSquare;
     }
     public ArrayList<Square> getValidMoves(Piece piece) {
@@ -161,20 +160,13 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
                     && board[x + 2][y + 2].isEmpty())
                 validMoves.add(board[x + 2][y + 2]);
         }
+        System.out.println(validMoves);
         return validMoves;
 
     }
-
-    
-
     public void handle(MouseEvent event) {
-
-
-        
         Square clickedSquare = getClickedSquare(event);
-
         if (clickedSquare != null) {
-
             if (triggerer != null) {
                 if (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED) {
                     removeHighlights();

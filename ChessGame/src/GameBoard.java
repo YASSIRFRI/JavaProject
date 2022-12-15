@@ -398,12 +398,8 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
     }
 
     public void handle(MouseEvent event) {
-
-
         Square clickedSquare = getClickedSquare(event);
-
         if (clickedSquare != null) {
-
             if (trigger != null) {
                 if (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED) {
                     removeHighlights();
