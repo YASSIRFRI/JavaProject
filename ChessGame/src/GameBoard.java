@@ -104,7 +104,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
         this.gameHistory = new ArrayList<Move>();
         Button reverseMove = new Button("Reverse Move");
 
-        reverseMove.setStyle("-fx-background-color: brown; -fx-font-size: 18px; -fx-border-width: 5px; -fx-text-fill: white");
+        reverseMove.setStyle("-fx-background-color: brown; -fx-f0ont-size: 18px; -fx-border-width: 5px; -fx-text-fill: white");
         this.add(reverseMove, 12, 7);
         reverseMove.setAlignment(Pos.BOTTOM_CENTER);
 
