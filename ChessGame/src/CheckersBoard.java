@@ -133,30 +133,36 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
         }
         return clickedSquare;
     }
+    public static boolean inBoard(int x, int y) {
+        return x >= 0 && x < 8 && y >= 0 && y < 8;
+    }
     public ArrayList<Square> getValidMoves(Piece piece) {
         ArrayList<Square> validMoves = new ArrayList<Square>();
         int x = piece.getLocation().getx();
+        System.out.println(x);
         int y = piece.getLocation().gety();
+        System.out.println(y);
         if (piece.getIsWhite()) {
-            if (x > 0 && y > 0 && board[x - 1][y - 1].isEmpty())
-                validMoves.add(board[x - 1][y - 1]);
-            if (x < 7 && y > 0 && board[x + 1][y - 1].isEmpty())
-                validMoves.add(board[x + 1][y - 1]);
-            if (x > 1 && y > 1 && board[x - 1][y - 1].getPlaceholder().getIsWhite() != piece.getIsWhite()
-                    && board[x - 2][y - 2].isEmpty())
-                validMoves.add(board[x - 2][y - 2]);
-            if (x < 6 && y > 1 && board[x + 1][y - 1].getPlaceholder().getIsWhite() != piece.getIsWhite()
-                    && board[x + 2][y - 2].isEmpty())
-                validMoves.add(board[x + 2][y - 2]);
-        } else {
-            if (x > 0 && y < 7 && board[x - 1][y + 1].isEmpty())
-                validMoves.add(board[x - 1][y + 1]);
-            if (x < 7 && y < 7 && board[x + 1][y + 1].isEmpty())
+            System.out.println("white");
+            System.out.println(board[x+1][y+1].isEmpty());
+            if (inBoard(x+1, y+1) && board[x + 1][y + 1].isEmpty())
                 validMoves.add(board[x + 1][y + 1]);
-            if (x > 1 && y < 6 && board[x - 1][y + 1].getPlaceholder().getIsWhite() != piece.getIsWhite()
+            if(inBoard(x-1, y+1) && board[x - 1][y + 1].isEmpty())
+                validMoves.add(board[x - 1][y + 1]);
+        } 
+        else {
+            if (inBoard(x, y) && board[x - 1][y + 1].isEmpty())
+                validMoves.add(board[x - 1][y + 1]);
+            if (inBoard(x, y) && board[x + 1][y + 1].isEmpty())
+            {
+                System.out.println("here");
+                System.out.println(board[x + 1][y + 1].isEmpty());
+                validMoves.add(board[x + 1][y + 1]);
+            }
+            if (inBoard(x, y) && board[x - 1][y + 1].getPlaceholder().getIsWhite() != piece.getIsWhite()
                     && board[x - 2][y + 2].isEmpty())
                 validMoves.add(board[x - 2][y + 2]);
-            if (x < 6 && y < 6 && board[x + 1][y + 1].getPlaceholder().getIsWhite() != piece.getIsWhite()
+            if (inBoard(x, y) && board[x + 1][y + 1].getPlaceholder().getIsWhite() != piece.getIsWhite()
                     && board[x + 2][y + 2].isEmpty())
                 validMoves.add(board[x + 2][y + 2]);
         }
@@ -180,24 +186,28 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
                     if (clickedSquare.isEmpty()) {
                         removeHighlights();
                         triggerer = null;
-                    } else {
+                    }
+
+                     else {
                         if (clickedSquare.getPlaceholder().getIsWhite() == isWhiteTurn) {
                             highlightValidMoves(clickedSquare.getPlaceholder());
                             triggerer = clickedSquare;
                         } else
                             removeHighlights();
-
                     }
                 }
-
-
-            } else {
+            } 
+            else 
+            {
+                System.out.println("triggerer is null");
                 if (clickedSquare.isEmpty())
                     removeHighlights();
                 else {
-                    // Show valid moves only for same team pieces
+                    System.out.println("clicked square is not empty");
+                    System.out.println("clicked square is white: " + clickedSquare.getPlaceholder().getIsWhite());
                     if (clickedSquare.getPlaceholder().getIsWhite() == isWhiteTurn) {
-                        clickedSquare.highlightValidMoves();
+                        System.out.println("highlighting valid moves");
+                        highlightValidMoves(clickedSquare.getPlaceholder());
                         triggerer = clickedSquare;
                     }
                 }
@@ -211,10 +221,13 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
     }
 
     public void highlightValidMoves(Piece piece) {
+        System.out.println("highlighting valid moves");
         this.removeHighlights();
         piece.getLocation().setFill(Color.DARKSLATEBLUE);
         highlightedSquares.add(piece.getLocation());
-        ArrayList<Square> moves = piece.getValidMoves(this);
+        ArrayList<Square> moves = this.getValidMoves(piece);
+        System.out.println("valid moves: ");
+        System.out.println(moves);
         for (Square s : moves) {
             highlightedSquares.add(s);
             if ((!s.isEmpty()) && piece.isEnemy(s.getPlaceholder()))

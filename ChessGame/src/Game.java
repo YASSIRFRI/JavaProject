@@ -67,7 +67,7 @@ public class Game extends Application{
             stage.setResizable(false);
             stage.show();
         }
-        else{
+        else if(game=="Checkers"){
             CheckersBoard checkersBoard = new CheckersBoard(colors);
             checkersBoard.fillBoard();
             checkersBoard.setOnMouseClicked(checkersBoard);

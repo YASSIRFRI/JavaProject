@@ -128,10 +128,11 @@ class Move {
 
     public void doMove(CheckersBoard checkersboard)
     {
-
-        
-        
-
+        destinationSquare.setPlaceholder(piece);
+        checkersboard.getChildren().remove(piece.getImage());
+        this.piece.setLocation(destinationSquare);
+        checkersboard.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
+        sourceSquare.setPlaceholder(null);
     }
     
     public void reverseMove(ChessBoard chessBoard)

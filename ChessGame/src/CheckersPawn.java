@@ -35,15 +35,6 @@ public class CheckersPawn extends Piece {
 
 
     // Getters and setters
-    public String getName() {
-        return name;
-    }
-    public boolean getIsWhite() {
-        return isWhite;
-    }
-    public Square getLocation() {
-        return location;
-    }
     public void setName(String name) {
         this.name = name;
     }

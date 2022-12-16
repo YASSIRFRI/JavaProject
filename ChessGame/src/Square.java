@@ -57,18 +57,15 @@ public class Square extends Rectangle {
         this.placeholder = placeholder;
     }
 
-    public boolean isEmpty() {
-        return this.getPlaceholder() == null;
-    }
-
     public void resetColor(Color color1, Color color2) {
         if ((this.getx() + this.gety()) % 2 != 0)
             this.setFill(color1);
         else
             this.setFill(color2);
     }
-
-
-    public void highlightValidMoves() {
+    public boolean isEmpty() {
+        return this.placeholder == null;
     }
+
+
 }
