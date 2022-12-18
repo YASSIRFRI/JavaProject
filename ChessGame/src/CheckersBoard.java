@@ -15,8 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
-import javafx.scene.text.Font;
-import javafx.stage.Stage;
 
 
 public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>{
@@ -25,15 +23,6 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
     public static Square triggerer;
     public ArrayList<Square> highlightedSquares=new ArrayList<Square>();
     public boolean isWhiteTurn=true;
-    public Label statusLabel;
-    public ArrayList<Move> gameHistory;
-
-
-
-
-
-  
-
 
     public CheckersBoard(){
         super(8, null,null );
@@ -42,21 +31,6 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
     public CheckersBoard(Color[] colors)
     {
         super(8, colors[0], colors[1]);
-        
-        this.statusLabel = new Label("White's turn");
-        statusLabel.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5px;");
-        this.add(statusLabel, 8, 1);
-        statusLabel.setFont(new Font("FiraCode", 20));
-        statusLabel.setAlignment(Pos.TOP_CENTER);
-        statusLabel.setTextFill(Color.BLACK);
-
-        this.gameHistory = new ArrayList<Move>();
-        Button reverseMove = new Button("Reverse Move");
-
-        reverseMove.setStyle("-fx-background-color: brown; -fx-font-size: 18px; -fx-border-width: 5px; -fx-text-fill: white");
-        this.add(reverseMove, 12, 7);
-        reverseMove.setAlignment(Pos.BOTTOM_CENTER);
-
         reverseMove.setOnAction(e -> {
             if (gameHistory.size() > 0) {
                 Move lastMove = gameHistory.get(gameHistory.size() - 1);
@@ -66,6 +40,7 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
                 System.out.println("Empty History");
             }
         });
+        this.gameHistory = new ArrayList<Move>();
         
     }
     public ArrayList<CheckersPawn> getWhitePieces() {
@@ -99,7 +74,7 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
 
                 }
                 if (board[i][j].getPlaceholder() != null ) {
-                    this.add(board[i][j].getPlaceholder().getImage(), i, j);
+                    this.Board.add(board[i][j].getPlaceholder().getImage(), i, j);
                     board[i][j].getPlaceholder().setLocation(board[i][j]);
                 }
 
@@ -136,16 +111,13 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
     public static boolean inBoard(int x, int y) {
         return x >= 0 && x < 8 && y >= 0 && y < 8;
     }
-    public ArrayList<Square> getValidMoves(Piece piece) {
+    public ArrayList<Square> getValidMoves(CheckersPawn piece) {
         ArrayList<Square> validMoves = new ArrayList<Square>();
         int x = piece.getLocation().getx();
         System.out.println(x);
         int y = piece.getLocation().gety();
         System.out.println(y);
         if (piece.getIsWhite()) {
-            System.out.println(board[x+1][y+1].isEmpty());
-            System.out.println(board[x+1][y+1].getPlaceholder());
-            System.out.println(board[x+2][y+2].isEmpty());
             if (inBoard(x+1, y+1) && board[x + 1][y + 1].isEmpty())
                 validMoves.add(board[x + 1][y + 1]);
             if(inBoard(x-1, y+1) && board[x - 1][y + 1].isEmpty())
@@ -192,12 +164,23 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
             if (triggerer != null) {
                 if (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED) {
                     removeHighlights();
+                    if(clickedSquare.gety()==0 || clickedSquare.gety()==7 )
+                    {
+                        Promotion p=new Promotion(triggerer, clickedSquare, triggerer.getPlaceholder(),new CheckersKing(isWhiteTurn));
+                        p.doMove(this);
+                        this.switchTurn();
+                        this.updateStatusLabel();
+                        triggerer = null;
+                    }
+                    else
+                    {
                     Move move = new Move(triggerer, clickedSquare, triggerer.getPlaceholder());
-                    System.out.println(move);
                     move.doMove(this);
                     this.switchTurn();
                     this.updateStatusLabel();
                     triggerer = null;
+                    }
+
                 } else {
                     if (clickedSquare.isEmpty()) {
                         removeHighlights();
@@ -206,7 +189,7 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
 
                      else {
                         if (clickedSquare.getPlaceholder().getIsWhite() == isWhiteTurn) {
-                            highlightValidMoves(clickedSquare.getPlaceholder());
+                            highlightValidMoves((CheckersPawn) clickedSquare.getPlaceholder());
                             triggerer = clickedSquare;
                         } else
                             removeHighlights();
@@ -223,7 +206,7 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
                     System.out.println("clicked square is white: " + clickedSquare.getPlaceholder().getIsWhite());
                     if (clickedSquare.getPlaceholder().getIsWhite() == isWhiteTurn) {
                         System.out.println("highlighting valid moves");
-                        highlightValidMoves(clickedSquare.getPlaceholder());
+                        highlightValidMoves((CheckersPawn) clickedSquare.getPlaceholder());
                         triggerer = clickedSquare;
                     }
                 }
@@ -236,7 +219,7 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
         this.isWhiteTurn = !this.isWhiteTurn;
     }
 
-    public void highlightValidMoves(Piece piece) {
+    public void highlightValidMoves(CheckersPawn piece) {
         System.out.println("highlighting valid moves");
         this.removeHighlights();
         piece.getLocation().setFill(Color.DARKSLATEBLUE);

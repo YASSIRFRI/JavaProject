@@ -1,34 +1,48 @@
 import java.awt.*;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventTarget;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.media.Media;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 
+import javax.lang.model.util.ElementScanner14;
 import javax.management.monitor.MonitorNotification;
 
-public abstract class GameBoard extends GridPane {
+public abstract class GameBoard extends StackPane {
 
     protected Square[][] board;
     protected int size;
     protected Color color1;
     protected Color color2;
+    protected GridPane Board=new GridPane();
     protected ArrayList<Move> gameHistory;
+    protected final ArrayList<Square> highlightedSquares= new ArrayList<Square>();
+    protected Label statusLabel=new Label();
+    protected Button reverseMove = new Button("Reverse Move");
+    protected Button playSound = new Button("Play sound");
 
     public GameBoard(int size, Color color1, Color color2) {
         super();
+        this.setStyle("-fx-background-color: lightgray;");
         this.size = size;
         this.board = new Square[size][size];
         this.color1 = color1;
@@ -40,12 +54,12 @@ public abstract class GameBoard extends GridPane {
             // Horizontal alignment of images
             ColumnConstraints col = new ColumnConstraints();
             col.setHalignment(HPos.CENTER);
-            this.getColumnConstraints().add(col);
+            this.Board.getColumnConstraints().add(col);
 
             // Vertical alignment of images
             RowConstraints row = new RowConstraints();
             row.setValignment(VPos.CENTER);
-            this.getRowConstraints().add(row);
+            this.Board.getRowConstraints().add(row);
 
             count++;
             for (int j = 0; j < size; j++) {
@@ -54,11 +68,26 @@ public abstract class GameBoard extends GridPane {
                 else
                     board[i][j] = new Square(i, j,  this.color2);
 
-                this.add(board[i][j], i, j);
+                this.Board.add(board[i][j], i, j);
                 count++;
             }
         }
+        this.statusLabel = new Label("White's turn");
+        statusLabel.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 0px; -fx-border-radius: 0px;");
+        statusLabel.setFont(new Font("FiraCode", 20));
+        statusLabel.setPadding(new Insets(5, 5, 5, 5));
+        statusLabel.setTextFill(Color.BLACK);
+        statusLabel.setAlignment(Pos.CENTER);
+        this.Board.add(statusLabel, 8, 0);
 
+        this.gameHistory = new ArrayList<Move>();
+        reverseMove.setStyle("-fx-background-color: brown; -fx-f0ont-size: 18px; -fx-border-width: 5px; -fx-text-fill: white");
+        this.Board.add(reverseMove, 12, 7);
+        reverseMove.setAlignment(Pos.BOTTOM_CENTER);
+        playSound.setStyle("-fx-background-image: url('file:/src/static/music.png'); -fx-background-size: 100% 100%; -fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5px;");
+        this.Board.add(playSound, 12, 5);
+        this.getChildren().add(Board);
+        this.setAlignment(Board, Pos.CENTER);
     }
 
     public Square[][] getBoard() {
@@ -79,39 +108,21 @@ public abstract class GameBoard extends GridPane {
 class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
 
     public static Square trigger = null;
-    private final ArrayList<Square> highlightedSquares;
     private King blackKing;
     private King whiteKing;
     private ArrayList<Piece> whitePieces;
     private ArrayList<Piece> blackPieces;
     private boolean isWhiteTurn;
-    private Label statusLabel;
-    public ArrayList<Move> gameHistory;
+    private GridPane piecePicker;
+ //   public Media sound= new Media("file:/src/static/");
 
 
     ChessBoard(Color[] colors) {
         super(8, colors[0], colors[1]);
-        highlightedSquares = new ArrayList<Square>();
         this.whitePieces = new ArrayList<Piece>();
         this.blackPieces = new ArrayList<Piece>();
         this.isWhiteTurn = true;
-
-        this.statusLabel = new Label("White's turn");
-        statusLabel.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5px;");
-        this.add(statusLabel, 8, 1);
-        statusLabel.setFont(new Font("FiraCode", 20));
-        statusLabel.setPadding(new Insets(10, 10, 10, 10));
-        statusLabel.setAlignment(Pos.TOP_CENTER);
-        statusLabel.setTextFill(Color.BLACK);
-
-        this.gameHistory = new ArrayList<Move>();
-        Button reverseMove = new Button("Reverse Move");
-
-        reverseMove.setStyle("-fx-background-color: brown; -fx-f0ont-size: 18px; -fx-border-width: 5px; -fx-text-fill: white");
-        this.add(reverseMove, 12, 7);
-        reverseMove.setAlignment(Pos.BOTTOM_CENTER);
-
-        reverseMove.setOnAction(e -> {
+        this.reverseMove.setOnAction(e -> {
             if (gameHistory.size() > 0) {
                 Move lastMove = gameHistory.get(gameHistory.size() - 1);
                 lastMove.reverseMove(this);
@@ -120,6 +131,23 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
                 System.out.println("Empty History");
             }
         });
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("promotion.fxml"));
+        try {
+            PromotionController controller = new PromotionController();
+            loader.setController(controller);
+            piecePicker = loader.load();
+            this.setAlignment(piecePicker, Pos.CENTER);
+            this.getChildren().add(piecePicker);
+            piecePicker.setVisible(false);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
+
+      
         
     }
 
@@ -305,7 +333,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
         for (int i = 0; i < 8; i++) {
             for (int j = 0; j < 8; j++) {
                 if (board[i][j].getPlaceholder() != null) {
-                    this.add(board[i][j].getPlaceholder().getImage(), i, j);
+                    this.Board.add(board[i][j].getPlaceholder().getImage(), i, j);
 
                     if (board[i][j].getPlaceholder().getIsWhite())
                         this.whitePieces.add(board[i][j].getPlaceholder());
@@ -404,13 +432,21 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
             if (trigger != null) {
                 if (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED) {
                     removeHighlights();
+                if((clickedSquare.getx()==0 || clickedSquare.getx()==7)&& clickedSquare.getPlaceholder() instanceof Pawn){
+                    //Promotion p= new Promotion(clickedSquare, clickedSquare, trigger.getPlaceholder(), new Queen(isWhiteTurn));
+                   // p.doMove(this);
+                   this.piecePicker.setVisible(true);
+                    this.switchTurn();
+                    this.updateStatusLabel();
+                    trigger = null;
+                }
+                else{
                     Move move = new Move(trigger, clickedSquare, trigger.getPlaceholder());
-                    System.out.println(move);
-                   // this.gameHistory.add(move);
                     move.doMove(this);
                     this.switchTurn();
                     this.updateStatusLabel();
                     trigger = null;
+                }
                 } else {
                     if (clickedSquare.isEmpty()) {
                         removeHighlights();

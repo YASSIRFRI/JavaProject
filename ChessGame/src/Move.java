@@ -95,7 +95,7 @@ class Move {
 
         if (!destinationSquare.isEmpty()) {
             Piece killedPiece = destinationSquare.getPlaceholder();
-            chessBoard.getChildren().remove(killedPiece.getImage());  // Removing the image of the killed piece
+            chessBoard.Board.getChildren().remove(killedPiece.getImage());  // Removing the image of the killed piece
             this.enemyPiece=killedPiece;
 
             if (killedPiece.getIsWhite()) {
@@ -109,16 +109,16 @@ class Move {
         }
         
         destinationSquare.setPlaceholder(piece);
-        chessBoard.getChildren().remove(piece.getImage());
+        chessBoard.Board.getChildren().remove(piece.getImage());
         this.piece.setLocation(destinationSquare);
-        chessBoard.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
+        chessBoard.Board.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
         sourceSquare.setPlaceholder(null);
         this.piece.setHasMoved(true);
         //handling pawn promotion
         if(piece.getName().equals("Pawn") && (destinationSquare.gety()==0 || destinationSquare.gety()==7)){
             chessBoard.getChildren().remove(piece.getImage());
             Piece queen = new Queen(piece.getIsWhite(), destinationSquare);
-            chessBoard.add(queen.getImage(), destinationSquare.getx(), destinationSquare.gety());
+            chessBoard.Board.add(queen.getImage(), destinationSquare.getx(), destinationSquare.gety());
             destinationSquare.setPlaceholder(queen);
             if(piece.getIsWhite()){
                 chessBoard.getWhitePieces().add(queen);
@@ -137,18 +137,18 @@ class Move {
         {
             Square middleSquare=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2];
             Piece killedPiece=middleSquare.getPlaceholder();
-            checkersboard.getChildren().remove(killedPiece.getImage());
+            checkersboard.Board.getChildren().remove(killedPiece.getImage());
             this.killedPieces.add(killedPiece);
             middleSquare.setPlaceholder(null);
         }
         if(Math.abs(this.getDestinationSquare().getx()-this.getSourceSquare().getx())==4) 
         {
-            Square middleSquare1=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2];
-            Square middleSquare2=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2+1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2];
+            Square middleSquare1=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2-1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2-1];
+            Square middleSquare2=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2+1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2+1];
             Piece killedPiece1=middleSquare1.getPlaceholder();
             Piece killedPiece2=middleSquare2.getPlaceholder();
-            checkersboard.getChildren().remove(killedPiece1.getImage());
-            checkersboard.getChildren().remove(killedPiece2.getImage());
+            checkersboard.Board.getChildren().remove(killedPiece1.getImage());
+            checkersboard.Board.getChildren().remove(killedPiece2.getImage());
             this.killedPieces.add(killedPiece1);
             this.killedPieces.add(killedPiece2);
             middleSquare1.setPlaceholder(null);
@@ -156,11 +156,11 @@ class Move {
         }
         
         destinationSquare.setPlaceholder(piece);
-        checkersboard.getChildren().remove(piece.getImage());
+        checkersboard.Board.getChildren().remove(piece.getImage());
         this.piece.setLocation(this.getDestinationSquare());
         System.out.println(destinationSquare.getx() + " " + destinationSquare.gety());
         System.out.println("Piece location: " + piece.getLocation().getx() + " " + piece.getLocation().gety());
-        checkersboard.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
+        checkersboard.Board.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
         sourceSquare.setPlaceholder(null);
         checkersboard.gameHistory.add(this);
     }
@@ -168,10 +168,10 @@ class Move {
     public void reverseMove(ChessBoard chessBoard)
     {
         if (this.enemyPiece != null) {
-            chessBoard.add(this.enemyPiece.getImage(), this.destinationSquare.getx(), this.destinationSquare.gety());
+            chessBoard.Board.add(this.enemyPiece.getImage(), this.destinationSquare.getx(), this.destinationSquare.gety());
             sourceSquare.setPlaceholder(piece);
-            chessBoard.getChildren().remove(this.piece.getImage());
-            chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
+            chessBoard.Board.getChildren().remove(this.piece.getImage());
+            chessBoard.Board.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
             chessBoard.board[this.destinationSquare.getx()][this.destinationSquare.gety()].setPlaceholder(this.enemyPiece);
             chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
             this.enemyPiece.setLocation(this.destinationSquare);
@@ -179,8 +179,8 @@ class Move {
 
         else {
             sourceSquare.setPlaceholder(piece);
-            chessBoard.getChildren().remove(this.piece.getImage());
-            chessBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
+            chessBoard.Board.getChildren().remove(this.piece.getImage());
+            chessBoard.Board.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
             chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
             destinationSquare.setPlaceholder(null);
         }
@@ -197,14 +197,14 @@ class Move {
         {
             Piece killedPiece=this.killedPieces.get(this.killedPieces.size()-1);
             this.killedPieces.remove(this.killedPieces.size()-1);
-            checkersBoard.getChildren().remove(killedPiece.getImage());
-            checkersBoard.add(killedPiece.getImage(), (this.destinationSquare.getx()+this.sourceSquare.getx())/2, (this.destinationSquare.gety()+this.sourceSquare.gety())/2);
+            checkersBoard.Board.getChildren().remove(killedPiece.getImage());
+            checkersBoard.Board.add(killedPiece.getImage(), (this.destinationSquare.getx()+this.sourceSquare.getx())/2, (this.destinationSquare.gety()+this.sourceSquare.gety())/2);
             checkersBoard.board[(this.destinationSquare.getx()+this.sourceSquare.getx())/2][(this.destinationSquare.gety()+this.sourceSquare.gety())/2].setPlaceholder(killedPiece);
             killedPiece.setLocation(checkersBoard.board[(this.destinationSquare.getx()+this.sourceSquare.getx())/2][(this.destinationSquare.gety()+this.sourceSquare.gety())/2]);
         }
         sourceSquare.setPlaceholder(piece);
-        checkersBoard.getChildren().remove(this.piece.getImage());
-        checkersBoard.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
+        checkersBoard.Board.getChildren().remove(this.piece.getImage());
+        checkersBoard.Board.add(this.piece.getImage(), this.sourceSquare.getx(), this.sourceSquare.gety());
         checkersBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
         destinationSquare.setPlaceholder(null);
         this.piece.setLocation(this.sourceSquare);
@@ -221,6 +221,7 @@ class Promotion extends Move{
         super(sourceSquare, destinationSquare, piece);
         this.promotedPiece=promotedPiece;
     }
+
     public Piece getPromotedPiece()
     {
         return promotedPiece;
@@ -231,18 +232,18 @@ class Promotion extends Move{
     }
     public void doMove(GameBoard chessBoard) {
         getDestinationSquare().setPlaceholder(piece);
-        chessBoard.getChildren().remove(piece.getImage());
+        chessBoard.Board.getChildren().remove(piece.getImage());
         this.piece.setLocation(getDestinationSquare());
         getSourceSquare().setPlaceholder(null);
         this.piece.setHasMoved(true);
-        chessBoard.add(promotedPiece.getImage(), getDestinationSquare().getx(), getDestinationSquare().gety());
+        chessBoard.Board.add(promotedPiece.getImage(), getDestinationSquare().getx(), getDestinationSquare().gety());
         promotedPiece.setLocation(getDestinationSquare());
         chessBoard.gameHistory.add(this);
     }
     public void reverseMove(ChessBoard chessBoard) {
         getSourceSquare().setPlaceholder(piece);
-        chessBoard.getChildren().remove(this.promotedPiece.getImage());
-        chessBoard.add(this.piece.getImage(), getSourceSquare().getx(), getSourceSquare().gety());
+        chessBoard.Board.getChildren().remove(this.promotedPiece.getImage());
+        chessBoard.Board.add(this.piece.getImage(), getSourceSquare().getx(), getSourceSquare().gety());
         chessBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(piece);
         getDestinationSquare().setPlaceholder(null);
         this.piece.setLocation(getSourceSquare());
