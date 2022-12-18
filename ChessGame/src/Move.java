@@ -141,6 +141,20 @@ class Move {
             this.killedPieces.add(killedPiece);
             middleSquare.setPlaceholder(null);
         }
+        if(Math.abs(this.getDestinationSquare().getx()-this.getSourceSquare().getx())==4) 
+        {
+            Square middleSquare1=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2];
+            Square middleSquare2=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2+1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2];
+            Piece killedPiece1=middleSquare1.getPlaceholder();
+            Piece killedPiece2=middleSquare2.getPlaceholder();
+            checkersboard.getChildren().remove(killedPiece1.getImage());
+            checkersboard.getChildren().remove(killedPiece2.getImage());
+            this.killedPieces.add(killedPiece1);
+            this.killedPieces.add(killedPiece2);
+            middleSquare1.setPlaceholder(null);
+            middleSquare2.setPlaceholder(null);
+        }
+        
         destinationSquare.setPlaceholder(piece);
         checkersboard.getChildren().remove(piece.getImage());
         this.piece.setLocation(this.getDestinationSquare());
