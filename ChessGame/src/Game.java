@@ -96,10 +96,6 @@ public class Game extends Application{
                 e.printStackTrace();
             }
         });
-
-
-
-
     }
 
     public static void main(String[] args) {

@@ -4,7 +4,6 @@ import java.util.ArrayList;
 public class CheckersPawn extends Piece {
     protected String name="Checkers";
     protected boolean isWhite;
-    protected Square location;
     protected ImageView image;
     protected boolean hasMoved;
 
@@ -34,15 +33,11 @@ public class CheckersPawn extends Piece {
     }
 
 
-    // Getters and setters
     public void setName(String name) {
         this.name = name;
     }
     public void setIsWhite(boolean isWhite) {
         this.isWhite = isWhite;
-    }
-    public void setLocation(Square location) {
-        this.location = location;
     }
     public ImageView getImage(){
         return this.image;
@@ -78,11 +73,11 @@ public class CheckersPawn extends Piece {
                 validMoves.add(chekersBoard.getSquare(x - 1, y + 1));
             }
         } else {
-            if (x + 1 < 8 && y - 1 >= 0 && chekersBoard.getSquare(x + 1, y - 1).isEmpty()) {
-                validMoves.add(chekersBoard.getSquare(x + 1, y - 1));
+            if (x + 1 < 8 && y + 1 >= 0 && chekersBoard.getSquare(x + 1, y + 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x + 1, y + 1));
             }
-            if (x - 1 >= 0 && y - 1 >= 0 && chekersBoard.getSquare(x - 1, y - 1).isEmpty()) {
-                validMoves.add(chekersBoard.getSquare(x - 1, y - 1));
+            if (x - 1 >= 0 && y + 1 >= 0 && chekersBoard.getSquare(x - 1, y + 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x - 1, y + 1));
             }
 
 

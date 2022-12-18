@@ -25,6 +25,7 @@ public abstract class GameBoard extends GridPane {
     protected int size;
     protected Color color1;
     protected Color color2;
+    protected ArrayList<Move> gameHistory;
 
     public GameBoard(int size, Color color1, Color color2) {
         super();
