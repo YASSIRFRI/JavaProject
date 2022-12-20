@@ -119,11 +119,6 @@ class Move {
             chessBoard.setEnPassantThreatedPawn(null);
         }
 
-        if (chessBoard.getEnPassantThreatedPawn() != null) {
-            Pawn killedPiece = chessBoard.getEnPassantThreatedPawn();
-            if ()
-        }
-
     }
 
     public void doMove(CheckersBoard checkersboard)

@@ -462,11 +462,11 @@ class Pawn extends Piece {
         if (chessBoard2.getEnPassantThreatedPawn() != null) {
             Pawn threatedPawn = chessBoard2.getEnPassantThreatedPawn();
             if (isInRange(xSrc-1) && chessBoard2.getBoard()[xSrc-1][ySrc].getPlaceholder() == threatedPawn) {
-                validMoves.add(board[xSrc-1][]);
+                validMoves.add(board[xSrc-1][ySrc+pawnOrientation]);
             }
 
             else if (isInRange(xSrc+1) && chessBoard2.getBoard()[xSrc+1][ySrc].getPlaceholder() == threatedPawn) {
-
+                validMoves.add(board[xSrc+1][ySrc+pawnOrientation]);
             }
         }
 
