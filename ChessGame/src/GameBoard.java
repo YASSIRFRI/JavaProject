@@ -136,7 +136,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
     private ArrayList<Piece> blackPieces;
     private boolean isWhiteTurn;
     private GridPane piecePicker;
-    private Alert alert;
+    private Alert alert=new Alert(Alert.AlertType.INFORMATION);
     private Piece promotedPiece;
  //   public Media sound= new Media("file:/src/static/");
 
@@ -180,13 +180,9 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
                             case "Knight":
                                 promotedPiece = new Knight(isWhiteTurn);
                                 break;
-                            default: 
-                                promotedPiece = new Queen(isWhiteTurn);
-                                break;
                         }
                         System.out.println(promotedPiece);
                         e.consume();
-                        notify();
                     });
                 }
             }
@@ -479,7 +475,6 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
                 if (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED) {
                     removeHighlights();
                 if((clickedSquare.gety()==0 || clickedSquare.gety()==7)&& trigger.getPlaceholder() instanceof Pawn){
-                    System.out.println("Promoting");
                     this.setAlignment(piecePicker, Pos.CENTER);
                     this.alert.showAndWait();
                     System.out.println("Promoted piece: "+this.promotedPiece);
