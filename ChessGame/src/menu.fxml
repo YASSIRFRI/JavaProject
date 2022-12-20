@@ -61,12 +61,12 @@
       </Label>
       <ColorPicker fx:id="color1" layoutX="144.0" layoutY="419.0" prefHeight="41.0" prefWidth="150.0" promptText="Color 2" style="-fx-background-color: lime;">
          <value>
-            <Color red="0.805351972579956" green="0.07052301615476608" blue="0.07052301615476608" />
+            <Color red="0.800000011920929" green="0.43784770369529724" blue="0.07199999690055847" />
          </value>
       </ColorPicker>
       <ColorPicker fx:id="color2" editable="true" layoutX="427.0" layoutY="419.0" prefHeight="41.0" prefWidth="160.0" promptText="Color 1" style="-fx-background-color: yellow;">
          <value>
-            <Color red="0.07374347746372223" green="0.3636464476585388" blue="0.12206064164638519" />
+            <Color red="1.0" green="0.8177777528762817" blue="0.39259257912635803" />
          </value>
       </ColorPicker>
    </children>
