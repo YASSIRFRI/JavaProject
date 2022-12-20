@@ -88,6 +88,17 @@ class Move {
                 rookMove.doMove(chessBoard);
             }
         }
+
+        // Handling EnPassant move
+        if (piece.getName().equals("Pawn") && destinationSquare.isEmpty() && (destinationSquare.getx() != sourceSquare.getx())) {
+            Pawn killedPiece = chessBoard.getEnPassantThreatedPawn();
+            chessBoard.Board.getChildren().remove(killedPiece.getImage());
+            chessBoard.getEnemyPieces(piece.getIsWhite()).remove(killedPiece);
+            this.enemyPiece = killedPiece;
+        }
+
+
+        /////////////////////////////////
         if (!destinationSquare.isEmpty()) {
             Piece killedPiece = destinationSquare.getPlaceholder();
             chessBoard.Board.getChildren().remove(killedPiece.getImage());  // Removing the image of the killed piece
