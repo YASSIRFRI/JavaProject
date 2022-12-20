@@ -88,14 +88,6 @@ class Move {
                 rookMove.doMove(chessBoard);
             }
         }
-        //handling pawn promotion
-        if(piece.getName()=="Pawn" && (destinationSquare.gety()==0 || destinationSquare.gety()==7)){
-            Piece queen = new Queen(piece.getIsWhite(), destinationSquare);
-            Promotion promotion = new Promotion(sourceSquare,destinationSquare,this.piece,queen);
-            promotion.doMove(chessBoard);
-            return;
-        }
-
         if (!destinationSquare.isEmpty()) {
             Piece killedPiece = destinationSquare.getPlaceholder();
             chessBoard.Board.getChildren().remove(killedPiece.getImage());  // Removing the image of the killed piece

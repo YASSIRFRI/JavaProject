@@ -390,7 +390,6 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
         this.setBlackKing((King) board[3][7].getPlaceholder());
         this.setWhiteKing((King) board[3][0].getPlaceholder());
 
-//        this.setGridLinesVisible(true);
         this.setAlignment(Pos.BASELINE_LEFT);
     }
 
