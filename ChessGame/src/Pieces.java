@@ -455,7 +455,6 @@ class Pawn extends Piece {
             if (board[xSrc][ySrc+2*pawnOrientation].getPlaceholder() == null && board[xSrc][ySrc+pawnOrientation].getPlaceholder() == null)
                 validMoves.add(board[xSrc][ySrc+2*pawnOrientation]);
         }
-
         return validMoves;
     }
 }

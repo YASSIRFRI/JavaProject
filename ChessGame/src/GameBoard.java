@@ -1,10 +1,8 @@
 import java.awt.*;
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.fxml.FXMLLoader;
@@ -13,19 +11,18 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
+import javafx.scene.image.Image;
 
-import javax.lang.model.util.ElementScanner14;
-import javax.management.monitor.MonitorNotification;
 
 public abstract class GameBoard extends StackPane {
 
@@ -38,10 +35,15 @@ public abstract class GameBoard extends StackPane {
     protected final ArrayList<Square> highlightedSquares= new ArrayList<Square>();
     protected Label statusLabel=new Label();
     protected Button reverseMove = new Button("Reverse Move");
-    protected Button playSound = new Button("Play sound");
+    protected ImageView playSound = new ImageView(new Image("/static/music.png")); 
+    String musicFile = new File("src/static/music.mp3").getAbsolutePath();
+    public Media music = new Media(new File(musicFile).toURI().toString());
+    protected MediaPlayer mediaPlayer = new MediaPlayer(music);
+    boolean soundOn = false;
 
     public GameBoard(int size, Color color1, Color color2) {
         super();
+
         this.setStyle("-fx-background-color: lightgray;");
         this.size = size;
         this.board = new Square[size][size];
@@ -77,17 +79,37 @@ public abstract class GameBoard extends StackPane {
         statusLabel.setFont(new Font("FiraCode", 20));
         statusLabel.setPadding(new Insets(5, 5, 5, 5));
         statusLabel.setTextFill(Color.BLACK);
-        statusLabel.setAlignment(Pos.CENTER);
-        this.Board.add(statusLabel, 8, 0);
+        statusLabel.setAlignment(Pos.TOP_RIGHT);
+        this.setAlignment(statusLabel, Pos.TOP_RIGHT);
+        this.getChildren().add(statusLabel);
 
         this.gameHistory = new ArrayList<Move>();
-        reverseMove.setStyle("-fx-background-color: brown; -fx-f0ont-size: 18px; -fx-border-width: 5px; -fx-text-fill: white");
+        reverseMove.setStyle("-fx-background-color: brown;  -fx-border-width: 5px; -fx-text-fill: white");
         this.Board.add(reverseMove, 12, 7);
         reverseMove.setAlignment(Pos.BOTTOM_CENTER);
-        playSound.setStyle("-fx-background-image: url('file:/src/static/music.png'); -fx-background-size: 100% 100%; -fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5px;");
-        this.Board.add(playSound, 12, 5);
+        String musicFile = new File("src/static/music.mp3").getAbsolutePath();
+        playSound.setStyle(" -fx-background-size: 100% 100%; -fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5px;");
+        playSound.setFitHeight(50);
+        playSound.setFitWidth(50);
         this.getChildren().add(Board);
         this.setAlignment(Board, Pos.CENTER);
+        this.setAlignment(playSound, Pos.BOTTOM_RIGHT);
+        playSound.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if(soundOn){
+                    mediaPlayer.stop();
+                    soundOn = false;
+                }
+                else{
+                    mediaPlayer.play();
+                    soundOn = true;
+                }
+                event.consume();
+            }
+        });
+        this.getChildren().add(playSound);
+
     }
 
     public Square[][] getBoard() {
@@ -114,6 +136,8 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
     private ArrayList<Piece> blackPieces;
     private boolean isWhiteTurn;
     private GridPane piecePicker;
+    private Alert alert;
+    private Piece promotedPiece;
  //   public Media sound= new Media("file:/src/static/");
 
 
@@ -137,18 +161,40 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
             PromotionController controller = new PromotionController();
             loader.setController(controller);
             piecePicker = loader.load();
+            for (Node node : piecePicker.getChildren()) {
+                if (node instanceof ImageView) {
+                    node.addEventHandler(MouseEvent.MOUSE_CLICKED, e -> {
+                        ImageView piece = (ImageView) e.getSource();
+                        System.out.println(piece.getId());
+                        System.out.println("Clicked");
+                        switch (piece.getId()) {
+                            case "Queen":
+                                promotedPiece = new Queen(isWhiteTurn);
+                                break;
+                            case "Rook":
+                                promotedPiece = new Rook(isWhiteTurn);
+                                break;
+                            case "Bishop":
+                                promotedPiece = new Bishop(isWhiteTurn);
+                                break;
+                            case "Knight":
+                                promotedPiece = new Knight(isWhiteTurn);
+                                break;
+                            default: 
+                                promotedPiece = new Queen(isWhiteTurn);
+                                break;
+                        }
+                        System.out.println(promotedPiece);
+                        e.consume();
+                        notify();
+                    });
+                }
+            }
             this.setAlignment(piecePicker, Pos.CENTER);
-            this.getChildren().add(piecePicker);
-            piecePicker.setVisible(false);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
-
-      
-        
+        this.alert.getDialogPane().setContent(piecePicker);
     }
 
     public ArrayList<Piece> getWhitePieces() {
@@ -432,10 +478,15 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
             if (trigger != null) {
                 if (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED) {
                     removeHighlights();
-                if((clickedSquare.getx()==0 || clickedSquare.getx()==7)&& clickedSquare.getPlaceholder() instanceof Pawn){
-                    //Promotion p= new Promotion(clickedSquare, clickedSquare, trigger.getPlaceholder(), new Queen(isWhiteTurn));
-                   // p.doMove(this);
-                   this.piecePicker.setVisible(true);
+                if((clickedSquare.gety()==0 || clickedSquare.gety()==7)&& trigger.getPlaceholder() instanceof Pawn){
+                    System.out.println("Promoting");
+                    this.setAlignment(piecePicker, Pos.CENTER);
+                    this.alert.showAndWait();
+                    System.out.println("Promoted piece: "+this.promotedPiece);
+                   Promotion p= new Promotion(clickedSquare, clickedSquare, trigger.getPlaceholder(),this.promotedPiece);
+                   p.doMove(this);
+                   this.piecePicker.setVisible(false);
+                   this.promotedPiece=null;
                     this.switchTurn();
                     this.updateStatusLabel();
                     trigger = null;

@@ -89,25 +89,26 @@ class Move {
                 rookMove.doMove(chessBoard);
             }
         }
-
-        //Handling pawn promotion
-        //////////////////////////////////////////
+        //handling pawn promotion
+        if(piece.getName()=="Pawn" && (destinationSquare.gety()==0 || destinationSquare.gety()==7)){
+            Piece queen = new Queen(piece.getIsWhite(), destinationSquare);
+            Promotion promotion = new Promotion(sourceSquare,destinationSquare,this.piece,queen);
+            promotion.doMove(chessBoard);
+            return;
+        }
 
         if (!destinationSquare.isEmpty()) {
             Piece killedPiece = destinationSquare.getPlaceholder();
             chessBoard.Board.getChildren().remove(killedPiece.getImage());  // Removing the image of the killed piece
             this.enemyPiece=killedPiece;
-
             if (killedPiece.getIsWhite()) {
                 chessBoard.getWhitePieces().remove(killedPiece);
             }
             else {
                 chessBoard.getBlackPieces().remove(killedPiece);
             }
-
             destinationSquare.getPlaceholder().setLocation(null);
         }
-        
         destinationSquare.setPlaceholder(piece);
         chessBoard.Board.getChildren().remove(piece.getImage());
         this.piece.setLocation(destinationSquare);
@@ -115,18 +116,6 @@ class Move {
         sourceSquare.setPlaceholder(null);
         this.piece.setHasMoved(true);
         //handling pawn promotion
-        if(piece.getName().equals("Pawn") && (destinationSquare.gety()==0 || destinationSquare.gety()==7)){
-            chessBoard.getChildren().remove(piece.getImage());
-            Piece queen = new Queen(piece.getIsWhite(), destinationSquare);
-            chessBoard.Board.add(queen.getImage(), destinationSquare.getx(), destinationSquare.gety());
-            destinationSquare.setPlaceholder(queen);
-            if(piece.getIsWhite()){
-                chessBoard.getWhitePieces().add(queen);
-            }
-            else{
-                chessBoard.getBlackPieces().add(queen);
-            }
-        }
         chessBoard.gameHistory.add(this);
 
     }
@@ -216,7 +205,7 @@ class Move {
 
 
 class Promotion extends Move{
-    private Piece promotedPiece;
+    public Piece promotedPiece;
     public Promotion(Square sourceSquare, Square destinationSquare, Piece piece, Piece promotedPiece) {
         super(sourceSquare, destinationSquare, piece);
         this.promotedPiece=promotedPiece;
@@ -230,16 +219,26 @@ class Promotion extends Move{
     {
         this.promotedPiece=promotedPiece;
     }
-    public void doMove(GameBoard chessBoard) {
-        getDestinationSquare().setPlaceholder(piece);
-        chessBoard.Board.getChildren().remove(piece.getImage());
-        this.piece.setLocation(getDestinationSquare());
+    @Override
+    /*
+     * This method is used to move a piece from one square to another square
+     * @param chessBoard is the chessboard that the piece is on
+     * @return void
+     * @throws none
+    */
+    public void doMove(ChessBoard chessBoard) {
+        System.out.println("Promotion");
         getSourceSquare().setPlaceholder(null);
-        this.piece.setHasMoved(true);
-        chessBoard.Board.add(promotedPiece.getImage(), getDestinationSquare().getx(), getDestinationSquare().gety());
-        promotedPiece.setLocation(getDestinationSquare());
+        chessBoard.Board.getChildren().remove(this.piece.getImage());
+        chessBoard.Board.add(this.promotedPiece.getImage(), getDestinationSquare().getx(), getDestinationSquare().gety());
+        chessBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(promotedPiece);
+        getDestinationSquare().setPlaceholder(promotedPiece);
+        this.promotedPiece.setLocation(getDestinationSquare());
+        if (!this.piece.isHasMoved())
+            this.piece.setHasMoved(true);
         chessBoard.gameHistory.add(this);
     }
+    @Override
     public void reverseMove(ChessBoard chessBoard) {
         getSourceSquare().setPlaceholder(piece);
         chessBoard.Board.getChildren().remove(this.promotedPiece.getImage());
