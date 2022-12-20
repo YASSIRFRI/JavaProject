@@ -136,6 +136,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
     private GridPane piecePicker;
     private Alert alert=new Alert(Alert.AlertType.INFORMATION);
     private Piece promotedPiece;
+    private Pawn enPassantThreatedPawn;
  //   public Media sound= new Media("file:/src/static/");
 
 
@@ -191,6 +192,14 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
         this.alert.setContentText("Choose a piece to promote to");
         this.alert.setTitle("Promotion");
         this.alert.getDialogPane().setContent(piecePicker);
+    }
+
+    public Pawn getEnPassantThreatedPawn() {
+        return enPassantThreatedPawn;
+    }
+
+    public void setEnPassantThreatedPawn(Pawn enPassantThreatedPawn) {
+        this.enPassantThreatedPawn = enPassantThreatedPawn;
     }
 
     public ArrayList<Piece> getWhitePieces() {

@@ -118,6 +118,21 @@ class Move {
         //handling pawn promotion
         chessBoard.gameHistory.add(this);
 
+
+
+        // Handling EnPassant //////////////////////////////////////////////////////////////////////////////////////////
+        if (piece.getName().equals("Pawn") && Math.abs(sourceSquare.gety() - destinationSquare.gety()) == 2) {
+            chessBoard.setEnPassantThreatedPawn((Pawn) piece);
+        }
+        else {
+            chessBoard.setEnPassantThreatedPawn(null);
+        }
+
+        if (chessBoard.getEnPassantThreatedPawn() != null) {
+            Pawn killedPiece = chessBoard.getEnPassantThreatedPawn();
+            if ()
+        }
+
     }
 
     public void doMove(CheckersBoard checkersboard)
@@ -204,7 +219,7 @@ class Move {
 }
 
 
-class Promotion extends Move{
+class Promotion extends Move {
     public Piece promotedPiece;
     public Promotion(Square sourceSquare, Square destinationSquare, Piece piece, Piece promotedPiece) {
         super(sourceSquare, destinationSquare, piece);

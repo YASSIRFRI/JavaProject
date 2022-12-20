@@ -455,6 +455,23 @@ class Pawn extends Piece {
             if (board[xSrc][ySrc+2*pawnOrientation].getPlaceholder() == null && board[xSrc][ySrc+pawnOrientation].getPlaceholder() == null)
                 validMoves.add(board[xSrc][ySrc+2*pawnOrientation]);
         }
+
+
+        // Handling EnPassant
+        ChessBoard chessBoard2 = (ChessBoard) chessBoard;
+        if (chessBoard2.getEnPassantThreatedPawn() != null) {
+            Pawn threatedPawn = chessBoard2.getEnPassantThreatedPawn();
+            if (isInRange(xSrc-1) && chessBoard2.getBoard()[xSrc-1][ySrc].getPlaceholder() == threatedPawn) {
+                validMoves.add(board[xSrc-1][]);
+            }
+
+            else if (isInRange(xSrc+1) && chessBoard2.getBoard()[xSrc+1][ySrc].getPlaceholder() == threatedPawn) {
+
+            }
+        }
+
+
+
         return validMoves;
     }
 }
