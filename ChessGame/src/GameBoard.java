@@ -1,4 +1,3 @@
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,7 +42,6 @@ public abstract class GameBoard extends StackPane {
 
     public GameBoard(int size, Color color1, Color color2) {
         super();
-
         this.setStyle("-fx-background-color: lightgray;");
         this.size = size;
         this.board = new Square[size][size];
@@ -190,6 +188,8 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        this.alert.setContentText("Choose a piece to promote to");
+        this.alert.setTitle("Promotion");
         this.alert.getDialogPane().setContent(piecePicker);
     }
 
@@ -480,11 +480,11 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
                     System.out.println("Promoted piece: "+this.promotedPiece);
                    Promotion p= new Promotion(clickedSquare, clickedSquare, trigger.getPlaceholder(),this.promotedPiece);
                    p.doMove(this);
-                   this.piecePicker.setVisible(false);
                    this.promotedPiece=null;
                     this.switchTurn();
                     this.updateStatusLabel();
                     trigger = null;
+                    return;
                 }
                 else{
                     Move move = new Move(trigger, clickedSquare, trigger.getPlaceholder());
@@ -503,7 +503,6 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
                             trigger = clickedSquare;
                         } else
                             removeHighlights();
-
                     }
                 }
 
