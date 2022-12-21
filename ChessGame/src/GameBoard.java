@@ -487,7 +487,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
                     this.setAlignment(piecePicker, Pos.CENTER);
                     this.alert.showAndWait();
                     this.promotedPiece.setIsWhite(isWhiteTurn);
-                   Promotion p= new Promotion(clickedSquare, clickedSquare, trigger.getPlaceholder(),this.promotedPiece);
+                   Promotion p= new Promotion(trigger, clickedSquare, trigger.getPlaceholder(),this.promotedPiece);
                    p.doMove(this);
                    this.promotedPiece=null;
                     this.switchTurn();

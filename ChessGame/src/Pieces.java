@@ -452,7 +452,7 @@ class Pawn extends Piece {
 
         // Checking the second square forward if the pawn never moved
         if (! this.isHasMoved()) {
-            if (board[xSrc][ySrc+2*pawnOrientation].getPlaceholder() == null && board[xSrc][ySrc+pawnOrientation].getPlaceholder() == null)
+            if (isInRange(ySrc+2*pawnOrientation)&& board[xSrc][ySrc+2*pawnOrientation].getPlaceholder() == null && board[xSrc][ySrc+pawnOrientation].getPlaceholder() == null)
                 validMoves.add(board[xSrc][ySrc+2*pawnOrientation]);
         }
 

@@ -282,6 +282,8 @@ class Promotion extends Move {
     {
         this.promotedPiece=promotedPiece;
     }
+
+
     @Override
     public void doMove(ChessBoard chessBoard) {
         if(this.getDestinationSquare().getPlaceholder()!=null)
@@ -294,7 +296,9 @@ class Promotion extends Move {
         chessBoard.Board.getChildren().remove(this.piece.getImage());
         chessBoard.Board.add(this.promotedPiece.getImage(), getDestinationSquare().getx(), getDestinationSquare().gety());
         chessBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(promotedPiece);
+        chessBoard.board[getSourceSquare().getx()][getSourceSquare().gety()].setPlaceholder(null);
         getDestinationSquare().setPlaceholder(promotedPiece);
+        getSourceSquare().setPlaceholder(null);
         this.promotedPiece.setLocation(getDestinationSquare());
         if (!this.piece.isHasMoved())
             this.piece.setHasMoved(true);
@@ -320,11 +324,11 @@ class Promotion extends Move {
     public void reverseMove(ChessBoard chessBoard) {
         System.out.println("reversing promotion");
         chessBoard.Board.getChildren().remove(this.promotedPiece.getImage());
+        chessBoard.Board.getChildren().remove(this.piece.getImage());
         chessBoard.Board.add(this.piece.getImage(), getSourceSquare().getx(), getSourceSquare().gety());
+        chessBoard.board[getSourceSquare().getx()][getSourceSquare().gety()].setPlaceholder(piece);
         getSourceSquare().setPlaceholder(piece);
         this.piece.setLocation(getSourceSquare());
-        if (this.piece.isHasMoved())
-            this.piece.setHasMoved(false);
         if(piece.getIsWhite())
         {
             chessBoard.getWhitePieces().remove(promotedPiece);
