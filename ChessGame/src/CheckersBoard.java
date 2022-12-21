@@ -158,6 +158,41 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
         return validMoves;
 
     }
+    public ArrayList<Square> getValidMoves(CheckersKing piece) {
+        ArrayList<Square> validMoves = new ArrayList<Square>();
+        int x = piece.getLocation().getx();
+        System.out.println(x);
+        int y = piece.getLocation().gety();
+        System.out.println(y);
+        if (piece.getIsWhite()) {
+            if (inBoard(x+1, y+1) && board[x + 1][y + 1].isEmpty())
+                validMoves.add(board[x + 1][y + 1]);
+            if(inBoard(x-1, y+1) && board[x - 1][y + 1].isEmpty())
+                validMoves.add(board[x - 1][y + 1]);
+            if (inBoard(x+1, y-1) && board[x + 1][y - 1].isEmpty())
+                validMoves.add(board[x + 1][y - 1]);
+            if(inBoard(x-1, y-1) && board[x - 1][y - 1].isEmpty())
+                validMoves.add(board[x - 1][y - 1]);
+
+        }
+        else {
+            if (inBoard(x-1, y-1) && board[x - 1][y - 1].isEmpty())
+                validMoves.add(board[x - 1][y - 1]);
+            if (inBoard(x+1, y-1) && board[x + 1][y - 1].isEmpty())
+                validMoves.add(board[x + 1][y - 1]);
+            if (inBoard(x+1, y+1) && board[x + 1][y + 1].isEmpty())
+                validMoves.add(board[x + 1][y + 1]);
+            if(inBoard(x-1, y+1) && board[x - 1][y + 1].isEmpty())
+                validMoves.add(board[x - 1][y + 1]);
+
+        }
+        
+        
+        
+        System.out.println(validMoves);
+        return validMoves;
+    
+    }
     public void handle(MouseEvent event) {
         Square clickedSquare = getClickedSquare(event);
         if (clickedSquare != null) {
@@ -166,7 +201,7 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
                     removeHighlights();
                     if(clickedSquare.gety()==0 || clickedSquare.gety()==7 )
                     {
-                        Promotion p=new Promotion(triggerer, clickedSquare, triggerer.getPlaceholder(),new CheckersKing(isWhiteTurn));
+                        PromotionCheckers p=new PromotionCheckers(triggerer, clickedSquare, triggerer.getPlaceholder(),new CheckersKing(isWhiteTurn));
                         p.doMove(this);
                         this.switchTurn();
                         this.updateStatusLabel();

@@ -93,14 +93,50 @@ class CheckersKing extends CheckersPawn
         super(isWhite);
         this.name = "CheckersKing";
         if(isWhite){
-            this.image = new ImageView(new Image("/static/White/"+this.name+ ".png"));
+            this.image = new ImageView(new Image("/static/White/" +this.name+ ".png"));
         }
         else{
-            this.image = new ImageView(new Image("/static/Black/"+this.name+".png"));
+            this.image = new ImageView(new Image("/static/Black/" +this.name+ ".png"));
         }
         this.image.setFitHeight(Square.squareWidth - 25);
         this.image.setFitWidth(Square.squareWidth - 25);
     }
+    @Override
+    public ArrayList<Square> getValidMoves(GameBoard chekersBoard) {
+        ArrayList<Square> validMoves = new ArrayList<Square>();
+        int x = this.location.getx();
+        int y = this.location.gety();
+        if (this.isWhite) {
+            if (x + 1 < 8 && y + 1 < 8 && chekersBoard.getSquare(x + 1, y + 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x + 1, y + 1));
+            }
+            if (x - 1 >= 0 && y + 1 < 8 && chekersBoard.getSquare(x - 1, y + 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x - 1, y + 1));
+            }
+            if (x - 1 >= 0 && y - 1 >= 0 && chekersBoard.getSquare(x - 1, y - 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x - 1, y - 1));
+            }
+            if (x + 1 < 8 && y - 1 >= 0 && chekersBoard.getSquare(x + 1, y - 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x + 1, y - 1));
+            }
+        } else {
+            if (x + 1 < 8 && y + 1 >= 0 && chekersBoard.getSquare(x + 1, y + 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x + 1, y + 1));
+            }
+            if (x - 1 >= 0 && y + 1 >= 0 && chekersBoard.getSquare(x - 1, y + 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x - 1, y + 1));
+            }
+            if (x - 1 >= 0 && y - 1 < 8 && chekersBoard.getSquare(x - 1, y - 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x - 1, y - 1));
+            }
+            if (x + 1 < 8 && y - 1 < 8 && chekersBoard.getSquare(x + 1, y - 1).isEmpty()) {
+                validMoves.add(chekersBoard.getSquare(x + 1, y - 1));
+            }
+
+
+        }
+        return validMoves;
+}
 
     
 
