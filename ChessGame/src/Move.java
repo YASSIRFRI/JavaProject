@@ -262,6 +262,34 @@ class PromotionCheckers extends Move {
         checkersBoard.gameHistory.add(this);
 
 }
+    @Override
+    public void reverseMove(CheckersBoard checkersBoard) {
+        getSourceSquare().setPlaceholder(piece);
+        checkersBoard.Board.getChildren().remove(this.promotedPiece.getImage());
+        checkersBoard.Board.add(this.piece.getImage(), getSourceSquare().getx(), getSourceSquare().gety());
+        checkersBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(piece);
+        getDestinationSquare().setPlaceholder(null);
+        this.piece.setLocation(getSourceSquare());
+
+        if(piece.getIsWhite())
+        {
+            checkersBoard.getWhitePieces().remove(promotedPiece);
+            checkersBoard.getWhitePieces().add((CheckersPawn) piece);
+        }
+        else{
+            checkersBoard.getBlackPieces().remove(promotedPiece);
+            checkersBoard.getBlackPieces().add((CheckersPawn) piece);
+        }
+        if(this.killedPiece!=null)
+        {
+            if(this.killedPiece.getIsWhite())
+                checkersBoard.getWhitePieces().add((CheckersPawn) this.killedPiece);
+            else
+                checkersBoard.getBlackPieces().add((CheckersPawn) this.killedPiece);
+        }
+        checkersBoard.switchTurn();
+        checkersBoard.updateStatusLabel();
+    }
 
 }
 
