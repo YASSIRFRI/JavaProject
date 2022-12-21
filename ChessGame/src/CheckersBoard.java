@@ -201,7 +201,7 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
                     removeHighlights();
                     if(clickedSquare.gety()==0 || clickedSquare.gety()==7 )
                     {
-                        Promotion p=new Promotion(triggerer, clickedSquare, triggerer.getPlaceholder(),new CheckersKing(isWhiteTurn));
+                        PromotionCheckers p=new PromotionCheckers(triggerer, clickedSquare, triggerer.getPlaceholder(),new CheckersKing(isWhiteTurn));
                         p.doMove(this);
                         this.switchTurn();
                         this.updateStatusLabel();

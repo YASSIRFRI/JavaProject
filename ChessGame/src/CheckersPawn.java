@@ -93,10 +93,10 @@ class CheckersKing extends CheckersPawn
         super(isWhite);
         this.name = "CheckersKing";
         if(isWhite){
-            this.image = new ImageView(new Image("/static/White/"+this.name+ ".png"));
+            this.image = new ImageView(new Image("/static/White/" +this.name+ ".png"));
         }
         else{
-            this.image = new ImageView(new Image("/static/Black/"+this.name+".png"));
+            this.image = new ImageView(new Image("/static/Black/" +this.name+ ".png"));
         }
         this.image.setFitHeight(Square.squareWidth - 25);
         this.image.setFitWidth(Square.squareWidth - 25);
