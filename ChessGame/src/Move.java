@@ -237,10 +237,10 @@ class Promotion extends Move {
         if(this.getDestinationSquare().getPlaceholder()!=null)
         {
             this.killedPiece=this.getDestinationSquare().getPlaceholder();
+            this.getDestinationSquare().setPlaceholder(null);
             chessBoard.Board.getChildren().remove(this.killedPiece.getImage());
             this.killedPiece.setLocation(null);
         }
-        getSourceSquare().setPlaceholder(null);
         chessBoard.Board.getChildren().remove(this.piece.getImage());
         chessBoard.Board.add(this.promotedPiece.getImage(), getDestinationSquare().getx(), getDestinationSquare().gety());
         chessBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(promotedPiece);
@@ -268,11 +268,10 @@ class Promotion extends Move {
     }
     @Override
     public void reverseMove(ChessBoard chessBoard) {
-        getSourceSquare().setPlaceholder(piece);
+        System.out.println("reversing promotion");
         chessBoard.Board.getChildren().remove(this.promotedPiece.getImage());
         chessBoard.Board.add(this.piece.getImage(), getSourceSquare().getx(), getSourceSquare().gety());
-        chessBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(piece);
-        getDestinationSquare().setPlaceholder(null);
+        getSourceSquare().setPlaceholder(piece);
         this.piece.setLocation(getSourceSquare());
         if (this.piece.isHasMoved())
             this.piece.setHasMoved(false);
@@ -291,6 +290,13 @@ class Promotion extends Move {
                 chessBoard.getWhitePieces().add(this.killedPiece);
             else
                 chessBoard.getBlackPieces().add(this.killedPiece);
+            chessBoard.Board.getChildren().add(this.killedPiece.getImage());
+            this.getDestinationSquare().setPlaceholder(this.killedPiece);
+            this.killedPiece.setLocation(this.getDestinationSquare());
+        }
+        else
+        {
+            this.getDestinationSquare().setPlaceholder(null);
         }
         chessBoard.switchTurn();
         chessBoard.updateStatusLabel();
