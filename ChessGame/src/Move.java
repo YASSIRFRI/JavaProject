@@ -270,7 +270,6 @@ class PromotionCheckers extends Move {
         checkersBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(piece);
         getDestinationSquare().setPlaceholder(null);
         this.piece.setLocation(getSourceSquare());
-
         if(piece.getIsWhite())
         {
             checkersBoard.getWhitePieces().remove(promotedPiece);

@@ -1,7 +1,10 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.locks.ReentrantLock;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +23,7 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
+import javafx.util.Duration;
 import javafx.scene.image.Image;
 
 
@@ -39,6 +43,10 @@ public abstract class GameBoard extends StackPane {
     public Media music = new Media(new File(musicFile).toURI().toString());
     protected MediaPlayer mediaPlayer = new MediaPlayer(music);
     boolean soundOn = false;
+    protected int Whitetime=5;
+    protected int Blacktime=5;
+    protected Timeline whiteTimer;
+    protected Timeline blackTimer;
 
     public GameBoard(int size, Color color1, Color color2) {
         super();
@@ -48,7 +56,7 @@ public abstract class GameBoard extends StackPane {
         this.color1 = color1;
         this.color2 = color2;
         int count = 0;
-
+        //create a timer
         for (int i = 0; i < size; i++) {
 
             // Horizontal alignment of images
@@ -72,20 +80,63 @@ public abstract class GameBoard extends StackPane {
                 count++;
             }
         }
+        Font vogue= Font.loadFont(getClass().getResourceAsStream("/static/fonts/Vogue.ttf"), 30);
         this.statusLabel = new Label("White's turn");
         statusLabel.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 0px; -fx-border-radius: 0px;");
-        statusLabel.setFont(new Font("FiraCode", 20));
-        statusLabel.setPadding(new Insets(5, 5, 5, 5));
+        statusLabel.setFont(vogue);
+        statusLabel.setPadding(new Insets(20, 100, 20, 100));
         statusLabel.setTextFill(Color.BLACK);
         statusLabel.setAlignment(Pos.TOP_RIGHT);
         this.setAlignment(statusLabel, Pos.TOP_RIGHT);
         this.getChildren().add(statusLabel);
-
+        Label timer= new Label("Time Left : 60"); 
+        timer.setMaxHeight(50);
+        
+        this.Whitetime=60*Whitetime;; 
+        this.whiteTimer= new Timeline(new KeyFrame(Duration.seconds(1), e->{
+            if(Whitetime>0){
+                Whitetime--;
+                timer.setText("Time Left : "+Whitetime);
+            }
+            else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game Over");
+                alert.setHeaderText("Time is up!");
+                alert.setContentText("Game Over");
+                alert.showAndWait();
+            }
+        }));
+        whiteTimer.setCycleCount(Timeline.INDEFINITE);
+        whiteTimer.play();
+        this.Blacktime=60*Blacktime;
+        this.blackTimer= new Timeline(new KeyFrame(Duration.seconds(1), e->{
+            if(Blacktime>0){
+                Blacktime--;
+                timer.setText("Time Left : "+Blacktime);
+            }
+            else{
+                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                alert.setTitle("Game Over");
+                alert.setHeaderText("Time is up!");
+                alert.setContentText("Game Over");
+                alert.showAndWait();
+            }
+        }));
+        blackTimer.setCycleCount(Timeline.INDEFINITE);
+        timer.setPadding(new Insets(20, 20, 20, 20));
+        this.setAlignment(timer, Pos.TOP_RIGHT);
+        timer.setTranslateX(-50);
+        timer.setTranslateY(100);
+        this.getChildren().add(timer);
+        timer.setFont(vogue);
         this.gameHistory = new ArrayList<Move>();
         reverseMove.setStyle("-fx-background-color: brown;  -fx-border-width: 5px; -fx-text-fill: white");
-        this.Board.add(reverseMove, 12, 7);
         reverseMove.setAlignment(Pos.BOTTOM_CENTER);
-        String musicFile = new File("src/static/music.mp3").getAbsolutePath();
+        this.setAlignment(reverseMove, Pos.BOTTOM_RIGHT);
+        reverseMove.setTranslateX(-150);
+        reverseMove.setTranslateY(-100);
+        reverseMove.setPadding(new Insets(20, 20, 20, 20));
+        this.getChildren().add(reverseMove);
         playSound.setStyle(" -fx-background-size: 100% 100%; -fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5px;");
         playSound.setFitHeight(50);
         playSound.setFitWidth(50);
@@ -137,7 +188,6 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
     private Alert alert=new Alert(Alert.AlertType.INFORMATION);
     private Piece promotedPiece;
     private Pawn enPassantThreatedPawn;
- //   public Media sound= new Media("file:/src/static/");
 
 
     ChessBoard(Color[] colors) {
@@ -145,7 +195,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
         this.whitePieces = new ArrayList<Piece>();
         this.blackPieces = new ArrayList<Piece>();
         this.isWhiteTurn = true;
-        this.reverseMove.setOnAction(e -> {
+        this.reverseMove.setOnMouseClicked(e -> {
             if (gameHistory.size() > 0) {
                 Move lastMove = gameHistory.get(gameHistory.size() - 1);
                 lastMove.reverseMove(this);
@@ -442,6 +492,16 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
     public void switchTurn() {
         this.isWhiteTurn = !this.isWhiteTurn();
         this.statusLabel.setStyle("-fx-background-color: " + (this.isWhiteTurn() ? "white" : "black") + "; -fx-text-fill: " + (this.isWhiteTurn() ? "black" : "white") + ";");
+        if(isWhiteTurn==false)
+        {
+            this.blackTimer.play();
+            this.whiteTimer.stop();
+        }
+        else
+        {
+            this.whiteTimer.play();
+            this.blackTimer.stop();
+        }
     }
 
     public GameStatus getBoardStatus() {
