@@ -36,8 +36,9 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
                 Move lastMove = gameHistory.get(gameHistory.size() - 1);
                 lastMove.reverseMove(this);
                 this.gameHistory.remove(lastMove);
+                e.consume();
             } else {
-                System.out.println("Empty History");
+                e.consume();
             }
         });
         this.gameHistory = new ArrayList<Move>();
@@ -95,6 +96,16 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
 
         this.highlightedSquares.clear();
     }
+    public void updateStatusLabel() {
+        if(this.whitePieces.size()==0)
+            this.statusLabel.setText("Black Wins!");
+        else if(this.blackPieces.size()==0)
+            this.statusLabel.setText("White Wins!");
+        else if (this.isWhiteTurn)
+            this.statusLabel.setText("White's Turn");
+        else
+            this.statusLabel.setText("Black's Turn");
+    }
 
    
     public Square getClickedSquare(MouseEvent event) {
@@ -126,7 +137,6 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
                 validMoves.add(board[x - 1][y + 1]);
             if(inBoard(x+2, y+2) && board[x + 2][y + 2].isEmpty() && board[x + 1][y + 1].getPlaceholder() != null && board[x + 1][y + 1].getPlaceholder().getIsWhite() == false)
             {
-                System.out.println("test");
                 validMoves.add(board[x + 2][y + 2]);
             }
             if(inBoard(x-2, y+2) && board[x - 2][y + 2].isEmpty() && board[x - 1][y + 1].getPlaceholder() != null && board[x - 1][y + 1].getPlaceholder().getIsWhite() == false)
@@ -194,9 +204,6 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
                 validMoves.add(board[x - 1][y + 1]);
 
         }
-        
-        
-        
         System.out.println(validMoves);
         return validMoves;
     
@@ -278,14 +285,6 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
             else
                 s.setFill(Color.LIMEGREEN);
         }
-    }
-    public void updateStatusLabel() {
-        if (this.isWhiteTurn)
-            this.statusLabel.setText("White's turn");
-        else
-            this.statusLabel.setText("Black's turn");
-
-
     }
 
 
