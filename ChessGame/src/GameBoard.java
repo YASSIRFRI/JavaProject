@@ -89,6 +89,8 @@ public abstract class GameBoard extends StackPane {
         statusLabel.setTextFill(Color.BLACK);
         statusLabel.setAlignment(Pos.TOP_RIGHT);
         this.setAlignment(statusLabel, Pos.TOP_RIGHT);
+        //set the width of the status label to be fixed
+        statusLabel.setMaxWidth(400);
         this.getChildren().add(statusLabel);
         Label timer= new Label("Time Left : 60"); 
         timer.setMaxHeight(50);
