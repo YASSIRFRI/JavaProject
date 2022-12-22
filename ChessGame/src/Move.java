@@ -150,7 +150,7 @@ class Move {
             {
             if(this.getSourceSquare().getPlaceholder().isWhite)
             {
-            Square middleSquare1=checkersboard.getBoard()[this.getDestinationSquare().getx()+1][this.getDestinationSquare().gety()+1];
+            Square middleSquare1=checkersboard.getBoard()[this.getSourceSquare().getx()+1][this.getSourceSquare().gety()+1];
             Square middleSquare2=checkersboard.getBoard()[this.getSourceSquare().getx()+1][this.getSourceSquare().gety()+3];
             Piece killedPiece1=middleSquare1.getPlaceholder();
             Piece killedPiece2=middleSquare2.getPlaceholder();

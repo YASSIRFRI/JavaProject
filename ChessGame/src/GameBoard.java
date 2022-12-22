@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.event.EventTarget;
 import javafx.fxml.FXMLLoader;
@@ -107,7 +108,12 @@ public abstract class GameBoard extends StackPane {
                 alert.setTitle("Game Over");
                 alert.setHeaderText("Time is up!");
                 alert.setContentText("Game Over");
-                alert.showAndWait();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        alert.showAndWait();
+                    }
+                });
             }
         }));
         whiteTimer.setCycleCount(Timeline.INDEFINITE);
@@ -122,7 +128,12 @@ public abstract class GameBoard extends StackPane {
                 alert.setTitle("Game Over");
                 alert.setHeaderText("Time is up!");
                 alert.setContentText("Game Over");
-                alert.showAndWait();
+                Platform.runLater(new Runnable() {
+                    @Override
+                    public void run() {
+                        alert.showAndWait();
+                    }
+                });
             }
         }));
         blackTimer.setCycleCount(Timeline.INDEFINITE);

@@ -42,6 +42,8 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
             }
         });
         this.gameHistory = new ArrayList<Move>();
+        this.Board.setVgap(5);
+        this.Board.setHgap(5);
         
     }
     public ArrayList<CheckersPawn> getWhitePieces() {
