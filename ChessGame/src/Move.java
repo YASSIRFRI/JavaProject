@@ -65,11 +65,8 @@ class Move {
  
 
     public boolean equals(Move anotherMove) {
-		if(this.getSourceSquare() == anotherMove.getSourceSquare() && this.getDestinationSquare() == anotherMove.getDestinationSquare() ){
-			return true;
-		}
-		return false;
-	}
+        return this.getSourceSquare() == anotherMove.getSourceSquare() && this.getDestinationSquare() == anotherMove.getDestinationSquare();
+    }
 
 
     public void doMove(ChessBoard chessBoard) {
@@ -100,6 +97,20 @@ class Move {
             chessBoard.getEnemyPieces(piece.getIsWhite()).remove(killedPiece);
             killedPiece.setLocation(null);
             this.enemyPiece = killedPiece;
+
+
+            if (killedPiece.getIsWhite()) {
+                ImageView img = new ImageView(new Image("/static/White/Pawn.png"));
+                img.setFitWidth(40);
+                img.setFitHeight(40);
+                chessBoard.getWhiteKilledPiecesPane().getChildren().add(img);
+            }
+            else {
+                ImageView img = new ImageView(new Image("/static/Black/Pawn.png"));
+                img.setFitWidth(40);
+                img.setFitHeight(40);
+                chessBoard.getBlackKilledPiecesPane().getChildren().add(img);
+            }
         }
 
 
@@ -247,6 +258,15 @@ class Move {
             chessBoard.board[this.destinationSquare.getx()][this.destinationSquare.gety()].setPlaceholder(this.enemyPiece);
             chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
             this.enemyPiece.setLocation(this.destinationSquare);
+
+
+            // Deleting the last element of showed killed pieces
+            if (enemyPiece.getIsWhite()) {
+                chessBoard.getWhiteKilledPiecesPane().getChildren().remove(chessBoard.getWhiteKilledPiecesPane().getChildren().size()-1);
+            }
+            else {
+                chessBoard.getBlackKilledPiecesPane().getChildren().remove(chessBoard.getBlackKilledPiecesPane().getChildren().size()-1);
+            }
         }
 
         else {
