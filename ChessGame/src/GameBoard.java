@@ -46,6 +46,8 @@ public abstract class GameBoard extends StackPane {
     protected int Blacktime=Whitetime;
      protected Timeline whiteTimer;
     protected Timeline blackTimer;
+    protected FlowPane whiteKilledPiecesPane;
+    protected FlowPane blackKilledPiecesPane;
     protected Player whitePlayer;
     protected Player blackPlayer;
     protected Font vogue = Font.loadFont(getClass().getResourceAsStream("/static/fonts/Vogue.ttf"), 30);
@@ -153,6 +155,22 @@ public abstract class GameBoard extends StackPane {
         this.getChildren().add(Board);
         this.setAlignment(Board, Pos.CENTER);
         this.setAlignment(playSound, Pos.BOTTOM_RIGHT);
+
+        blackKilledPiecesPane = new FlowPane();
+        blackKilledPiecesPane.setMaxWidth(380);
+        blackKilledPiecesPane.setMaxHeight(50);
+        this.getChildren().add(blackKilledPiecesPane);
+        setAlignment(blackKilledPiecesPane, Pos.CENTER_RIGHT);
+        blackKilledPiecesPane.setTranslateY(50);
+
+        whiteKilledPiecesPane = new FlowPane();
+        whiteKilledPiecesPane.setMaxWidth(380);
+        whiteKilledPiecesPane.setMaxHeight(50);
+        this.getChildren().add(whiteKilledPiecesPane);
+        setAlignment(whiteKilledPiecesPane, Pos.CENTER_RIGHT);
+        whiteKilledPiecesPane.setTranslateY(-50);
+
+
         playSound.addEventHandler(MouseEvent.MOUSE_CLICKED, new EventHandler<MouseEvent>() {
             @Override
             public void handle(MouseEvent event) {
@@ -169,6 +187,22 @@ public abstract class GameBoard extends StackPane {
         });
         this.getChildren().add(playSound);
 
+    }
+
+    public FlowPane getWhiteKilledPiecesPane() {
+        return whiteKilledPiecesPane;
+    }
+
+    public void setWhiteKilledPiecesPane(FlowPane whiteKilledPiecesPane) {
+        this.whiteKilledPiecesPane = whiteKilledPiecesPane;
+    }
+
+    public FlowPane getBlackKilledPiecesPane() {
+        return blackKilledPiecesPane;
+    }
+
+    public void setBlackKilledPiecesPane(FlowPane blackKilledPiecesPane) {
+        this.blackKilledPiecesPane = blackKilledPiecesPane;
     }
 
     public Square[][] getBoard() {

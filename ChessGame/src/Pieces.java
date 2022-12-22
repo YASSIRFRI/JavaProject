@@ -118,7 +118,7 @@ abstract class Piece {
         }
 
         // Checking castling if the piece is a king
-        if ( this.getName().equals("King") && (! this.isHasMoved())) {
+        if ( this.getName().equals("King") && (! this.isHasMoved()) && (this.getLocation() != null)) {
             Square[][] board = chessBoard.getBoard();
             int xSrc = this.getLocation().getx();
             int ySrc = this.getLocation().gety();

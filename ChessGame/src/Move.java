@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 
@@ -107,9 +110,19 @@ class Move {
             this.enemyPiece=killedPiece;
             if (killedPiece.getIsWhite()) {
                 chessBoard.getWhitePieces().remove(killedPiece);
+
+                ImageView img = new ImageView(new Image("/static/White/" + killedPiece.getName() + ".png"));
+                img.setFitWidth(40);
+                img.setFitHeight(40);
+                chessBoard.getWhiteKilledPiecesPane().getChildren().add(img);
             }
             else {
                 chessBoard.getBlackPieces().remove(killedPiece);
+
+                ImageView img = new ImageView(new Image("/static/Black/" + killedPiece.getName() + ".png"));
+                img.setFitWidth(40);
+                img.setFitHeight(40);
+                chessBoard.getBlackKilledPiecesPane().getChildren().add(img);
             }
             destinationSquare.getPlaceholder().setLocation(null);
         }
