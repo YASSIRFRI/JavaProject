@@ -65,11 +65,8 @@ class Move {
  
 
     public boolean equals(Move anotherMove) {
-		if(this.getSourceSquare() == anotherMove.getSourceSquare() && this.getDestinationSquare() == anotherMove.getDestinationSquare() ){
-			return true;
-		}
-		return false;
-	}
+        return this.getSourceSquare() == anotherMove.getSourceSquare() && this.getDestinationSquare() == anotherMove.getDestinationSquare();
+    }
 
 
     public void doMove(ChessBoard chessBoard) {
@@ -261,6 +258,15 @@ class Move {
             chessBoard.board[this.destinationSquare.getx()][this.destinationSquare.gety()].setPlaceholder(this.enemyPiece);
             chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
             this.enemyPiece.setLocation(this.destinationSquare);
+
+
+            // Deleting the last element of showed killed pieces
+            if (enemyPiece.getIsWhite()) {
+                chessBoard.getWhiteKilledPiecesPane().getChildren().remove(chessBoard.getWhiteKilledPiecesPane().getChildren().size()-1);
+            }
+            else {
+                chessBoard.getBlackKilledPiecesPane().getChildren().remove(chessBoard.getBlackKilledPiecesPane().getChildren().size()-1);
+            }
         }
 
         else {
