@@ -44,7 +44,8 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
         this.gameHistory = new ArrayList<Move>();
         this.Board.setVgap(5);
         this.Board.setHgap(5);
-        
+        this.setWhitePlayer("White");
+        this.setBlackPlayer("Black");
     }
     public ArrayList<CheckersPawn> getWhitePieces() {
         return whitePieces;
@@ -176,45 +177,60 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
         }
         System.out.println(validMoves);
         return validMoves;
-
     }
     public ArrayList<Square> getValidMoves(CheckersKing piece) {
         ArrayList<Square> validMoves = new ArrayList<Square>();
+        validMoves.addAll(getValidMoves((CheckersPawn) piece));
         int x = piece.getLocation().getx();
-        System.out.println(x);
         int y = piece.getLocation().gety();
-        System.out.println(y);
-        if (piece.getIsWhite()) {
-            if (inBoard(x+1, y+1) && board[x + 1][y + 1].isEmpty())
-                validMoves.add(board[x + 1][y + 1]);
+        if(!piece.isWhite){
+        if (inBoard(x+1, y+1) && board[x + 1][y + 1].isEmpty())
+        validMoves.add(board[x + 1][y + 1]);
             if(inBoard(x-1, y+1) && board[x - 1][y + 1].isEmpty())
                 validMoves.add(board[x - 1][y + 1]);
-            if (inBoard(x+1, y-1) && board[x + 1][y - 1].isEmpty())
-                validMoves.add(board[x + 1][y - 1]);
-            if(inBoard(x-1, y-1) && board[x - 1][y - 1].isEmpty())
-                validMoves.add(board[x - 1][y - 1]);
-
-        }
-        else {
+            if(inBoard(x+2, y+2) && board[x + 2][y + 2].isEmpty() && board[x + 1][y + 1].getPlaceholder() != null && board[x + 1][y + 1].getPlaceholder().getIsWhite() == true)
+            {
+                validMoves.add(board[x + 2][y + 2]);
+            }
+            if(inBoard(x-2, y+2) && board[x - 2][y + 2].isEmpty() && board[x - 1][y + 1].getPlaceholder() != null && board[x - 1][y + 1].getPlaceholder().getIsWhite() == true)
+                validMoves.add(board[x - 2][y + 2]);
+            if(inBoard(x+4, y+4) && board[x + 4][y + 4].isEmpty()&& board[x+2][y+2].isEmpty() && board[x + 1][y + 1].getPlaceholder() != null && board[x + 1][y + 1].getPlaceholder().getIsWhite() == true && board[x+3][y +3].getPlaceholder() != null && board[x + 3][y + 3].getPlaceholder().getIsWhite() == false)
+                validMoves.add(board[x + 4][y + 4]);
+            if(inBoard(x-4, y+4) && board[x - 4][y + 4].isEmpty()&&board[x-2][y+2].isEmpty() && board[x - 1][y + 1].getPlaceholder() != null && board[x - 1][y + 1].getPlaceholder().getIsWhite() == true && board[x-3][y +3].getPlaceholder() != null && board[x - 3][y + 3].getPlaceholder().getIsWhite() == true)
+                validMoves.add(board[x - 4][y + 4]);
+            if(inBoard(x,y+4) && board[x][y+4].isEmpty()&&board[x+2][y+2].isEmpty() && board[x+1][y+1].getPlaceholder() != null && board[x+1][y+1].getPlaceholder().getIsWhite() == true && board[x+1][y+3].getPlaceholder() != null && board[x+1][y+3].getPlaceholder().getIsWhite() == true)
+                validMoves.add(board[x][y+4]);
+            }
+        else{
             if (inBoard(x-1, y-1) && board[x - 1][y - 1].isEmpty())
+            {
+                System.out.println("noir");
                 validMoves.add(board[x - 1][y - 1]);
+            }
             if (inBoard(x+1, y-1) && board[x + 1][y - 1].isEmpty())
+            {
+                System.out.println("noir");
                 validMoves.add(board[x + 1][y - 1]);
-            if (inBoard(x+1, y+1) && board[x + 1][y + 1].isEmpty())
-                validMoves.add(board[x + 1][y + 1]);
-            if(inBoard(x-1, y+1) && board[x - 1][y + 1].isEmpty())
-                validMoves.add(board[x - 1][y + 1]);
-
+            }
+            if(inBoard(x-2, y-2) && board[x - 2][y - 2].isEmpty() && board[x - 1][y - 1].getPlaceholder() != null && board[x - 1][y - 1].getPlaceholder().getIsWhite() == false)
+                validMoves.add(board[x - 2][y - 2]);
+            if(inBoard(x+2, y-2) && board[x + 2][y - 2].isEmpty() && board[x + 1][y - 1].getPlaceholder() != null && board[x + 1][y - 1].getPlaceholder().getIsWhite() == false)
+                validMoves.add(board[x + 2][y - 2]);
+            if(inBoard(x-4, y-4) && board[x - 4][y - 4].isEmpty()&&board[x-2][y-2].isEmpty() && board[x - 1][y - 1].getPlaceholder() != null && board[x - 1][y - 1].getPlaceholder().getIsWhite() == false && board[x-3][y -3].getPlaceholder() != null && board[x - 3][y - 3].getPlaceholder().getIsWhite() == false)
+                validMoves.add(board[x - 4][y - 4]);
+            if(inBoard(x+4, y-4) && board[x + 4][y - 4].isEmpty()&&board[x+2][y-2].isEmpty() && board[x + 1][y - 1].getPlaceholder() != null && board[x + 1][y - 1].getPlaceholder().getIsWhite() == false && board[x+3][y -3].getPlaceholder() != null && board[x + 3][y - 3].getPlaceholder().getIsWhite() == false
+            )
+                validMoves.add(board[x + 4][y - 4]);
+            if(inBoard(x,y+4) && board[x][y+4].isEmpty()&&board[x+2][y+2].isEmpty() && board[x+1][y+1].getPlaceholder() != null && board[x+1][y+1].getPlaceholder().getIsWhite() == false && board[x+1][y+3].getPlaceholder() != null && board[x+1][y+3].getPlaceholder().getIsWhite() == false)
+                validMoves.add(board[x][y+4]);
         }
-        System.out.println(validMoves);
-        return validMoves;
-    
-    }
+                return validMoves;
+        }
     public void handle(MouseEvent event) {
         Square clickedSquare = getClickedSquare(event);
         if (clickedSquare != null) {
             if (triggerer != null) {
-                if (clickedSquare.getFill() == Color.LIMEGREEN || clickedSquare.getFill() == Color.DARKRED) {
+                if (clickedSquare.getFill() == Color.LIMEGREEN ) {
                     removeHighlights();
                     if(clickedSquare.gety()==0 || clickedSquare.gety()==7 )
                     {
@@ -233,8 +249,9 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
                     this.updateStatusLabel();
                     triggerer = null;
                     }
-
-                } else {
+                }
+                 else 
+                {
                     if (clickedSquare.isEmpty()) {
                         removeHighlights();
                         triggerer = null;
@@ -242,7 +259,10 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
 
                      else {
                         if (clickedSquare.getPlaceholder().getIsWhite() == isWhiteTurn) {
-                            highlightValidMoves((CheckersPawn) clickedSquare.getPlaceholder());
+                            if(triggerer.getPlaceholder() instanceof CheckersKing)
+                                highlightValidMoves((CheckersKing) triggerer.getPlaceholder());
+                            else
+                                highlightValidMoves((CheckersPawn) triggerer.getPlaceholder());
                             triggerer = clickedSquare;
                         } else
                             removeHighlights();
@@ -251,15 +271,16 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
             } 
             else 
             {
-                System.out.println("triggerer is null");
                 if (clickedSquare.isEmpty())
                     removeHighlights();
                 else {
                     System.out.println("clicked square is not empty");
                     System.out.println("clicked square is white: " + clickedSquare.getPlaceholder().getIsWhite());
                     if (clickedSquare.getPlaceholder().getIsWhite() == isWhiteTurn) {
-                        System.out.println("highlighting valid moves");
-                        highlightValidMoves((CheckersPawn) clickedSquare.getPlaceholder());
+                        if(clickedSquare.getPlaceholder() instanceof CheckersKing)
+                            highlightValidMoves((CheckersKing) clickedSquare.getPlaceholder());
+                        else
+                            highlightValidMoves((CheckersPawn) clickedSquare.getPlaceholder());
                         triggerer = clickedSquare;
                     }
                 }
@@ -270,6 +291,22 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
 
     public void switchTurn() {
         this.isWhiteTurn = !this.isWhiteTurn;
+    }
+    public void highlightValidMoves(CheckersKing piece) {
+        System.out.println("highlighting valid moves");
+        this.removeHighlights();
+        piece.getLocation().setFill(Color.DARKSLATEBLUE);
+        highlightedSquares.add(piece.getLocation());
+        ArrayList<Square> moves = this.getValidMoves(piece);
+        System.out.println("valid moves: ");
+        System.out.println(moves);
+        for (Square s : moves) {
+            highlightedSquares.add(s);
+            if ((!s.isEmpty()) && piece.isEnemy(s.getPlaceholder()))
+                s.setFill(Color.DARKRED);
+            else
+                s.setFill(Color.LIMEGREEN);
+        }
     }
 
     public void highlightValidMoves(CheckersPawn piece) {
