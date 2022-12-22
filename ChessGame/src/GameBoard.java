@@ -1,8 +1,6 @@
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.concurrent.locks.ReentrantLock;
-
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.event.EventHandler;
@@ -37,18 +35,20 @@ public abstract class GameBoard extends StackPane {
     protected ArrayList<Move> gameHistory;
     protected final ArrayList<Square> highlightedSquares= new ArrayList<Square>();
     protected Label statusLabel=new Label();
-    protected Button reverseMove = new Button("Reverse Move");
+    protected ImageView reverseMove = new ImageView(new Image("/static/reverseMove.png"));
     protected ImageView playSound = new ImageView(new Image("/static/music.png")); 
     String musicFile = new File("src/static/music.mp3").getAbsolutePath();
     public Media music = new Media(new File(musicFile).toURI().toString());
     protected MediaPlayer mediaPlayer = new MediaPlayer(music);
     boolean soundOn = false;
     protected int Whitetime=5;
-    protected int Blacktime=5;
-    protected Timeline whiteTimer;
+    protected int Blacktime=Whitetime;
+     protected Timeline whiteTimer;
     protected Timeline blackTimer;
+    protected Player whitePlayer;
+    protected Player blackPlayer;
 
-    public GameBoard(int size, Color color1, Color color2) {
+    public GameBoard(int size, Color color1, Color color2, int time) {
         super();
         this.setStyle("-fx-background-color: lightgray;");
         this.size = size;
@@ -79,6 +79,7 @@ public abstract class GameBoard extends StackPane {
                 this.Board.add(board[i][j], i, j);
                 count++;
             }
+            this.Whitetime=time*60;
         }
         Font vogue= Font.loadFont(getClass().getResourceAsStream("/static/fonts/Vogue.ttf"), 30);
         this.statusLabel = new Label("White's turn");
@@ -91,8 +92,8 @@ public abstract class GameBoard extends StackPane {
         this.getChildren().add(statusLabel);
         Label timer= new Label("Time Left : 60"); 
         timer.setMaxHeight(50);
-        
-        this.Whitetime=60*Whitetime;; 
+        this.Whitetime=60*time;
+        this.Blacktime=Whitetime;
         this.whiteTimer= new Timeline(new KeyFrame(Duration.seconds(1), e->{
             if(Whitetime>0){
                 Whitetime--;
@@ -108,7 +109,6 @@ public abstract class GameBoard extends StackPane {
         }));
         whiteTimer.setCycleCount(Timeline.INDEFINITE);
         whiteTimer.play();
-        this.Blacktime=60*Blacktime;
         this.blackTimer= new Timeline(new KeyFrame(Duration.seconds(1), e->{
             if(Blacktime>0){
                 Blacktime--;
@@ -130,13 +130,9 @@ public abstract class GameBoard extends StackPane {
         this.getChildren().add(timer);
         timer.setFont(vogue);
         this.gameHistory = new ArrayList<Move>();
-        reverseMove.setStyle("-fx-background-color: brown;  -fx-border-width: 5px; -fx-text-fill: white");
-        reverseMove.setAlignment(Pos.BOTTOM_CENTER);
-        this.setAlignment(reverseMove, Pos.BOTTOM_RIGHT);
-        reverseMove.setTranslateX(-150);
-        reverseMove.setTranslateY(-100);
-        reverseMove.setPadding(new Insets(20, 20, 20, 20));
-        this.getChildren().add(reverseMove);
+        reverseMove.setFitHeight(50);
+        reverseMove.setFitWidth(50);
+        this.Board.add(reverseMove,8,7);
         playSound.setStyle(" -fx-background-size: 100% 100%; -fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 2px; -fx-border-radius: 5px;");
         playSound.setFitHeight(50);
         playSound.setFitWidth(50);
@@ -171,7 +167,18 @@ public abstract class GameBoard extends StackPane {
     public Square getSquare(int x, int y) {
         return board[x][y];
     }
-
+    public String getWhiteName() {
+        return this.whitePlayer.getUserName();
+    }
+    public String getBlackName() {
+        return this.blackPlayer.getUserName();
+    }
+    public void setWhitePlayer(String name) {
+        this.whitePlayer= new Player(name);
+    }
+    public void setBlackPlayer(String name) {
+        this.blackPlayer= new Player(name);
+    }
     public abstract void fillBoard();
 }
 
@@ -190,8 +197,9 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
     private Pawn enPassantThreatedPawn;
 
 
-    ChessBoard(Color[] colors) {
-        super(8, colors[0], colors[1]);
+
+    ChessBoard(Color[] colors,int time) {
+        super(8, colors[0], colors[1], time);
         this.whitePieces = new ArrayList<Piece>();
         this.blackPieces = new ArrayList<Piece>();
         this.isWhiteTurn = true;
@@ -203,6 +211,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
             } else {
                 System.out.println("Empty History");
             }
+            e.consume();
         });
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("promotion.fxml"));
@@ -240,6 +249,8 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
             e.printStackTrace();
         }
         this.alert.setContentText("Choose a piece to promote to");
+        //set the message of the alert
+        this.alert.setHeaderText("Promotion");
         this.alert.setTitle("Promotion");
         this.alert.getDialogPane().setContent(piecePicker);
     }
@@ -522,7 +533,7 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
                 break;
 
             case CHECKMATE:
-                text = (this.isWhiteTurn() ? "White" : "Black") + " is checkmated !";
+                text = (this.isWhiteTurn() ? this.getBlackName() : this.getWhiteName()) + "won by checkmate !";
                 break;
 
             case CHECK:

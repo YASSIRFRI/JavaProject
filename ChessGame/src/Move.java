@@ -214,83 +214,26 @@ class Move {
     }
    
 }
-class PromotionCheckers extends Move {
-    public CheckersKing promotedPiece;
-    public Piece killedPiece;
-    public PromotionCheckers(Square sourceSquare, Square destinationSquare, Piece piece, CheckersKing promotedPiece) {
-        super(sourceSquare, destinationSquare, piece);
-        this.promotedPiece=promotedPiece;
-    }
-    public Piece getPromotedPiece()
-    {
-        return promotedPiece;
-    }
-    public void setPromotedPiece(CheckersKing promotedPiece)
-    {
-        this.promotedPiece=promotedPiece;
-    }
-    @Override
-    public void doMove(CheckersBoard checkersBoard) {
-        if(this.getDestinationSquare().getPlaceholder()!=null)
-        {
-            this.killedPiece= this.getDestinationSquare().getPlaceholder();
-            checkersBoard.Board.getChildren().remove(this.killedPiece.getImage());
-            this.killedPiece.setLocation(null);
-        }
-        getSourceSquare().setPlaceholder(null);
-        checkersBoard.Board.getChildren().remove(this.piece.getImage());
-        checkersBoard.Board.add(this.promotedPiece.getImage(), getDestinationSquare().getx(), getDestinationSquare().gety());
-        checkersBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(promotedPiece);
-        getDestinationSquare().setPlaceholder(promotedPiece);
-        this.promotedPiece.setLocation(getDestinationSquare());
-        if(piece.getIsWhite())
-        {
-            checkersBoard.getWhitePieces().remove(piece);
-            checkersBoard.getWhitePieces().add(promotedPiece);
-        }
-        else{
-            checkersBoard.getBlackPieces().remove(piece);
-            checkersBoard.getBlackPieces().add(promotedPiece);
-        }
-        if(this.killedPiece!=null)
-        {
-            if(this.killedPiece.getIsWhite())
-                checkersBoard.getWhitePieces().remove(this.killedPiece);
-            else
-                checkersBoard.getBlackPieces().remove(this.killedPiece);
-        }
-        checkersBoard.gameHistory.add(this);
 
-}
-    @Override
-    public void reverseMove(CheckersBoard checkersBoard) {
-        getSourceSquare().setPlaceholder(piece);
-        checkersBoard.Board.getChildren().remove(this.promotedPiece.getImage());
-        checkersBoard.Board.add(this.piece.getImage(), getSourceSquare().getx(), getSourceSquare().gety());
-        checkersBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(piece);
-        getDestinationSquare().setPlaceholder(null);
-        this.piece.setLocation(getSourceSquare());
-        if(piece.getIsWhite())
-        {
-            checkersBoard.getWhitePieces().remove(promotedPiece);
-            checkersBoard.getWhitePieces().add((CheckersPawn) piece);
-        }
-        else{
-            checkersBoard.getBlackPieces().remove(promotedPiece);
-            checkersBoard.getBlackPieces().add((CheckersPawn) piece);
-        }
-        if(this.killedPiece!=null)
-        {
-            if(this.killedPiece.getIsWhite())
-                checkersBoard.getWhitePieces().add((CheckersPawn) this.killedPiece);
-            else
-                checkersBoard.getBlackPieces().add((CheckersPawn) this.killedPiece);
-        }
-        checkersBoard.switchTurn();
-        checkersBoard.updateStatusLabel();
-    }
+///You must keep the code abstract, and not add a new class each time
+// class PromotionCheckers extends Move {
+//     public CheckersKing promotedPiece;
+//     public Piece killedPiece;
+//     public PromotionCheckers(Square sourceSquare, Square destinationSquare, Piece piece, CheckersKing promotedPiece) {
+//         super(sourceSquare, destinationSquare, piece);
+//         this.promotedPiece=promotedPiece;
+//     }
+//     public Piece getPromotedPiece()
+//     {
+//         return promotedPiece;
+//     }
+//     public void setPromotedPiece(CheckersKing promotedPiece)
+//     {
+//         this.promotedPiece=promotedPiece;
+//     }
+    
 
-}
+// }
 
 
 class Promotion extends Move {
@@ -381,6 +324,66 @@ class Promotion extends Move {
         }
         chessBoard.switchTurn();
         chessBoard.updateStatusLabel();
+    }
+    @Override
+    public void doMove(CheckersBoard checkersBoard) {
+        if(this.getDestinationSquare().getPlaceholder()!=null)
+        {
+            this.killedPiece= this.getDestinationSquare().getPlaceholder();
+            checkersBoard.Board.getChildren().remove(this.killedPiece.getImage());
+            this.killedPiece.setLocation(null);
+        }
+        getSourceSquare().setPlaceholder(null);
+        checkersBoard.Board.getChildren().remove(this.piece.getImage());
+        checkersBoard.Board.add(this.promotedPiece.getImage(), getDestinationSquare().getx(), getDestinationSquare().gety());
+        checkersBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(promotedPiece);
+        getDestinationSquare().setPlaceholder(promotedPiece);
+        this.promotedPiece.setLocation(getDestinationSquare());
+        if(piece.getIsWhite())
+        {
+            checkersBoard.getWhitePieces().remove(piece);
+            checkersBoard.getWhitePieces().add((CheckersPawn) promotedPiece);
+        }
+        else{
+            checkersBoard.getBlackPieces().remove(piece);
+            checkersBoard.getBlackPieces().add((CheckersPawn) promotedPiece);
+        }
+        if(this.killedPiece!=null)
+        {
+            if(this.killedPiece.getIsWhite())
+                checkersBoard.getWhitePieces().remove(this.killedPiece);
+            else
+                checkersBoard.getBlackPieces().remove(this.killedPiece);
+        }
+        checkersBoard.gameHistory.add(this);
+
+}
+    @Override
+    public void reverseMove(CheckersBoard checkersBoard) {
+        getSourceSquare().setPlaceholder(piece);
+        checkersBoard.Board.getChildren().remove(this.promotedPiece.getImage());
+        checkersBoard.Board.add(this.piece.getImage(), getSourceSquare().getx(), getSourceSquare().gety());
+        checkersBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(piece);
+        getDestinationSquare().setPlaceholder(null);
+        this.piece.setLocation(getSourceSquare());
+        if(piece.getIsWhite())
+        {
+            checkersBoard.getWhitePieces().remove(promotedPiece);
+            checkersBoard.getWhitePieces().add((CheckersPawn) piece);
+        }
+        else{
+            checkersBoard.getBlackPieces().remove(promotedPiece);
+            checkersBoard.getBlackPieces().add((CheckersPawn) piece);
+        }
+        if(this.killedPiece!=null)
+        {
+            if(this.killedPiece.getIsWhite())
+                checkersBoard.getWhitePieces().add((CheckersPawn) this.killedPiece);
+            else
+                checkersBoard.getBlackPieces().add((CheckersPawn) this.killedPiece);
+        }
+        checkersBoard.switchTurn();
+        checkersBoard.updateStatusLabel();
     }
 
 }

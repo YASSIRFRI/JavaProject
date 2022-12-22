@@ -55,11 +55,22 @@ public class Game extends Application{
     public void setPlayers(Player[] players) {
         this.players = players;
     }
-    public void startGame(MouseEvent event,Color[] colors,String game) throws IOException{
-        if(game=="Chess"){
-
-            ChessBoard chessBoard = new ChessBoard(colors);
+    public void startGame(MouseEvent event,Color[] colors,String game,String time,String[] players) throws IOException{
+        if(game=="Chess" && players[0]!="" && players[1]!=""){
+            int timeInt = 5;
+            if(time==""){
+                return;
+            }
+            else{
+                timeInt = Integer.parseInt(time);
+                if(timeInt<0){
+                    return;
+                }
+            }
+            ChessBoard chessBoard = new ChessBoard(colors,timeInt);
             chessBoard.fillBoard();
+            chessBoard.setWhitePlayer(players[0]);
+            chessBoard.setWhitePlayer(players[1]);
             chessBoard.setOnMouseClicked(chessBoard);
             Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
             Stage stage = new Stage();
@@ -68,7 +79,7 @@ public class Game extends Application{
             stage.show();
         }
         else if(game=="Checkers"){
-            CheckersBoard checkersBoard = new CheckersBoard(colors);
+            CheckersBoard checkersBoard = new CheckersBoard(colors,2);
             checkersBoard.fillBoard();
             checkersBoard.setOnMouseClicked(checkersBoard);
             Scene scene = new Scene(checkersBoard, windowWidth+400, windowWidth+4);
@@ -91,7 +102,7 @@ public class Game extends Application{
         primaryStage.show();
         controller.start.addEventHandler(MouseEvent.MOUSE_CLICKED, arg0 -> {
             try {
-                startGame(arg0,controller.getColors(),controller.getGameType());
+                startGame(arg0,controller.getColors(),controller.getGameType(),controller.getTime(),controller.getPlayers());
             } catch (IOException e) {
                 e.printStackTrace();
             }

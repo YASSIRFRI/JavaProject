@@ -5,8 +5,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.ColorPicker;
 import javafx.scene.control.RadioButton;
+import javafx.scene.control.TextField;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Text;
 
 public class Controller implements Initializable{
 
@@ -20,16 +22,16 @@ public class Controller implements Initializable{
     public String[] info;
 
     @FXML
-    private RadioButton single;
-
-
+    private TextField player1;
     @FXML
-    private RadioButton two;
-    
+    private TextField player2;
+
     @FXML
     ColorPicker color1;
     @FXML 
     ColorPicker color2;
+    @FXML
+    private TextField time;
     @Override
     public void initialize(java.net.URL url, java.util.ResourceBundle resourceBundle) {
         gametype.getItems().addAll("Chess", "Checkers");
@@ -41,12 +43,6 @@ public class Controller implements Initializable{
     public String[] startGame(){
         String[] info = new String[2];
         info[0] = gametype.getValue();
-        if(single.isSelected()){
-            info[1] = "single";
-        }
-        else if(two.isSelected()){
-            info[1] = "two";
-        }
         return info; 
     }
 
@@ -60,6 +56,17 @@ public class Controller implements Initializable{
     public String getGameType(){
         return gametype.getValue();
     }
+    public  String[] getPlayers(){
+        String[] players = new String[2];
+        players[0] = player1.getText();
+        players[1] = player2.getText();
+        return players;
+    }
+    public String getTime()
+    {
+        return time.getText();
+    }
+
 
 
 
