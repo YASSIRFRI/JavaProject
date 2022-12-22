@@ -47,6 +47,8 @@ public abstract class GameBoard extends StackPane {
     protected Timeline blackTimer;
     protected Player whitePlayer;
     protected Player blackPlayer;
+    protected Font vogue = Font.loadFont(getClass().getResourceAsStream("/static/fonts/Vogue.ttf"), 30);
+    protected Font vogue2 = Font.loadFont(getClass().getResourceAsStream("/static/fonts/Vogue.ttf"), 15);
 
     public GameBoard(int size, Color color1, Color color2, int time) {
         super();
@@ -81,7 +83,6 @@ public abstract class GameBoard extends StackPane {
             }
             this.Whitetime=time*60;
         }
-        Font vogue= Font.loadFont(getClass().getResourceAsStream("/static/fonts/Vogue.ttf"), 30);
         this.statusLabel = new Label("White's turn");
         statusLabel.setStyle("-fx-background-color: #FFFFFF; -fx-border-color: #000000; -fx-border-width: 0px; -fx-border-radius: 0px;");
         statusLabel.setFont(vogue);
@@ -528,22 +529,25 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
 
     public void updateStatusLabel() {
         String text = "";
-
-        switch (this.getBoardStatus()) {
+       switch (this.getBoardStatus()) {
             case ACTIVE:
                 text = (this.isWhiteTurn() ? "White" : "Black") + "'s turn";
+                this.statusLabel.setFont(vogue);
                 break;
 
             case CHECKMATE:
                 text = (this.isWhiteTurn() ? this.getBlackName() : this.getWhiteName()) + "won by checkmate !";
+                this.statusLabel.setFont(vogue2);
                 break;
 
             case CHECK:
                 text = (this.isWhiteTurn() ? "White" : "Black") + " king is checked !";
+                this.statusLabel.setFont(vogue2);
                 break;
 
             case STALEMATE:
                 text = "Stalemate !";
+                this.statusLabel.setFont(vogue);
                 break;
         }
 
