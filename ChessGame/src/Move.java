@@ -100,6 +100,20 @@ class Move {
             chessBoard.getEnemyPieces(piece.getIsWhite()).remove(killedPiece);
             killedPiece.setLocation(null);
             this.enemyPiece = killedPiece;
+
+
+            if (killedPiece.getIsWhite()) {
+                ImageView img = new ImageView(new Image("/static/White/Pawn.png"));
+                img.setFitWidth(40);
+                img.setFitHeight(40);
+                chessBoard.getWhiteKilledPiecesPane().getChildren().add(img);
+            }
+            else {
+                ImageView img = new ImageView(new Image("/static/Black/Pawn.png"));
+                img.setFitWidth(40);
+                img.setFitHeight(40);
+                chessBoard.getBlackKilledPiecesPane().getChildren().add(img);
+            }
         }
 
 
