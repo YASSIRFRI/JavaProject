@@ -157,10 +157,14 @@ class Move {
             this.killedPieces.add(killedPiece);
             middleSquare.setPlaceholder(null);
         }
-        if(Math.abs(this.getDestinationSquare().getx()-this.getSourceSquare().getx())==4) 
+        if(Math.abs(this.getDestinationSquare().gety()-this.getSourceSquare().gety())==4) 
         {
-            Square middleSquare1=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2-1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2-1];
-            Square middleSquare2=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2+1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2+1];
+            if(Math.abs(this.getDestinationSquare().getx()-this.getSourceSquare().getx())==0)
+            {
+            if(this.getSourceSquare().getPlaceholder().isWhite)
+            {
+            Square middleSquare1=checkersboard.getBoard()[this.getDestinationSquare().getx()+1][this.getDestinationSquare().gety()+1];
+            Square middleSquare2=checkersboard.getBoard()[this.getSourceSquare().getx()+1][this.getSourceSquare().gety()+3];
             Piece killedPiece1=middleSquare1.getPlaceholder();
             Piece killedPiece2=middleSquare2.getPlaceholder();
             checkersboard.Board.getChildren().remove(killedPiece1.getImage());
@@ -169,8 +173,52 @@ class Move {
             this.killedPieces.add(killedPiece2);
             middleSquare1.setPlaceholder(null);
             middleSquare2.setPlaceholder(null);
+            }
+            else
+            {
+                Square middleSquare1=checkersboard.getBoard()[this.getDestinationSquare().getx()+1][this.getDestinationSquare().gety()+1];
+                Square middleSquare2=checkersboard.getBoard()[this.getSourceSquare().getx()+1][this.getSourceSquare().gety()-3];
+                Piece killedPiece1=middleSquare1.getPlaceholder();
+                Piece killedPiece2=middleSquare2.getPlaceholder();
+                checkersboard.Board.getChildren().remove(killedPiece1.getImage());
+                checkersboard.Board.getChildren().remove(killedPiece2.getImage());
+                this.killedPieces.add(killedPiece1);
+                this.killedPieces.add(killedPiece2);
+                middleSquare1.setPlaceholder(null);
+                middleSquare2.setPlaceholder(null);
+
+            }
         }
-        
+        else
+        {
+            if(this.getDestinationSquare().getx()>this.getSourceSquare().getx())
+            {
+            Square middleSquare1=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2+1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2+1];
+            Square middleSquare2=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2-1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2-1];
+            Piece killedPiece2=middleSquare2.getPlaceholder();
+            Piece killedPiece1=middleSquare1.getPlaceholder();
+            checkersboard.Board.getChildren().remove(killedPiece1.getImage());
+            checkersboard.Board.getChildren().remove(killedPiece2.getImage());
+            this.killedPieces.add(killedPiece1);
+            this.killedPieces.add(killedPiece2);
+            middleSquare1.setPlaceholder(null);
+            middleSquare2.setPlaceholder(null);
+            }
+            else
+            {
+                Square middleSquare1=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2+1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2-1];
+            Square middleSquare2=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2-1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2+1];
+            Piece killedPiece2=middleSquare2.getPlaceholder();
+            Piece killedPiece1=middleSquare1.getPlaceholder();
+            checkersboard.Board.getChildren().remove(killedPiece1.getImage());
+            checkersboard.Board.getChildren().remove(killedPiece2.getImage());
+            this.killedPieces.add(killedPiece1);
+            this.killedPieces.add(killedPiece2);
+            middleSquare1.setPlaceholder(null);
+            middleSquare2.setPlaceholder(null);
+            }
+        }
+    }
         destinationSquare.setPlaceholder(piece);
         checkersboard.Board.getChildren().remove(piece.getImage());
         this.piece.setLocation(this.getDestinationSquare());
@@ -179,6 +227,14 @@ class Move {
         checkersboard.Board.add(piece.getImage(), destinationSquare.getx(), destinationSquare.gety());
         sourceSquare.setPlaceholder(null);
         checkersboard.gameHistory.add(this);
+        if(this.getDestinationSquare().getPlaceholder().isWhite && this.killedPieces.size()>0)
+        {
+            checkersboard.getWhitePieces().removeAll(this.killedPieces);
+        }
+        else if(this.killedPieces.size()>0)
+        {
+            checkersboard.getBlackPieces().removeAll(this.killedPieces);
+        }
     }
     
     public void reverseMove(ChessBoard chessBoard)
@@ -217,6 +273,14 @@ class Move {
             checkersBoard.Board.add(killedPiece.getImage(), (this.destinationSquare.getx()+this.sourceSquare.getx())/2, (this.destinationSquare.gety()+this.sourceSquare.gety())/2);
             checkersBoard.board[(this.destinationSquare.getx()+this.sourceSquare.getx())/2][(this.destinationSquare.gety()+this.sourceSquare.gety())/2].setPlaceholder(killedPiece);
             killedPiece.setLocation(checkersBoard.board[(this.destinationSquare.getx()+this.sourceSquare.getx())/2][(this.destinationSquare.gety()+this.sourceSquare.gety())/2]);
+            if(killedPiece.getIsWhite())
+            {
+                checkersBoard.getWhitePieces().add((CheckersPawn)killedPiece);
+            }
+            else
+            {
+                checkersBoard.getBlackPieces().add((CheckersPawn)killedPiece);
+            }
         }
         sourceSquare.setPlaceholder(piece);
         checkersBoard.Board.getChildren().remove(this.piece.getImage());
