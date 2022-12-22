@@ -72,7 +72,7 @@ public class Game extends Application{
             chessBoard.setWhitePlayer(players[0]);
             chessBoard.setWhitePlayer(players[1]);
             chessBoard.setOnMouseClicked(chessBoard);
-            Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+4);
+            Scene scene = new Scene(chessBoard, windowWidth+400, windowWidth+20);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setResizable(false);
@@ -82,7 +82,7 @@ public class Game extends Application{
             CheckersBoard checkersBoard = new CheckersBoard(colors,2);
             checkersBoard.fillBoard();
             checkersBoard.setOnMouseClicked(checkersBoard);
-            Scene scene = new Scene(checkersBoard, windowWidth+400, windowWidth+4);
+            Scene scene = new Scene(checkersBoard, windowWidth+400, windowWidth+20);
             Stage stage = new Stage();
             stage.setScene(scene);
             stage.setResizable(false);

@@ -92,8 +92,10 @@ class Move {
         // Handling EnPassant move
         if (piece.getName().equals("Pawn") && destinationSquare.isEmpty() && (destinationSquare.getx() != sourceSquare.getx())) {
             Pawn killedPiece = chessBoard.getEnPassantThreatedPawn();
+            killedPiece.getLocation().setPlaceholder(null);
             chessBoard.Board.getChildren().remove(killedPiece.getImage());
             chessBoard.getEnemyPieces(piece.getIsWhite()).remove(killedPiece);
+            killedPiece.setLocation(null);
             this.enemyPiece = killedPiece;
         }
 
