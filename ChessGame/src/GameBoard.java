@@ -13,7 +13,6 @@ import javafx.geometry.Pos;
 import javafx.geometry.VPos;
 import javafx.scene.Node;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -108,14 +107,15 @@ public abstract class GameBoard extends StackPane {
             else{
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Game Over");
-                alert.setHeaderText("Time is up!");
-                alert.setContentText("Game Over");
+                alert.setHeaderText("Time is up!" + this.getWhiteName() + " lost");
+                alert.setContentText("Game Over!");
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         alert.showAndWait();
                     }
                 });
+                whiteTimer.stop();
             }
         }));
         whiteTimer.setCycleCount(Timeline.INDEFINITE);
@@ -128,14 +128,15 @@ public abstract class GameBoard extends StackPane {
             else{
                 Alert alert = new Alert(Alert.AlertType.INFORMATION);
                 alert.setTitle("Game Over");
-                alert.setHeaderText("Time is up!");
-                alert.setContentText("Game Over");
+                alert.setHeaderText("Time is up!"+this.getBlackName()+" lost");
+                alert.setContentText("Game Over!");
                 Platform.runLater(new Runnable() {
                     @Override
                     public void run() {
                         alert.showAndWait();
                     }
                 });
+                blackTimer.stop();
             }
         }));
         blackTimer.setCycleCount(Timeline.INDEFINITE);
