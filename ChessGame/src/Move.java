@@ -406,9 +406,9 @@ class Promotion extends Move {
     }
     @Override
     public void doMove(CheckersBoard checkersBoard) {
-        if(this.getDestinationSquare().getPlaceholder()!=null)
+        if(checkersBoard.board[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2].getPlaceholder()!=null)
         {
-            this.killedPiece= this.getDestinationSquare().getPlaceholder();
+            this.killedPiece= checkersBoard.board[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2].getPlaceholder();
             checkersBoard.Board.getChildren().remove(this.killedPiece.getImage());
             this.killedPiece.setLocation(null);
         }

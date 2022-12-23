@@ -15,11 +15,11 @@
    <children>
       <Button fx:id="start" layoutX="213.0" layoutY="513.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="291.0" style="-fx-background-color: #adadb1; -fx-font-weight: Bolder;" text="Start Game" textFill="WHITE">
          <font>
-            <Font size="32.0" />
+            <Font name="Bell MT Bold" size="32.0" />
          </font>
       </Button>
       <ChoiceBox fx:id="gametype" layoutX="194.0" layoutY="143.0" prefHeight="48.0" prefWidth="330.0" style="-fx-background-color: #adadb1;" />
-      <Label layoutX="110.0" layoutY="248.0" prefHeight="41.0" prefWidth="174.0" style="-fx-font-weight: 800; -fx-text-alignment: center;" stylesheets="@static/styles/menu.css" text="player 1: " textAlignment="CENTER" textFill="#adadb1" wrapText="true">
+      <Label layoutX="110.0" layoutY="248.0" prefHeight="41.0" prefWidth="174.0" style="-fx-font-weight: 800; -fx-text-alignment: center;" stylesheets="@static/styles/menu.css" text="White" textAlignment="CENTER" textFill="#adadb1" wrapText="true">
          <font>
             <Font name="Bell MT" size="32.0" />
          </font>
@@ -27,7 +27,7 @@
             <Insets left="10.0" />
          </padding>
       </Label>
-      <Label fx:id="mode" layoutX="217.0" layoutY="191.0" prefHeight="69.0" prefWidth="284.0" style="-fx-font-weight: 800; -fx-text-alignment: end;" text="Select  A Mode:" textFill="#adadb1">
+      <Label fx:id="mode" layoutX="217.0" layoutY="191.0" prefHeight="69.0" prefWidth="284.0" style="-fx-font-weight: 800; -fx-text-alignment: end;" text="Enter players Names:" textFill="#adadb1">
          <font>
             <Font name="Bell MT Italic" size="30.0" />
          </font>
@@ -43,7 +43,7 @@
       </Label>
       <Label fx:id="mode1" layoutX="213.0" layoutY="318.0" prefHeight="69.0" prefWidth="330.0" style="-fx-font-weight: 800; -fx-text-alignment: end;" text="Select Board colors" textFill="#adadb1">
          <font>
-            <Font size="30.0" />
+            <Font name="Bell MT Italic" size="37.0" />
          </font>
          <padding>
             <Insets left="10.0" />
@@ -59,7 +59,7 @@
             <Color red="1.0" green="0.8177777528762817" blue="0.39259257912635803" />
          </value>
       </ColorPicker>
-      <Label layoutX="426.0" layoutY="248.0" prefHeight="41.0" prefWidth="150.0" style="-fx-font-weight: 800; -fx-text-alignment: center;" stylesheets="@static/styles/menu.css" text="player 2: " textAlignment="CENTER" textFill="#adadb1" wrapText="true">
+      <Label layoutX="426.0" layoutY="248.0" prefHeight="41.0" prefWidth="150.0" style="-fx-font-weight: 800; -fx-text-alignment: center;" stylesheets="@static/styles/menu.css" text="Black" textAlignment="CENTER" textFill="#adadb1" wrapText="true">
          <font>
             <Font name="Bell MT" size="32.0" />
          </font>
@@ -79,7 +79,7 @@
       <TextField fx:id="player2" layoutX="430.0" layoutY="290.0" prefHeight="31.0" prefWidth="149.0" />
       <Label fx:id="mode11" layoutX="197.0" layoutY="435.0" prefHeight="68.0" prefWidth="190.0" style="-fx-font-weight: 800; -fx-text-alignment: end;" text="Time Limit:" textFill="#adadb1">
          <font>
-            <Font size="30.0" />
+            <Font name="Bell MT Italic" size="26.0" />
          </font>
          <padding>
             <Insets left="10.0" />
