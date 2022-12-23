@@ -65,8 +65,11 @@ class Move {
  
 
     public boolean equals(Move anotherMove) {
-        return this.getSourceSquare() == anotherMove.getSourceSquare() && this.getDestinationSquare() == anotherMove.getDestinationSquare();
-    }
+		if(this.getSourceSquare() == anotherMove.getSourceSquare() && this.getDestinationSquare() == anotherMove.getDestinationSquare() ){
+			return true;
+		}
+		return false;
+	}
 
 
     public void doMove(ChessBoard chessBoard) {
@@ -97,20 +100,6 @@ class Move {
             chessBoard.getEnemyPieces(piece.getIsWhite()).remove(killedPiece);
             killedPiece.setLocation(null);
             this.enemyPiece = killedPiece;
-
-
-            if (killedPiece.getIsWhite()) {
-                ImageView img = new ImageView(new Image("/static/White/Pawn.png"));
-                img.setFitWidth(40);
-                img.setFitHeight(40);
-                chessBoard.getWhiteKilledPiecesPane().getChildren().add(img);
-            }
-            else {
-                ImageView img = new ImageView(new Image("/static/Black/Pawn.png"));
-                img.setFitWidth(40);
-                img.setFitHeight(40);
-                chessBoard.getBlackKilledPiecesPane().getChildren().add(img);
-            }
         }
 
 
@@ -217,7 +206,7 @@ class Move {
             }
             else
             {
-                Square middleSquare1=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2+1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2-1];
+            Square middleSquare1=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2+1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2-1];
             Square middleSquare2=checkersboard.getBoard()[(this.getDestinationSquare().getx()+this.getSourceSquare().getx())/2-1][(this.getDestinationSquare().gety()+this.getSourceSquare().gety())/2+1];
             Piece killedPiece2=middleSquare2.getPlaceholder();
             Piece killedPiece1=middleSquare1.getPlaceholder();
@@ -258,15 +247,6 @@ class Move {
             chessBoard.board[this.destinationSquare.getx()][this.destinationSquare.gety()].setPlaceholder(this.enemyPiece);
             chessBoard.board[this.sourceSquare.getx()][this.sourceSquare.gety()].setPlaceholder(piece);
             this.enemyPiece.setLocation(this.destinationSquare);
-
-
-            // Deleting the last element of showed killed pieces
-            if (enemyPiece.getIsWhite()) {
-                chessBoard.getWhiteKilledPiecesPane().getChildren().remove(chessBoard.getWhiteKilledPiecesPane().getChildren().size()-1);
-            }
-            else {
-                chessBoard.getBlackKilledPiecesPane().getChildren().remove(chessBoard.getBlackKilledPiecesPane().getChildren().size()-1);
-            }
         }
 
         else {
@@ -287,19 +267,18 @@ class Move {
     public void reverseMove(CheckersBoard checkersBoard) {
         if(this.killedPieces.size()>0)
         {
-            Piece killedPiece=this.killedPieces.get(this.killedPieces.size()-1);
-            this.killedPieces.remove(this.killedPieces.size()-1);
-            checkersBoard.Board.getChildren().remove(killedPiece.getImage());
-            checkersBoard.Board.add(killedPiece.getImage(), (this.destinationSquare.getx()+this.sourceSquare.getx())/2, (this.destinationSquare.gety()+this.sourceSquare.gety())/2);
-            checkersBoard.board[(this.destinationSquare.getx()+this.sourceSquare.getx())/2][(this.destinationSquare.gety()+this.sourceSquare.gety())/2].setPlaceholder(killedPiece);
-            killedPiece.setLocation(checkersBoard.board[(this.destinationSquare.getx()+this.sourceSquare.getx())/2][(this.destinationSquare.gety()+this.sourceSquare.gety())/2]);
-            if(killedPiece.getIsWhite())
+            for(Piece killedPiece:this.killedPieces)
             {
-                checkersBoard.getWhitePieces().add((CheckersPawn)killedPiece);
-            }
-            else
-            {
-                checkersBoard.getBlackPieces().add((CheckersPawn)killedPiece);
+                checkersBoard.Board.add(killedPiece.getImage(), killedPiece.getLocation().getx(), killedPiece.getLocation().gety());
+                checkersBoard.board[killedPiece.getLocation().getx()][killedPiece.getLocation().gety()].setPlaceholder(killedPiece);
+                if(killedPiece.isWhite)
+                {
+                    checkersBoard.getWhitePieces().add((CheckersPawn)killedPiece);
+                }
+                else
+                {
+                    checkersBoard.getBlackPieces().add((CheckersPawn)killedPiece);
+                }
             }
         }
         sourceSquare.setPlaceholder(piece);
@@ -367,6 +346,7 @@ class Promotion extends Move {
         chessBoard.board[getDestinationSquare().getx()][getDestinationSquare().gety()].setPlaceholder(promotedPiece);
         chessBoard.board[getSourceSquare().getx()][getSourceSquare().gety()].setPlaceholder(null);
         getDestinationSquare().setPlaceholder(promotedPiece);
+        promotedPiece.setLocation(getDestinationSquare());
         getSourceSquare().setPlaceholder(null);
         this.promotedPiece.setLocation(getDestinationSquare());
         if (!this.piece.isHasMoved())

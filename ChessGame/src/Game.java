@@ -79,7 +79,17 @@ public class Game extends Application{
             stage.show();
         }
         else if(game=="Checkers"){
-            CheckersBoard checkersBoard = new CheckersBoard(colors,2);
+            int timeInt = 5;
+            if(time==""){
+                return;
+            }
+            else{
+                timeInt = Integer.parseInt(time);
+                if(timeInt<0){
+                    return;
+                }
+            }
+            CheckersBoard checkersBoard = new CheckersBoard(colors,timeInt);
             checkersBoard.fillBoard();
             checkersBoard.setOnMouseClicked(checkersBoard);
             Scene scene = new Scene(checkersBoard, windowWidth+400, windowWidth+20);
