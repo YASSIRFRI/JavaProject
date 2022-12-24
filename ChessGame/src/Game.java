@@ -1,11 +1,13 @@
 import java.io.Console;
 import java.io.IOException;
+import java.net.URI;
 import java.util.ArrayList;
 
 
 import javax.sound.midi.SysexMessage;
 
 import javafx.application.Application;
+import javafx.application.HostServices;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -26,6 +28,7 @@ public class Game extends Application{
     private GameStatus status; 
     private GameBoard gameBoard;
     private Player[] players;
+    private HostServices hostServices= getHostServices();
 
     public static double windowWidth = 600.0;
     // Getters and setters
@@ -56,6 +59,7 @@ public class Game extends Application{
         this.players = players;
     }
     public void startGame(MouseEvent event,Color[] colors,String game,String time,String[] players) throws IOException{
+        String musicFile= this.getClass().getResource("/static/music.mp3").toString();
         if(game=="Chess" ){
             int timeInt = 5;
             if(time==""){
@@ -67,7 +71,7 @@ public class Game extends Application{
                     timeInt = 5;
                 }
             }
-            ChessBoard chessBoard = new ChessBoard(colors,timeInt);
+            ChessBoard chessBoard = new ChessBoard(colors,timeInt,musicFile);
             chessBoard.fillBoard();
             if(players[0]==null || players[0]==null){
                 players[0]="Player1";
@@ -93,7 +97,7 @@ public class Game extends Application{
                     return;
                 }
             }
-            CheckersBoard checkersBoard = new CheckersBoard(colors,timeInt);
+            CheckersBoard checkersBoard = new CheckersBoard(colors,timeInt,musicFile);
             checkersBoard.fillBoard();
             checkersBoard.setOnMouseClicked(checkersBoard);
             Scene scene = new Scene(checkersBoard, windowWidth+400, windowWidth+20);

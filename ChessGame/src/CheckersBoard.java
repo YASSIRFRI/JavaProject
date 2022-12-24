@@ -25,13 +25,10 @@ public class CheckersBoard extends GameBoard implements EventHandler<MouseEvent>
     public ArrayList<Square> highlightedSquares=new ArrayList<Square>();
     public boolean isWhiteTurn=true;
 
-    public CheckersBoard(){
-        super(8, null,null,5 );
-    }
 
-    public CheckersBoard(Color[] colors,int time)
+    public CheckersBoard(Color[] colors,int time,String musicFile)
     {
-        super(8, colors[0], colors[1],time);
+        super(8, colors[0], colors[1],time,musicFile);
         this.reverseMove.setOnMouseClicked(e -> {
             if (gameHistory.size() > 0) {
                 Move lastMove = gameHistory.get(gameHistory.size() - 1);

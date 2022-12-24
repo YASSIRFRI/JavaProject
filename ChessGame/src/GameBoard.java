@@ -37,9 +37,9 @@ public abstract class GameBoard extends StackPane {
     protected Label statusLabel=new Label();
     protected ImageView reverseMove = new ImageView(new Image("/static/reverseMove.png"));
     protected ImageView playSound = new ImageView(new Image("/static/music.png")); 
-    String musicFile = new File("src/static/music.mp3").getAbsolutePath();
-    public Media music = new Media(new File(musicFile).toURI().toString());
-    protected MediaPlayer mediaPlayer = new MediaPlayer(music);
+    public String musicFile;
+    public Media music; 
+    protected MediaPlayer mediaPlayer; 
     boolean soundOn = false;
     protected int Whitetime=5;
     protected int Blacktime=Whitetime;
@@ -52,13 +52,16 @@ public abstract class GameBoard extends StackPane {
     protected Font vogue = Font.loadFont(getClass().getResourceAsStream("/static/fonts/Vogue.ttf"), 30);
     protected Font vogue2 = Font.loadFont(getClass().getResourceAsStream("/static/fonts/Vogue.ttf"), 15);
 
-    public GameBoard(int size, Color color1, Color color2, int time) {
+    public GameBoard(int size, Color color1, Color color2, int time, String musicFile) {
         super();
         this.setStyle("-fx-background-color: lightgray;");
         this.size = size;
         this.board = new Square[size][size];
         this.color1 = color1;
         this.color2 = color2;
+        System.out.println(musicFile);
+        this.music= new Media(musicFile);
+        this.mediaPlayer = new MediaPlayer(music);
         int count = 0;
         //create a timer
         for (int i = 0; i < size; i++) {
@@ -247,8 +250,8 @@ class ChessBoard extends GameBoard implements EventHandler<MouseEvent> {
 
 
 
-    ChessBoard(Color[] colors,int time) {
-        super(8, colors[0], colors[1], time);
+    ChessBoard(Color[] colors,int time,String musicFile) {
+        super(8, colors[0], colors[1], time,musicFile);
         this.whitePieces = new ArrayList<Piece>();
         this.blackPieces = new ArrayList<Piece>();
         this.isWhiteTurn = true;
