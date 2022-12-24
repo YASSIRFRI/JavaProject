@@ -55,15 +55,7 @@
             <Color red="1.0" green="0.8177777528762817" blue="0.39259257912635803" />
          </value>
       </ColorPicker>
-<<<<<<< HEAD
-<<<<<<< HEAD
-      <Label layoutX="426.0" layoutY="248.0" prefHeight="41.0" prefWidth="150.0" style="-fx-font-weight: 800; -fx-text-alignment: center;" stylesheets="@static/styles/menu.css" text="Black" textAlignment="CENTER" textFill="#adadb1" wrapText="true">
-=======
-      <Label alignment="CENTER" layoutX="389.0" layoutY="228.0" prefHeight="41.0" prefWidth="150.0" style="-fx-font-weight: 800; -fx-text-alignment: center;" stylesheets="@static/styles/menu.css" text="Player 2" textAlignment="CENTER" textFill="#adadb1" wrapText="true">
->>>>>>> 41964aceab850a3d584b2d7bf8c2520176806242
-=======
       <Label alignment="CENTER" layoutX="378.0" layoutY="216.0" prefHeight="41.0" prefWidth="150.0" style="-fx-font-weight: 800; -fx-text-alignment: center;" stylesheets="@static/styles/menu.css" text="Player 2" textAlignment="CENTER" textFill="WHITE" wrapText="true">
->>>>>>> d1a6aa9e82f7ae1575fa5377a8ae8b60d286e23a
          <font>
             <Font name="Bell MT" size="32.0" />
          </font>

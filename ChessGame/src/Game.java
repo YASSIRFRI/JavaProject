@@ -56,19 +56,23 @@ public class Game extends Application{
         this.players = players;
     }
     public void startGame(MouseEvent event,Color[] colors,String game,String time,String[] players) throws IOException{
-        if(game=="Chess" && players[0]!="" && players[1]!=""){
+        if(game=="Chess" ){
             int timeInt = 5;
             if(time==""){
-                return;
+                timeInt = 5;
             }
             else{
                 timeInt = Integer.parseInt(time);
                 if(timeInt<0){
-                    return;
+                    timeInt = 5;
                 }
             }
             ChessBoard chessBoard = new ChessBoard(colors,timeInt);
             chessBoard.fillBoard();
+            if(players[0]==null || players[0]==null){
+                players[0]="Player1";
+                players[1]="Player2";
+            }
             chessBoard.setWhitePlayer(players[0]);
             chessBoard.setWhitePlayer(players[1]);
             chessBoard.setOnMouseClicked(chessBoard);
